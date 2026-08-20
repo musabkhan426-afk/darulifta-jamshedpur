@@ -53,16 +53,41 @@
         border-radius: 4px;
       }
       @media print {
-        .no-print {
-          display: none !important;
-        }
-        .print-only {
-          display: block !important;
-        }
-      }
-      .print-only {
-        display: none;
-      }
+    @page {
+        size: A4;
+        margin: 8mm;
+    }
+
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        display: block !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .print-only * {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col font-urdu">
