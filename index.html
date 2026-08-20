@@ -732,7 +732,10 @@
         ];
 
         // App State
-        let questions = JSON.parse(localStorage.getItem('darul_ifta_questions')) || INITIAL_QUESTIONS;
+       const storedQuestions = JSON.parse(localStorage.getItem('darul_ifta_questions'));
+let questions = (storedQuestions && storedQuestions.length > 0)
+    ? storedQuestions
+    : INITIAL_QUESTIONS;
         let activeMufti = MUFTIS_LIST[0];
 
         // Save State
