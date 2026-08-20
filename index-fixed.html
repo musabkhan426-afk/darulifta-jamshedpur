@@ -40,7 +40,6 @@
       body {
         font-family: 'Noto Naskh Arabic', 'Amiri', serif;
       }
-      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -53,41 +52,24 @@
         border-radius: 4px;
       }
       @media print {
-    @page {
-        size: A4;
-        margin: 8mm;
-    }
-
-    html,
-    body {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 0 !important;
-        height: auto !important;
-        display: block !important;
-    }
-
-    .no-print {
-        display: none !important;
-    }
-
-    .print-only {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-    }
-
-    .print-only * {
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-    }
-}
+        body * {
+          visibility: hidden !important;
+        }
+        #print-certificate, #print-certificate * {
+          visibility: visible !important;
+        }
+        #print-certificate {
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 20px !important;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col font-urdu">
@@ -96,16 +78,261 @@
     <header class="bg-emeraldCustom-900 text-white shadow-lg sticky top-0 z-40 no-print">
         <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <!-- Logo & Title -->
                 <div class="flex items-center space-x-3 space-x-reverse">
-                    <img src="logo.png"
-     alt="دارالافتاء جمشیدپور"
-     class="w-14 h-14 object-contain rounded-full bg-white p-1">
+                    <img src="logo.png" alt="دارالافتاء جمشیدپور" class="w-14 h-14 object-contain rounded-full bg-white p-1">
                     <div>
                         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">دارالافتاء جمشیدپور</h1>
                         <p class="text-xs text-emerald-200">آن لائن ملٹی یوزر فتویٰ و تحقیق ڈیش بورڈ</p>
                     </div>
                 </div>
+
+                <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 md:pb-0 text-sm">
+                    <button onclick="switchTab('admin')" id="tab-admin" class="nav-btn bg-emeraldCustom-700 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
+                        <i class="fa-solid fa-user-shield text-amber-400"></i>
+                        <span>ناظم / ایڈمن پورٹل</span>
+                    </button>
+                    <button onclick="switchTab('mufti')" id="tab-mufti" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
+                        <i class="fa-solid fa-user-tie text-amber-400"></i>
+                        <span>مفتی صاحب پورٹل</span>
+                    </button>
+                    <button onclick="switchTab('public')" id="tab-public" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
+                        <i class="fa-solid fa-paper-plane text-amber-400"></i>
+                        <span>نیا استفتاء</span>
+                    </button>
+                    <button onclick="switchTab('archive')" id="tab-archive" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
+                        <i class="fa-solid fa-box-archive text-amber-400"></i>
+                        <span>فتاویٰ آرکائیو</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6 no-print">
+
+        <!-- 1. ADMIN DASHBOARD -->
+        <section id="view-admin" class="space-y-6">
+            <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-amber-400"></i>
+                        مرکزی ایڈمن ڈیش بورڈ (ناظمِ دارالافتاء)
+                    </h2>
+                    <p class="text-emerald-200 text-sm mt-1">یہاں سے نئے سوالات مفتیانِ کرام کو تفویض کریں اور ڈرافٹ کردہ جوابات کی تصدیق کریں۔</p>
+                </div>
+                <button onclick="openNewQuestionModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>نیا سوال درج کریں</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">کل موصولہ سوالات</p>
+                        <p id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-inbox"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">زیرِ تحقیق (تفویض شدہ)</p>
+                        <p id="stat-assigned" class="text-2xl font-bold text-amber-600 mt-1">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">جواب موصول (ڈرافٹ)</p>
+                        <p id="stat-drafts" class="text-2xl font-bold text-purple-600 mt-1">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">منظور شدہ (صادر شدہ)</p>
+                        <p id="stat-approved" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400"></i>
+                    <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="سوال، سائل یا آئی ڈی سے تلاش کریں..." class="w-full pr-9 pl-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <select id="admin-filter-status" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
+                        <option value="ALL">تمام اسٹیٹس</option>
+                        <option value="Unassigned">غیر تفویض شدہ</option>
+                        <option value="Assigned">زیرِ تحقیق</option>
+                        <option value="Draft Received">جواب موصول (ڈرافٹ)</option>
+                        <option value="Approved">منظور شدہ</option>
+                    </select>
+                    <select id="admin-filter-mufti" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
+                        <option value="ALL">تمام مفتیانِ کرام (13)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">آئی ڈی</th>
+                                <th class="p-3">عنوان / سوال</th>
+                                <th class="p-3">سائل و شہر</th>
+                                <th class="p-3">مفتی (تفویض)</th>
+                                <th class="p-3">اسٹیٹس</th>
+                                <th class="p-3">فتویٰ نمبر</th>
+                                <th class="p-3 text-center">اقدامات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-questions-tbody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MUFTI PERSONAL DASHBOARD -->
+        <section id="view-mufti" class="space-y-6 hidden">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold shadow-inner">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 font-bold mb-1">مفتی صاحب کا انتخاب کریں (13 مفتیان):</label>
+                        <select id="active-mufti-select" onchange="changeActiveMufti()" class="border border-emerald-600 rounded-lg py-1.5 px-3 font-bold text-emerald-900 bg-emerald-50 text-base focus:outline-none focus:ring-2 focus:ring-emerald-500"></select>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200 w-full md:w-auto justify-around">
+                    <div class="text-center">
+                        <span class="block text-xs text-slate-500">آپ کے ذمہ کل</span>
+                        <span id="mufti-stat-total" class="font-bold text-slate-800 text-lg">0</span>
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span class="block text-xs text-slate-500">منتظرِ جواب</span>
+                        <span id="mufti-stat-pending" class="font-bold text-amber-600 text-lg">0</span>
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <span class="block text-xs text-slate-500">مکمل شدہ</span>
+                        <span id="mufti-stat-completed" class="font-bold text-emerald-600 text-lg">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-700"></i>
+                    <span>آپ کی طرف تفویض شدہ سوالات</span>
+                </h3>
+                <div id="mufti-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </section>
+
+        <!-- 3. PUBLIC QUESTION SUBMISSION -->
+        <section id="view-public" class="max-w-2xl mx-auto space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
+                <div class="border-b border-slate-200 pb-4 mb-5 text-center">
+                    <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور - آن لائن استفتاء فارم</h2>
+                    <p class="text-sm text-slate-600 mt-1">براہِ کرم اپنا سوال واضح اور مکمل تفصیل کے ساتھ تحریر فرمائیں۔</p>
+                </div>
+
+                <form id="public-question-form" onsubmit="handlePublicQuestionSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">سائل کا نام *</label>
+                            <input type="text" id="ask-name" required placeholder="مثلاً: محمد عبداللہ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">شہر / علاقہ *</label>
+                            <input type="text" id="ask-city" required placeholder="مثلاً: جمشیدپور، جھارکھنڈ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">واٹس ایپ / فون نمبر</label>
+                            <input type="tel" id="ask-phone" placeholder="03001234567" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">فقہی باب / زمرہ *</label>
+                            <select id="ask-category" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+                                <option value="عبادات (نماز، روزہ، زکوۃ، حج)">عبادات (نماز، روزہ، زکوۃ، حج)</option>
+                                <option value="معاملات و بیوع (تجارت و کاروبار)">معاملات و بیوع (تجارت و کاروبار)</option>
+                                <option value="عائلی مسائل (نکاح، طلاق، خلع)">عائلی مسائل (نکاح، طلاق، خلع)</option>
+                                <option value="وراثت و وصیت">وراثت و وصیت</option>
+                                <option value="حلال و حرام / متفرقات">حلال و حرام / متفرقات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">سوال کی سرخی / عنوان *</label>
+                        <input type="text" id="ask-title" required placeholder="مثلاً: سفر کے دوران قصر نماز کا حکم" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">مکمل سوال کا متن *</label>
+                        <textarea id="ask-text" rows="5" required placeholder="اپنا سوال تفصیل کے ساتھ یہاں لکھیں..." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>استفتاء بھیجیں</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. PUBLIC FATWA ARCHIVE -->
+        <section id="view-archive" class="space-y-6 hidden">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-emerald-900 mb-2">شائع شدہ فتاویٰ کا آن لائن ذخیرہ</h2>
+                <p class="text-sm text-slate-600 mb-4">دارالافتاء جمشیدپور کے منظور شدہ تمام شرعی فتاویٰ کی فہرست و تلاش۔</p>
+                
+                <div class="relative max-w-lg">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-slate-400"></i>
+                    <input type="text" id="archive-search" oninput="renderArchiveList()" placeholder="عنوان، فتویٰ نمبر یا لفظ سے تلاش کریں..." class="w-full pr-10 pl-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+            </div>
+
+            <div id="archive-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: Mufti Answer Submission -->
+    <div id="modal-mufti-answer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden no-print">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="bg-emeraldCustom-900 text-white p-4 flex items-center justify-between">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-amber-400"></i>
+                    <span>تحقیق و جواب درج کریں</span>
+                </h3>
+                <button onclick="closeModal('modal-mufti-answer')" class="text-emerald-200 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
+                <div class="bg-slate-50 border-r-4 border-emerald-600 p-3 rounded-lg text-sm space-y-1">
+                    <div class="flex items-center justify-between text-xs text-                </div>
 
                 <!-- Role Selector Tabs -->
                 <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 md:pb-0 text-sm">
