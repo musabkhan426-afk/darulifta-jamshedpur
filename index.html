@@ -1020,19 +1020,52 @@
             }
         }
 
-        // Reject Draft Back to Mufti
-        function rejectDraftBackToMufti() {
-            const qId = document.getElementById('review-modal-id').value;
-            const q = questions.find(item => item.id === qId);
+        card.innerHTML = `
+    <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                ${q.fatwaNo || 'DIF-1448-0000'}
+            </span>
+            <span class="text-slate-500">${q.date || ''}</span>
+        </div>
 
-            if (q) {
-                q.status = 'Assigned'; // Send back to Assigned state
-                saveState();
-                closeModal('modal-admin-review');
-                renderAdminTable();
-                alert('سوال دوبارہ ترمیم و اصلاح کے لیے مفتی صاحب کے ڈیش بورڈ میں بھیج دیا گیا ہے۔');
-            }
-        }// Open Fatwa Details
+        <h3 class="font-bold text-slate-800 text-base">
+            ${q.title}
+        </h3>
+
+        <p class="text-xs text-slate-600 line-clamp-2">
+            ${q.questionText}
+        </p>
+
+        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500">
+                مفتی: <strong>${q.assignedMufti || 'مفتی صاحب'}</strong>
+            </span>
+
+            <div class="flex gap-2">
+
+                <button onclick="openFatwaView('${q.id}')"
+                    class="px-4 py-2 bg-emerald-700 text-white rounded-lg font-bold hover:bg-emerald-800">
+                    <i class="fa-solid fa-eye"></i>
+                    فتویٰ دیکھیں
+                </button>
+
+                <button onclick="printFatwaCertificate('${q.id}')"
+                    class="px-4 py-2 text-emerald-700 font-bold hover:underline">
+                    <i class="fa-solid fa-print"></i>
+                    پرنٹ
+                </button>
+
+            </div>
+        </div>
+    </div>
+    `;
+    
+    container.appendChild(card);
+});
+}
+
+// Open Fatwa Details
 function openFatwaView(qId) {
     const q = questions.find(item => item.id === qId);
 
