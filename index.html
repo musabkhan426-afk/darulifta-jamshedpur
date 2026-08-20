@@ -3,109 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دارالافتاء جمشیدپور - آن لائن نظامِ مدیریتِ فتاویٰ</title>
-    <!-- Tailwind CSS CDN -->
+    <title>دارالافتاء جمشیدپور - آن لائن محفوظ پورٹل</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Urdu Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              urdu: ['"Noto Naskh Arabic"', '"Amiri"', 'sans-serif'],
-            },
-            colors: {
-              emeraldCustom: {
-                50: '#f0fdf4',
-                100: '#dcfce7',
-                600: '#059669',
-                700: '#047857',
-                800: '#065f46',
-                900: '#064e3b',
-              },
-              amberCustom: {
-                500: '#d97706',
-                600: '#b45309',
-              }
-            }
-          }
-        }
-      }
-    </script>
     <style>
-      body {
-        font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-      }
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f5f9;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #059669;
-        border-radius: 4px;
-      }
+      body { font-family: 'Noto Naskh Arabic', 'Amiri', serif; }
       @media print {
-        body * {
-          visibility: hidden !important;
-        }
-        #print-certificate, #print-certificate * {
-          visibility: visible !important;
-        }
-        #print-certificate {
-          position: absolute !important;
-          left: 0 !important;
-          top: 0 !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 20px !important;
-        }
-        .no-print {
-          display: none !important;
-        }
+        body * { visibility: hidden !important; }
+        #print-certificate, #print-certificate * { visibility: visible !important; }
+        #print-certificate { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; margin: 0 !important; padding: 20px !important; }
+        .no-print { display: none !important; }
       }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col font-urdu">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-urdu">
 
-    <!-- Header / Navbar -->
-    <header class="bg-emeraldCustom-900 text-white shadow-lg sticky top-0 z-40 no-print">
-        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <img src="logo.png" alt="دارالافتاء جمشیدپور" class="w-14 h-14 object-contain rounded-full bg-white p-1">
-                    <div>
-                        <h1 class="text-xl sm:text-2xl font-bold tracking-tight">دارالافتاء جمشیدپور</h1>
-                        <p class="text-xs text-emerald-200">آن لائن ملٹی یوزر فتویٰ و تحقیق ڈیش بورڈ</p>
-                    </div>
+    <!-- LOGIN MODAL / SCREEN -->
+    <div id="login-screen" class="fixed inset-0 bg-slate-900 bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-emerald-800">
+            <div class="text-center">
+                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64'">
+                <h2 class="text-xl font-bold text-emerald-900">دارالافتاء جمشیدپور</h2>
+                <p class="text-xs text-slate-500 mt-1">لاگ ان کریں (مفتی / ناظم پورٹل)</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-3 text-sm">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
+                    <input type="email" id="login-email" required placeholder="mufti@darulifta.com" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg shadow transition">
+                    لاگ ان کریں
+                </button>
+            </form>
 
-                <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 md:pb-0 text-sm">
-                    <button onclick="switchTab('admin')" id="tab-admin" class="nav-btn bg-emeraldCustom-700 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-user-shield text-amber-400"></i>
-                        <span>ناظم / ایڈمن پورٹل</span>
-                    </button>
-                    <button onclick="switchTab('mufti')" id="tab-mufti" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-user-tie text-amber-400"></i>
-                        <span>مفتی صاحب پورٹل</span>
-                    </button>
-                    <button onclick="switchTab('public')" id="tab-public" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-paper-plane text-amber-400"></i>
-                        <span>نیا استفتاء</span>
-                    </button>
-                    <button onclick="switchTab('archive')" id="tab-archive" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-box-archive text-amber-400"></i>
-                        <span>فتاویٰ آرکائیو</span>
-                    </button>
-                </nav>
+            <div class="flex items-center justify-between text-xs pt-2 border-t">
+                <button onclick="handleForgotPassword()" class="text-emerald-700 font-semibold hover:underline">پاسورڈ بھول گئے؟</button>
+                <button onclick="guestPublicView()" class="text-slate-500 hover:underline">عام استفتاء بھیجیں ➔</button>
             </div>
         </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header id="main-header" class="bg-emerald-900 text-white shadow-lg sticky top-0 z-40 no-print hidden">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <h1 class="text-lg font-bold">دارالافتاء جمشیدپور</h1>
+                <span id="user-badge" class="bg-amber-500 text-slate-900 text-xs px-2 py-0.5 rounded font-bold">--</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+                <span id="user-email-display" class="hidden sm:inline text-emerald-200"></span>
+                <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold">
+                    <i class="fa-solid fa-right-from-bracket"></i> لاگ آؤٹ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT SECTION -->
+    <main id="app-content" class="flex-grow max-w-7xl w-full mx-auto p-4 no-print hidden">
+        <div id="role-view-container">
+            <!-- Dynamic Role Content Injected Here -->
+        </div>
+    </main>
+
+    <!-- Firebase SDK Modular -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      // ⬇️ Your Firebase Config Attached Here Successfully
+      const firebaseConfig = {
+        apiKey: "AIzaSyApyC7EXHB-Eo3p7GwU2A3Vcsg6Sn66G80",
+        authDomain: "darulifta-jamshedpur.firebaseapp.com",
+        projectId: "darulifta-jamshedpur",
+        storageBucket: "darulifta-jamshedpur.firebasestorage.app",
+        messagingSenderId: "1041824658718",
+        appId: "1:1041824658718:web:2210744f8ef99118f7050f",
+        measurementId: "G-49457NPB88"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Auth State Listener
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById('login-screen').classList.add('hidden');
+          document.getElementById('main-header').classList.remove('hidden');
+          document.getElementById('app-content').classList.remove('hidden');
+          document.getElementById('user-email-display').textContent = user.email;
+
+          if (user.email.includes('admin') || user.email.includes('nazim')) {
+            document.getElementById('user-badge').textContent = "ناظمِ اعلیٰ";
+            loadAdminPortal(db);
+          } else {
+            document.getElementById('user-badge').textContent = "مفتی صاحب";
+            loadMuftiPortal(db, user.email);
+          }
+        } else {
+          document.getElementById('login-screen').classList.remove('hidden');
+          document.getElementById('main-header').classList.add('hidden');
+          document.getElementById('app-content').classList.add('hidden');
+        }
+      });
+
+      window.handleLogin = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-password').value;
+        try {
+          await signInWithEmailAndPassword(auth, email, pass);
+        } catch (err) {
+          alert("لاگ ان ناکام! ای میل یا پاسورڈ درست نہیں ہے۔");
+        }
+      };
+
+      window.handleLogout = () => signOut(auth);
+
+      window.handleForgotPassword = async () => {
+        const email = prompt("اپنا ای میل درج کریں:");
+        if (email) {
+          try {
+            await sendPasswordResetEmail(auth, email);
+            alert("پاسورڈ ری سیٹ لنک آپ کے ای میل پر بھیج دیا گیا ہے۔");
+          } catch (err) {
+            alert("ای میل تلاش نہیں ہو سکا!");
+          }
+        }
+      };
+
+      window.guestPublicView = () => {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('app-content').classList.remove('hidden');
+        document.getElementById('role-view-container').innerHTML = `
+            <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow border">
+                <h2 class="text-xl font-bold text-emerald-900 mb-4 text-center">عام استفتاء فارم</h2>
+                <p class="text-xs text-slate-500 mb-4 text-center">بغیر لاگ ان کیے اپنا سوال دارالافتاء کو بھیجیں۔</p>
+                <input type="text" id="public-title" placeholder="عنوان" class="w-full border p-2 mb-2 rounded text-sm">
+                <textarea id="public-msg" rows="4" placeholder="تفصیلی سوال..." class="w-full border p-2 mb-3 rounded text-sm"></textarea>
+                <button onclick="submitPublicQuestion()" class="w-full bg-emerald-700 text-white font-bold py-2 rounded">بھیجیں</button>
+            </div>
+        `;
+      };
+
+      async function loadAdminPortal(db) {
+        const container = document.getElementById('role-view-container');
+        container.innerHTML = `<h3 class="text-lg font-bold text-emerald-900 mb-4">ناظم پورٹل - تمام فتاویٰ و تفویض</h3><div id="q-list" class="space-y-3">لوڈنگ...</div>`;
+        
+        try {
+          const qSnap = await getDocs(collection(db, "questions"));
+          let html = '';
+          qSnap.forEach(doc => {
+              const data = doc.data();
+              html += `<div class="bg-white p-4 rounded-xl shadow border flex justify-between items-center">
+                  <div>
+                      <h4 class="font-bold">${data.title || 'بلا عنوان'}</h4>
+                      <p class="text-xs text-slate-500">${data.questionText || ''}</p>
+                  </div>
+                  <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">${data.status || 'Unassigned'}</span>
+              </div>`;
+          });
+          document.getElementById('q-list').innerHTML = html || 'کوئی سوال موجود نہیں ہے۔';
+        } catch(e) {
+          document.getElementById('q-list').innerHTML = 'ڈیٹا لوڈنگ میں مسئلہ آ رہا ہے۔';
+        }
+      }
+
+      async function loadMuftiPortal(db, muftiEmail) {
+        const container = document.getElementById('role-view-container');
+        container.innerHTML = `<h3 class="text-lg font-bold text-emerald-900 mb-4">مفتی ڈیش بورڈ (${muftiEmail})</h3><div id="mufti-q-list" class="space-y-3">لوڈنگ...</div>`;
+
+        try {
+          const q = query(collection(db, "questions"), where("assignedTo", "==", muftiEmail));
+          const qSnap = await getDocs(q);
+          let html = '';
+          qSnap.forEach(doc => {
+              const data = doc.data();
+              html += `<div class="bg-white p-4 rounded-xl shadow border">
+                  <h4 class="font-bold">${data.title}</h4>
+                  <p class="text-xs text-slate-600 my-2">${data.questionText}</p>
+                  <button class="bg-emerald-700 text-white px-3 py-1 text-xs rounded font-bold">جواب لکھیں</button>
+              </div>`;
+          });
+          document.getElementById('mufti-q-list').innerHTML = html || 'آپ کے نام کوئی سوال تفویض نہیں ہے۔';
+        } catch(e) {
+          document.getElementById('mufti-q-list').innerHTML = 'ڈیٹا لوڈنگ میں مسئلہ آ رہا ہے۔';
+        }
+      }
+    </script>
+</body>
+</html>
     </header>
 
     <!-- Main Container -->
