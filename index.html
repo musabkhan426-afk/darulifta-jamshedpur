@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#022c22">
+    <meta name="theme-color" content="#0f172a">
     <title>دارالافتاء جمشیدپور — Digital Ecosystem</title>
 
     <!-- Tailwind CSS CDN -->
@@ -13,28 +13,338 @@
         theme: {
           extend: {
             colors: {
-              brand: {
-                50: '#f0fdf4',
-                100: '#dcfce7',
-                500: '#10b981',
-                800: '#065f46',
-                900: '#064e3b',
-                950: '#022c22',
+              royal: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                800: '#1e40af',
+                900: '#1e3a8a',
+                950: '#0f172a',
               },
-              gold: {
+              amber: {
                 400: '#fbbf24',
                 500: '#f59e0b',
                 600: '#d97706',
               }
-            },
-            fontFamily: {
-              nastaliq: ['Jameel Noori Nastaleeq', 'Noto Naskh Arabic', 'serif'],
-              arabic: ['Amiri', 'serif']
             }
           }
         }
       }
     </script>
+
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+      body, button, input, textarea, select {
+        font-family: 'Jameel Noori Nastaleeq', 'Amiri', serif !important;
+        line-height: 2.1 !important;
+      }
+      .font-sans-eng { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-royal-800 selection:text-white">
+
+    <!-- TOP LIGHT ANNOUNCEMENT BAR -->
+    <div class="bg-slate-900 text-slate-200 py-1.5 px-4 text-xs text-center border-b border-amber-500/30 flex items-center justify-between">
+        <span class="inline-flex items-center gap-2 mx-auto">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            مرکزی علمی و تحقیقاتی پورٹل — دارالافتاء جمشیدپور
+        </span>
+    </div>
+
+    <!-- CLEAN WHITE NAVBAR -->
+    <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.router('home')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-royal-900 to-royal-950 flex items-center justify-center text-amber-400 text-2xl shadow-md border border-amber-500/30">
+                    <i class="fa-solid fa-kaaba"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900 leading-none">دارالافتاء جمشیدپور</h1>
+                    <p class="text-[10px] text-slate-500 font-sans-eng tracking-wider uppercase mt-1">Darul Ifta Jamshedpur • Academic & Research Platform</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+                <button onclick="window.router('istifta')" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl shadow-md transition text-xs">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>سوال پوچھیں</span>
+                </button>
+                <button onclick="window.showLoginModal()" class="bg-royal-900 hover:bg-royal-950 text-white font-bold px-4 py-2 rounded-xl shadow transition text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>لاگ ان</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="bg-slate-100 text-slate-700 text-xs border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap py-1.5 scrollbar-none">
+                <button onclick="window.router('home')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-900 font-bold"><i class="fa-solid fa-house ml-1"></i> ہوم</button>
+                <button onclick="window.router('fatawa')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-800"><i class="fa-solid fa-book-quran ml-1"></i> فتاویٰ لائبریری</button>
+                <button onclick="window.router('library')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-800"><i class="fa-solid fa-book-open ml-1"></i> ڈیجیٹل کتب خانہ</button>
+                <button onclick="window.router('admin')" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-royal-900 font-bold shadow-sm"><i class="fa-solid fa-gauge-high ml-1"></i> ناظم پورٹل</button>
+                <button onclick="window.router('mufti')" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-amber-600 font-bold shadow-sm"><i class="fa-solid fa-user-nib ml-1"></i> مفتی ورک اسپیس</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- DYNAMIC CONTAINER -->
+    <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 relative">
+            <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center space-y-1">
+                <div class="w-14 h-14 rounded-2xl bg-royal-50 text-royal-900 flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">محفوظ پورٹل لاگ ان</h3>
+                <p class="text-xs text-slate-500">ناظمِ دارالافتاء و مفتیانِ کرام کے لیے</p>
+            </div>
+
+            <form id="login-form" class="space-y-3 text-sm">
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
+                   <input type="email" id="login-email" required placeholder="nazim@darulifta.org" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-royal-800 outline-none">
+                </div>
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
+                   <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-royal-800 outline-none">
+                </div>
+                <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded-xl border space-y-1 font-sans-eng">
+                   <b>Demo Login:</b><br>
+                   Nazim: <code class="text-royal-900 font-bold">nazim@darulifta.org</code> | <code class="text-royal-900 font-bold">demo123</code><br>
+                   Mufti: <code class="text-royal-900 font-bold">mufti@darulifta.org</code> | <code class="text-royal-900 font-bold">demo123</code>
+                </div>
+                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-3 rounded-xl shadow-lg transition text-sm">
+                    لاگ ان کریں
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 text-slate-600 text-xs mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="space-y-2">
+                <h4 class="text-base font-bold text-royal-900">دارالافتاء جمشیدپور</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">جدید ٹیکنالوجی اور معتبر فقہ اسلامی کی روشنی میں آن لائن شرعی رہنمائی و تحقیقات۔</p>
+            </div>
+            <div class="space-y-1">
+                <h5 class="text-slate-900 font-bold text-sm">رابطہ</h5>
+                <p>جمشیدپور، جھارکھنڈ، ہند</p>
+                <p class="text-royal-800 font-sans-eng">contact@darulifta-jamshedpur.org</p>
+            </div>
+            <div class="space-y-1">
+                <h5 class="text-slate-900 font-bold text-sm">شرعی انتباہ</h5>
+                <p class="text-slate-400 text-[11px]">آن لائن مواد عمومی علمی رہنمائی کے لیے ہے، باضابطہ فتویٰ کے لیے ادارے سے رجوع فرمائیں۔</p>
+            </div>
+        </div>
+        <div class="bg-slate-100 py-3 text-center text-slate-500 text-[11px] border-t border-slate-200">
+            © 2026 دارالافتاء جمشیدپور | Digital Institutional Ecosystem
+        </div>
+    </footer>
+
+    <!-- JS ENGINE -->
+    <script>
+      const state = {
+        currentUser: null,
+        questions: [
+          {
+            id: 'DIF-1448-001',
+            askerName: 'Sample Asker A',
+            phone: '+91 9876543210',
+            source: 'آن لائن ویب سائٹ',
+            title: 'آن لائن تجارتی معاہدوں میں ایڈوانس رقم (Advance Booking) کا حکم',
+            questionText: 'کیا آن لائن آرڈر منسوخ کرنے پر ایڈوانس رقم ضبط کی جا سکتی ہے؟ شرعی رہنمائی فرمائیں۔',
+            status: 'جواب شدہ',
+            assignedTo: 'mufti@darulifta.org',
+            answerText: 'الجواب وباللہ التوفیق: اگر فریقین نے معاہدے کے وقت یہ شرط طے کی تھی تو معاصر فقہی فیصلوں کی روشنی میں گنجائش موجود ہے۔',
+            createdAt: '2026-08-20'
+          },
+          {
+            id: 'DIF-1448-002',
+            askerName: 'Sample Asker B',
+            phone: '+91 9123456789',
+            source: 'واٹس ایپ (WhatsApp)',
+            title: 'زکوۃ کی رقم سے ہسپتال کے لیے طبی آلات خریدنا',
+            questionText: 'کیا زکوۃ کی رقم سے غریب بیمارات کے علاج کے لیے ہسپتال کو مشینری فراہم کی جا سکتی ہے؟',
+            status: 'زیرِ تحقیق',
+            assignedTo: 'mufti@darulifta.org',
+            answerText: '',
+            createdAt: '2026-08-21'
+          }
+        ]
+      };
+
+      window.router = (view) => {
+        const app = document.getElementById('app-view');
+        window.scrollTo(0, 0);
+
+        if (view === 'home') renderHome(app);
+        else if (view === 'istifta') renderIstifta(app);
+        else if (view === 'fatawa') renderFatawa(app);
+        else if (view === 'library') renderLibrary(app);
+        else if (view === 'admin') renderAdmin(app);
+        else if (view === 'mufti') renderMufti(app);
+        else renderHome(app);
+      };
+
+      window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
+      window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
+
+      document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        if(email.includes('nazim')) {
+          state.currentUser = { name: 'Sample Nazim', email, role: 'NAZIM' };
+        } else {
+          state.currentUser = { name: 'Sample Mufti', email, role: 'MUFTI' };
+        }
+        window.hideLoginModal();
+        window.router(state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti');
+      });
+
+      // HOME VIEW
+      function renderHome(c) {
+        c.innerHTML = `
+          <!-- HERO SECTION -->
+          <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-royal-950 via-royal-900 to-slate-900 text-white p-8 md:p-12 shadow-xl border border-slate-200">
+             <div class="max-w-2xl space-y-4 relative z-10">
+                <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/30">ڈیجیٹل افتاء و تحقیقاتی پورٹل</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-amber-400 leading-snug">دارالافتاء جمشیدپور</h2>
+                <p class="text-sm md:text-base text-slate-200">قرآن و سنت اور معتبر فقہ اسلامی کی روشنی میں آن لائن سوالات کے جوابات، فتاویٰ آرکائیو اور تحقیقاتی لائبریری۔</p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                   <button onclick="window.router('istifta')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl shadow-lg text-xs transition">
+                     آن لائن سوال پوچھیں ➔
+                   </button>
+                   <button onclick="window.router('fatawa')" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-2.5 rounded-xl text-xs border border-white/20 transition">
+                     سابقہ فتاویٰ تلاش کریں
+                   </button>
+                </div>
+             </div>
+          </div>
+
+          <!-- METRICS -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-royal-800 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-file-circle-check"></i></div>
+                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'جواب شدہ').length}</div>
+                <div class="text-xs text-slate-500">مصدقہ فتاویٰ</div>
+             </div>
+             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-clock"></i></div>
+                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'زیرِ تحقیق').length}</div>
+                <div class="text-xs text-slate-500">زیرِ تحقیق سوالات</div>
+             </div>
+             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-book"></i></div>
+                <div class="text-2xl font-bold text-slate-900 font-sans-eng">1,250+</div>
+                <div class="text-xs text-slate-500">ڈیجیٹل کتب</div>
+             </div>
+             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="text-2xl font-bold text-slate-900 font-sans-eng">100%</div>
+                <div class="text-xs text-slate-500">محفوظ پورٹل</div>
+             </div>
+          </div>
+        `;
+      }
+
+      // ONLINE ISTIFTA VIEW
+      function renderIstifta(c) {
+        c.innerHTML = `
+          <div class="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+             <div class="text-center space-y-1 border-b pb-4">
+                <h2 class="text-2xl font-bold text-royal-950">آن لائن استفتاء فارم</h2>
+                <p class="text-xs text-slate-500">دارالافتاء جمشیدپور کے مفتیانِ کرام سے شرعی مسئلہ دریافت کریں</p>
+             </div>
+
+             <form id="public-istifta-form" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا اسمِ گرامی</label>
+                      <input type="text" id="q-name" required placeholder="نام درج کریں" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
+                   </div>
+                   <div>
+                      <label class="block text-xs font-bold text-slate-700 mb-1">موبائل / واٹس ایپ نمبر</label>
+                      <input type="text" id="q-phone" placeholder="+91 0000000000" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
+                   </div>
+                </div>
+
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا ذریعہ (Source)</label>
+                   <select id="q-source" class="w-full border border-slate-300 p-3 rounded-xl text-sm bg-white outline-none">
+                       <option value="آن لائن ویب سائٹ">آن لائن ویب سائٹ</option>
+                       <option value="واٹس ایپ (WhatsApp)">واٹس ایپ (WhatsApp)</option>
+                       <option value="ای میل (Email)">ای میل (Email)</option>
+                   </select>
+                </div>
+
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا عنوان</label>
+                   <input type="text" id="q-title" required placeholder="مثال: آن لائن خرید و فروخت کا حکم" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
+                </div>
+
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">تفصیلی سوال</label>
+                   <textarea id="q-text" rows="5" required placeholder="اپنا مسئلہ مکمل تفصیل کے ساتھ تحریر کریں..." class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg transition">
+                   سوال ارسال کریں ➔
+                </button>
+             </form>
+          </div>
+        `;
+
+        document.getElementById('public-istifta-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newQ = {
+            id: `DIF-1448-00${state.questions.length + 1}`,
+            askerName: document.getElementById('q-name').value,
+            phone: document.getElementById('q-phone').value,
+            source: document.getElementById('q-source').value,
+            title: document.getElementById('q-title').value,
+            questionText: document.getElementById('q-text').value,
+            status: 'نیا سوال',
+            assignedTo: '',
+            answerText: '',
+            createdAt: '2026-08-22'
+          };
+          state.questions.push(newQ);
+          alert(`آپ کا سوال کامیابی سے موصول ہو گیا۔ استفتاء نمبر: ${newQ.id}`);
+          window.router('home');
+        });
+      }
+
+      // FATAWA ARCHIVE VIEW
+      function renderFatawa(c) {
+        c.innerHTML = `
+          <div class="space-y-4">
+             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">فتاویٰ لائبریری و آرکائیو</h2>
+             <div class="grid grid-cols-1 gap-4">
+                ${state.questions.map(q => `
+                   <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                      <div class="flex justify-between items-center">
+                         <span class="text-xs font-bold text-royal-900 bg-royal-50 px-3 py-1 rounded-full font-sans-eng border border-royal-200">${q.id}</span>
+                         <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${q.status === 'جواب شدہ' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${q.status}</span>
+                      </div>
+                      <h3 class="text-xl font-bold text-slate-900">${q.title}</h3>
+                      <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-700"><b>سوال:</b> ${q.questionText}</div>
+                      ${q.answerText ? `<div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100 text-sm text-slate-800"><b>الجواب وباللہ التوفیق:</b><br>${q.answerText}</div>` : ''}
+                   </div>
+                `).join('')}
+             </div>
+          </div>
+         </script>
 
     <!-- Fonts & FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
