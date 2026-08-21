@@ -1,40 +1,339 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="ur" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دارالافتاء جمشیدپور - آن لائن محفوظ پورٹل</title>
+    <meta name="theme-color" content="#064e3b">
+    <meta name="description" content="دارالافتاء جمشیدپور - Digital Darul Ifta Management, Research & Library Platform">
+    <title>دارالافتاء جمشیدپور — Digital Darul Ifta Platform</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              islamic: { 950: '#042f2e', 900: '#064e3b', 800: '#065f46', 100: '#ecfdf5' },
+              gold: { 600: '#d97706', 500: '#f59e0b', 400: '#fbbf24', 100: '#fef3c7' }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Jameel Noori Nastaleeq Font -->
     <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Web Application Manifest for PWA -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIjg0ODQwNjU4NCIsCiAgInNob3J0X25hbWUiOiAiRGFydWxJZnRhS1NBIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwNjRlM2IiLAogICJ0aGVtZV9jb2xvciI6ICIjMDY0ZTNiIgp9">
+
     <style>
-      body, button, input, textarea, select { 
-        font-family: 'Jameel Noori Nastaleeq', 'Noto Naskh Arabic', serif !important; 
-        line-height: 2.2 !important;
+      body, button, input, textarea, select {
+        font-family: 'Jameel Noori Nastaleeq', 'Noto Naskh Arabic', serif !important;
+        line-height: 2.1 !important;
       }
-      h1, h2, h3, h4, h5, h6 {
-        line-height: 1.8 !important;
-      }
+      .font-arabic { font-family: 'Amiri', 'Noto Naskh Arabic', serif !important; }
+      .font-sans-eng { font-family: system-ui, -apple-system, sans-serif !important; }
       @media print {
-        body * { visibility: hidden !important; }
-        #print-area, #print-area * { visibility: visible !important; }
-        #print-area { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; margin: 0 !important; padding: 20px !important; }
         .no-print { display: none !important; }
+        #print-content { display: block !important; }
       }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-urdu">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
-    <!-- LOGIN MODAL / SCREEN -->
-    <div id="login-screen" class="fixed inset-0 bg-slate-900 bg-opacity-95 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-emerald-800">
+    <!-- GLOBAL TOP BAR & NAVIGATION -->
+    <header class="bg-islamic-950 text-white border-b-2 border-gold-500 sticky top-0 z-50 shadow-xl no-print">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="window.router('home')">
+                <div class="w-11 h-11 rounded-full bg-gold-500/10 border border-gold-500/40 flex items-center justify-center text-gold-400 text-xl font-bold">
+                    <i class="fa-solid fa-kaaba"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gold-400 leading-tight">دارالافتاء جمشیدپور</h1>
+                    <p class="text-[10px] text-emerald-200/80 font-sans-eng tracking-wider">DARUL IFTA JAMSHEDPUR | دار الإفتاء جمشيدبور</p>
+                </div>
+            </div>
+
+            <!-- Language & Portal Auth Controls -->
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex bg-islamic-900 rounded-lg p-1 text-xs border border-emerald-800/80 font-sans-eng">
+                    <button class="px-2.5 py-0.5 rounded bg-gold-500 text-slate-950 font-bold">اردو</button>
+                    <button class="px-2.5 py-0.5 rounded hover:bg-emerald-800 text-emerald-200 font-arabic">العربية</button>
+                    <button class="px-2.5 py-0.5 rounded hover:bg-emerald-800 text-emerald-200">EN</button>
+                </div>
+
+                <div id="auth-nav-container">
+                    <button onclick="window.showLoginModal()" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-lock"></i> <span>پورٹل لاگ ان</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN MENU NAVBAR -->
+        <nav class="bg-islamic-900 border-t border-emerald-800/60 text-xs">
+            <div class="max-w-7xl mx-auto px-4 flex items-center justify-between overflow-x-auto whitespace-nowrap scrollbar-none py-1">
+                <div class="flex space-x-1 space-x-reverse">
+                    <button onclick="window.router('home')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100 font-bold"><i class="fa-solid fa-house ml-1"></i>ہوم</button>
+                    <button onclick="window.router('about')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">تعارف</button>
+                    <button onclick="window.router('manhaj')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">منہج و طریقۂ کار</button>
+                    <button onclick="window.router('fatawa')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">فتاویٰ لائبریری</button>
+                    <button onclick="window.router('istifta')" class="px-3 py-1 rounded bg-gold-500/20 text-gold-400 font-bold hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-pen-nib ml-1"></i>سوال پوچھیں</button>
+                    <button onclick="window.router('muftis')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">مفتیانِ کرام</button>
+                    <button onclick="window.router('library')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">ڈیجیٹل کتب خانہ</button>
+                    <button onclick="window.router('future')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">آئندہ کے عزائم</button>
+                    <button onclick="window.router('contact')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">رابطہ</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- DYNAMIC CONTAINER -->
+    <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 no-print">
+        <!-- Views automatically render here via JS -->
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-islamic-900 relative">
+            <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center">
-                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64?text=دارالافتاء'">
+                <div class="w-12 h-12 rounded-full bg-emerald-100 text-islamic-900 flex items-center justify-center mx-auto mb-2 text-xl font-bold">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xl font-bold text-islamic-950">محفوظ پورٹل لاگ ان</h3>
+                <p class="text-xs text-slate-500">ناظمِ دارالافتاء، مفتیانِ کرام اور ریسرچ اسکالرز کے لیے</p>
+            </div>
+
+            <form id="login-form" class="space-y-3 text-sm">
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
+                   <input type="email" id="login-email" required placeholder="mufti@darulifta.org" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-islamic-800 outline-none">
+                </div>
+                <div>
+                   <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
+                   <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-islamic-800 outline-none">
+                </div>
+                <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
+                   <b>ڈیمو کریڈنشیلز:</b><br>
+                   ناظم: <code class="text-emerald-800 font-bold">nazim@darulifta.org</code> | پاسورڈ: <code class="text-emerald-800 font-bold">demo123</code><br>
+                   مفتی: <code class="text-emerald-800 font-bold">mufti@darulifta.org</code> | پاسورڈ: <code class="text-emerald-800 font-bold">demo123</code>
+                </div>
+                <button type="submit" class="w-full bg-islamic-900 hover:bg-islamic-950 text-white font-bold py-2.5 rounded-lg shadow transition">
+                    لاگ ان کریں
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRINT VIEW AREA FOR OFFICIAL FATWA PDF GENERATION -->
+    <div id="print-view" class="hidden p-8 max-w-4xl mx-auto bg-white border-2 border-emerald-950 text-slate-900">
+        <!-- Rendered on Print Demand -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-islamic-950 text-emerald-200 border-t-4 border-gold-500 mt-12 no-print text-xs">
+        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="space-y-2">
+                <h4 class="text-gold-400 font-bold text-base">دارالافتاء جمشیدپور</h4>
+                <p class="text-slate-300 text-xs leading-relaxed">قرآن و سنت، آثارِ صحابہ اور معتبر فقہ اسلامی کی روشنی میں مستند شرعی رہنمائی و تحقیقاتی ڈیجیٹل پلیٹ فارم۔</p>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-2">اہم روابط</h5>
+                <ul class="space-y-1 text-slate-300">
+                    <li><a href="#" onclick="window.router('about')" class="hover:text-gold-400">ہمارا تعارف</a></li>
+                    <li><a href="#" onclick="window.router('manhaj')" class="hover:text-gold-400">منہجِ دارالافتاء</a></li>
+                    <li><a href="#" onclick="window.router('library')" class="hover:text-gold-400">کتب خانہ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-2">شرعی انتباہ</h5>
+                <p class="text-slate-400 text-[11px] leading-normal">آن لائن دستیاب مواد عمومی علمی و تحقیقی رہنمائی کے لیے ہے۔ کسی مخصوص شخص یا انفرادی صورتِ حال میں حتمی شرعی حکم کے لیے دارالافتاء سے براہ راست رجوع فرمائیں۔</p>
+            </div>
+            <div>
+                <h5 class="text-white font-bold mb-2">مرکزی دفتر</h5>
+                <p class="text-slate-300">جمشیدپور، جھارکھنڈ، ہند</p>
+                <p class="text-gold-400 font-mono mt-1">contact@darulifta-jamshedpur.org</p>
+            </div>
+        </div>
+        <div class="bg-black/30 py-3 text-center text-slate-400 border-t border-emerald-900/60">
+            © 2026 دارالافتاء جمشیدپور | تمام حقوق بحقِ ادارہ محفوظ ہیں۔
+        </div>
+    </footer>
+
+    <!-- CORE LOGIC & SPA ROUTER MODULE -->
+    <script>
+      // 1. STATE & SEED DATA (CLEARLY LABELLED SAMPLE DATA)
+      const state = {
+        currentUser: null, // { name, email, role: 'NAZIM' | 'MUFTI' | 'USER' }
+        questions: [
+          {
+            id: 'DIF-JSR-2026-0001',
+            askerName: 'Sample User A',
+            phone: '+91 9876543210',
+            source: 'آن لائن فارم (ویب سائٹ)',
+            title: 'Sample Question: آن لائن تجارت میں بیع بیع العربون کا حکم',
+            questionText: 'کیا آن لائن آرڈر منسوخ کرنے پر ایڈوانس رقم ضبط کی جا سکتی ہے؟ براہ کرم شرعی رہنمائی فرمائیں۔',
+            status: 'جواب شدہ',
+            assignedTo: 'mufti@darulifta.org',
+            answerText: 'الجواب وباللہ التوفیق: اگر فریقین نے معاہدے کے وقت یہ شرط طے کی تھی تو فقہ حنفی اور معاصر فقہی فیصلوں کی روشنی میں گنجائش موجود ہے...',
+            createdAt: '2026-08-20'
+          },
+          {
+            id: 'DIF-JSR-2026-0002',
+            askerName: 'Sample User B',
+            phone: '+91 9123456789',
+            source: 'واٹس ایپ (WhatsApp)',
+            title: 'Sample Question: زکوۃ کی رقم سے ہسپتال کے لیے آلات خریدنا',
+            questionText: 'کیا زکوۃ کی رقم سے غریب بیمارات کے علاج کے لیے ہسپتال کو مشینری فراہم کی جا سکتی ہے؟',
+            status: 'زیرِ تحقیق',
+            assignedTo: 'mufti@darulifta.org',
+            answerText: '',
+            createdAt: '2026-08-21'
+          }
+        ],
+        books: [
+          { title: 'Sample Book: الہدایۃ شرح بداية المبتدي', author: 'المرغيناني', category: 'فقہ حنفی', volumes: 4, notebooklmUrl: 'https://notebooklm.google.com' },
+          { title: 'Sample Book: رد المحتار علي الدر المختار', author: 'ابن عابدين الشامي', category: 'فتاویٰ', volumes: 12, notebooklmUrl: '' }
+        ]
+      };
+
+      // 2. ROUTER & AUTH HANDLERS
+      window.router = (view) => {
+        const app = document.getElementById('app-view');
+        window.scrollTo(0, 0);
+
+        switch(view) {
+          case 'home': renderHome(app); break;
+          case 'about': renderAbout(app); break;
+          case 'manhaj': renderManhaj(app); break;
+          case 'istifta': renderIstifta(app); break;
+          case 'fatawa': renderFatawa(app); break;
+          case 'library': renderLibrary(app); break;
+          case 'future': renderFuture(app); break;
+          case 'contact': renderContact(app); break;
+          case 'admin': renderAdminDashboard(app); break;
+          case 'mufti': renderMuftiDashboard(app); break;
+          default: renderHome(app);
+        }
+      };
+
+      window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
+      window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
+
+      document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        if(email.includes('nazim')) {
+          state.currentUser = { name: 'Sample Nazim', email, role: 'NAZIM' };
+        } else {
+          state.currentUser = { name: 'Sample Mufti', email, role: 'MUFTI' };
+        }
+        window.hideLoginModal();
+        updateAuthNav();
+        window.router(state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti');
+      });
+
+      function updateAuthNav() {
+        const container = document.getElementById('auth-nav-container');
+        if (state.currentUser) {
+          container.innerHTML = `
+            <div class="flex items-center gap-2">
+              <button onclick="window.router('${state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti'}')" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1">
+                <i class="fa-solid fa-gauge"></i> <span>${state.currentUser.role === 'NAZIM' ? 'ناظم پورٹل' : 'مفتی ورک اسپیس'}</span>
+              </button>
+              <button onclick="window.logout()" class="bg-red-700 hover:bg-red-800 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg">
+                <i class="fa-solid fa-power-off"></i>
+              </button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <button onclick="window.showLoginModal()" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
+                <i class="fa-solid fa-user-lock"></i> <span>پورٹل لاگ ان</span>
+            </button>
+          `;
+        }
+      }
+
+      window.logout = () => {
+        state.currentUser = null;
+        updateAuthNav();
+        window.router('home');
+      };
+
+      // 3. VIEWS IMPLEMENTATION
+      function renderHome(c) {
+        c.innerHTML = `
+          <!-- HERO SECTION -->
+          <div class="bg-gradient-to-br from-islamic-950 via-islamic-900 to-islamic-950 text-white rounded-3xl p-8 md:p-12 shadow-2xl border border-emerald-800/60 text-center relative overflow-hidden mb-8">
+             <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+                <span class="bg-gold-500/20 text-gold-400 text-xs px-3.5 py-1 rounded-full border border-gold-500/40 font-bold">باقاعدہ ڈیجیٹل افتاء، تحقیق و ادارہ جاتی پورٹل</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-gold-400 leading-snug">دارالافتاء جمشیدپور</h2>
+                <p class="text-base md:text-lg text-emerald-100 font-arabic">قرآن و سنت اور فقہ اسلامی کی روشنی میں مستند شرعی رہنمائی</p>
+
+                <div class="flex flex-wrap justify-center gap-3 pt-4">
+                   <button onclick="window.router('istifta')" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-sm shadow-lg transition">
+                     <i class="fa-solid fa-paper-plane ml-1"></i> آن لائن سوال پوچھیں
+                   </button>
+                   <button onclick="window.router('fatawa')" class="bg-islamic-800 hover:bg-islamic-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow border border-emerald-600 transition">
+                     سابقہ فتاویٰ تلاش کریں
+                   </button>
+                </div>
+             </div>
+          </div>
+
+          <!-- DYNAMIC STATS -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">${state.questions.filter(q => q.status === 'جواب شدہ').length}</div>
+                <div class="text-xs text-slate-500">جاری شدہ فتاویٰ</div>
+             </div>
+             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <div class="text-2xl font-bold text-gold-600 font-sans-eng">2025</div>
+                <div class="text-xs text-slate-500">سالِ قیام (سیمینار)</div>
+             </div>
+             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">${state.books.length}</div>
+                <div class="text-xs text-slate-500">کتب خانہ (ذیلی جلدیں)</div>
+             </div>
+             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
+                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">3</div>
+                <div class="text-xs text-slate-500">زبانیں (اردو/عربی/انگریزی)</div>
+             </div>
+          </div>
+        `;
+      }
+
+      function renderAbout(c) {
+        c.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 space-y-6">
+             <h2 class="text-2xl font-bold text-islamic-950 border-b pb-3">دارالافتاء جمشیدپور — قیام کا پس منظر و تعارف</h2>
+             <div class="prose max-w-none text-slate-700 leading-relaxed space-y-4">
+                <p>اسلامک فقہ اکیڈمی انڈیا کے 34ویں فقہی سیمینار (منعقدہ 8 نومبر 2025ء بمقام عجوہ سٹی سینٹر، جمشیدپور) کے موقع پر خطے میں ایک منظم، مستند اور ڈیجیٹل صلاحیتوں سے لیس دارالافتاء کی ضرورت کو محسوس کرتے ہوئے اس ادارے کی بنیاد رکھی گئی۔</p>
+                <h3 class="text-lg font-bold text-islamic-900">بنیادی مقاصد:</h3>
+                <ul class="list-disc list-inside space-y-1">
+                   <li>عوام و خواص کی شرعی مسائل میں صحیح، معتبر اور مستند رہنمائی۔</li>
+                   <li>جدید معاشی، طبی اور معاشرتی مسائل پر اکابرین و معاصر فقہاء کی روشنی میں تحریر و تحقیق۔</li>
+                   <li>آن لائن استفتاء اور ڈیجیٹل آرکائیو کے ذریعے افتائی نظام کو ہر فرد کے لیے قابلِ رسائی بنانا۔</li>
+                </ul>
+             </div>
+          </div>
+        `;
+      }
+
+      function renderManhaj(c) {
+        c.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 space-y-6">
+             <h2 class="text-2xl font-bold text-islamic-950 border-b pb-3">منہج و طریقۂ کار</h2>
+             <p class="text-slate-600">دارالافتاء جمشیدپور میں تمام شرعی و فقہی جوابات مندرجہ ذیل طے شدہ معتبر ترتیب کے مطابق تیار کیے جاتے ہیں:</p>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50/80 p-4 rounded-xl border border-emerald-200 font-bold text-islamic-900">1. قرآن کریم و سنتِ نب                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64?text=دارالافتاء'">
                 <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور</h2>
                 <p class="text-sm text-slate-500 mt-1">لاگ ان کریں (مفتی / ناظم پورٹل)</p>
             </div>
