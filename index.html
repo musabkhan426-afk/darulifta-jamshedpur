@@ -8,15 +8,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Jameel Noori Nastaleeq Font -->
+    <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
     
     <style>
-      body { font-family: 'Noto Naskh Arabic', 'Amiri', serif; }
+      body, button, input, textarea, select { 
+        font-family: 'Jameel Noori Nastaleeq', 'Noto Naskh Arabic', serif !important; 
+        line-height: 2.2 !important;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        line-height: 1.8 !important;
+      }
       @media print {
         body * { visibility: hidden !important; }
-        #print-certificate, #print-certificate * { visibility: visible !important; }
-        #print-certificate { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; margin: 0 !important; padding: 20px !important; }
+        #print-area, #print-area * { visibility: visible !important; }
+        #print-area { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; margin: 0 !important; padding: 20px !important; }
         .no-print { display: none !important; }
       }
     </style>
@@ -27,13 +34,343 @@
     <div id="login-screen" class="fixed inset-0 bg-slate-900 bg-opacity-95 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-emerald-800">
             <div class="text-center">
-                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64'">
-                <h2 class="text-xl font-bold text-emerald-900">دارالافتاء جمشیدپور</h2>
-                <p class="text-xs text-slate-500 mt-1">لاگ ان کریں (مفتی / ناظم پورٹل)</p>
+                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64?text=دارالافتاء'">
+                <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور</h2>
+                <p class="text-sm text-slate-500 mt-1">لاگ ان کریں (مفتی / ناظم پورٹل)</p>
             </div>
 
-            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-3 text-sm">
+            <form id="login-form" onsubmit="window.handleLogin(event)" class="space-y-3 text-sm">
                 <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
+                    <input type="email" id="login-email" required placeholder="mufti@darulifta.com" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">پاسورڈ</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <button type="submit" id="btn-login" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg shadow transition text-lg">
+                    لاگ ان کریں
+                </button>
+            </form>
+
+            <div class="flex items-center justify-between text-sm pt-2 border-t">
+                <button onclick="window.handleForgotPassword()" class="text-emerald-700 font-semibold hover:underline">پاسورڈ بھول گئے؟</button>
+                <button onclick="window.guestPublicView()" class="text-slate-500 hover:underline">عام استفتاء بھیجیں ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header id="main-header" class="bg-emerald-900 text-white shadow-lg sticky top-0 z-40 no-print hidden">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <h1 class="text-xl font-bold">دارالافتاء جمشیدپور</h1>
+                <span id="user-badge" class="bg-amber-500 text-slate-900 text-xs px-2 py-0.5 rounded font-bold">--</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+                <span id="user-email-display" class="hidden sm:inline text-emerald-200"></span>
+                <button onclick="window.handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold">
+                    <i class="fa-solid fa-right-from-bracket"></i> لاگ آؤٹ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="app-content" class="flex-grow max-w-7xl w-full mx-auto p-4 no-print hidden">
+        <div id="role-view-container">
+            <!-- Dynamic Content Load Here -->
+        </div>
+    </main>
+
+    <!-- PRINT SECTION -->
+    <div id="print-area" class="hidden"></div>
+
+    <!-- Firebase SDK Modular -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      // Firebase Configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyApyC7EXHB-Eo3p7GwU2A3Vcsg6Sn66G80",
+        authDomain: "darulifta-jamshedpur.firebaseapp.com",
+        projectId: "darulifta-jamshedpur",
+        storageBucket: "darulifta-jamshedpur.firebasestorage.app",
+        messagingSenderId: "1041824658718",
+        appId: "1:1041824658718:web:2210744f8ef99118f7050f",
+        measurementId: "G-49457NPB88"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Auth Listener
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById('login-screen').classList.add('hidden');
+          document.getElementById('main-header').classList.remove('hidden');
+          document.getElementById('app-content').classList.remove('hidden');
+          document.getElementById('user-email-display').textContent = user.email;
+
+          if (user.email.includes('nazim') || user.email.includes('admin')) {
+            document.getElementById('user-badge').textContent = "ناظمِ اعلیٰ";
+            loadAdminPortal();
+          } else {
+            document.getElementById('user-badge').textContent = "مفتی صاحب";
+            loadMuftiPortal(user.email);
+          }
+        } else {
+          document.getElementById('login-screen').classList.remove('hidden');
+          document.getElementById('main-header').classList.add('hidden');
+          document.getElementById('app-content').classList.add('hidden');
+        }
+      });
+
+      // Login Function
+      window.handleLogin = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-password').value;
+        const btn = document.getElementById('btn-login');
+        btn.innerText = "لاگ ان ہو رہا ہے...";
+        try {
+          await signInWithEmailAndPassword(auth, email, pass);
+        } catch (err) {
+          alert("لاگ ان میں غلطی! ای میل یا پاسورڈ درست نہیں ہے۔");
+        } finally {
+          btn.innerText = "لاگ ان کریں";
+        }
+      };
+
+      // Logout Function
+      window.handleLogout = () => signOut(auth);
+
+      // Forgot Password
+      window.handleForgotPassword = async () => {
+        const email = prompt("اپنا ای میل درج کریں:");
+        if (email) {
+          try {
+            await sendPasswordResetEmail(auth, email);
+            alert("پاسورڈ ری سیٹ کا لنک ای میل پر بھیج دیا گیا ہے۔");
+          } catch (err) {
+            alert("ای میل تلاش نہیں ہو سکا!");
+          }
+        }
+      };
+
+      // Public Question Form View
+      window.guestPublicView = () => {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('app-content').classList.remove('hidden');
+        document.getElementById('role-view-container').innerHTML = `
+            <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow border">
+                <h2 class="text-2xl font-bold text-emerald-900 mb-2 text-center">عام استفتاء فارم</h2>
+                <p class="text-sm text-slate-500 mb-4 text-center">دارالافتاء جمشیدپور کو اپنا سوال ارسال فرمائیں۔</p>
+                <div class="space-y-3">
+                    <input type="text" id="q-name" placeholder="آپ کا نام" class="w-full border p-2.5 rounded-lg text-base">
+                    <input type="text" id="q-phone" placeholder="موبائل نمبر / واٹس ایپ" class="w-full border p-2.5 rounded-lg text-base">
+                    
+                    <div>
+                      <label class="block text-sm font-bold text-slate-700 mb-1">سوال موصول ہونے کا ذریعہ:</label>
+                      <select id="q-source" class="w-full border p-2.5 rounded-lg text-base bg-white">
+                          <option value="آن لائن فارم (ویب سائٹ)">آن لائن فارم (ویب سائٹ)</option>
+                          <option value="واٹس ایپ (WhatsApp)">واٹس ایپ (WhatsApp)</option>
+                          <option value="ای میل (Email)">ای میل (Email)</option>
+                          <option value="گوگل فارم (Google Form)">گوگل فارم (Google Form)</option>
+                          <option value="دستی / ڈاک (Manual / Post)">دستی / ڈاک (Manual / Post)</option>
+                      </select>
+                    </div>
+
+                    <input type="text" id="q-title" placeholder="سوال کا عنوان (مثال: نماز کے احکام)" class="w-full border p-2.5 rounded-lg text-base">
+                    <textarea id="q-text" rows="4" placeholder="تفصیلی سوال یہاں لکھیں..." class="w-full border p-2.5 rounded-lg text-base"></textarea>
+                    
+                    <button onclick="window.submitQuestion()" id="btn-submit-q" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg transition text-lg">
+                        سوال بھیجیں ➔
+                    </button>
+                    <button onclick="location.reload()" class="w-full bg-slate-200 text-slate-700 text-sm py-2 rounded-lg">واپس لاگ ان اسکرین</button>
+                </div>
+            </div>
+        `;
+      };
+
+      // Submit Question Function
+      window.submitQuestion = async () => {
+        const name = document.getElementById('q-name').value;
+        const phone = document.getElementById('q-phone').value;
+        const source = document.getElementById('q-source').value;
+        const title = document.getElementById('q-title').value;
+        const text = document.getElementById('q-text').value;
+        const btn = document.getElementById('btn-submit-q');
+
+        if(!title || !text) {
+          alert("برائے مہربانی عنوان اور سوال مکمل لکھیں۔");
+          return;
+        }
+
+        btn.innerText = "ارسال ہو رہا ہے...";
+        try {
+          await addDoc(collection(db, "questions"), {
+            askerName: name || "گمنام",
+            phone: phone || "",
+            source: source || "آن لائن فارم",
+            title: title,
+            questionText: text,
+            status: "نیا سوال",
+            assignedTo: "",
+            answerText: "",
+            createdAt: serverTimestamp()
+          });
+          alert("آپ کا سوال کامیابی کے ساتھ موصول ہو گیا ہے!");
+          location.reload();
+        } catch (e) {
+          alert("سوال بھیجنے میں خرابی ہوئی، دوبارہ کوشش کریں۔");
+          btn.innerText = "سوال بھیجیں ➔";
+        }
+      };
+
+      // Load Admin Portal
+      async function loadAdminPortal() {
+        const container = document.getElementById('role-view-container');
+        container.innerHTML = `
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-emerald-900"><i class="fa-solid fa-list-check"></i> ناظم پورٹل - تمام سوالات و تفویض</h3>
+            <button onclick="window.guestPublicView()" class="bg-emerald-700 text-white text-sm px-3 py-2 rounded-lg font-bold"><i class="fa-solid fa-plus"></i> نیا سوال خود درج کریں</button>
+          </div>
+          <div id="admin-questions-list" class="space-y-4">لوڈنگ ہو رہی ہے...</div>
+        `;
+
+        try {
+          const qSnap = await getDocs(collection(db, "questions"));
+          let html = '';
+          if(qSnap.empty) {
+            container.querySelector('#admin-questions-list').innerHTML = '<div class="bg-white p-6 rounded-xl text-center text-slate-500">کوئی سوال موصول نہیں ہوا ہے۔</div>';
+            return;
+          }
+
+          qSnap.forEach(docSnap => {
+            const data = docSnap.data();
+            const id = docSnap.id;
+            html += `
+              <div class="bg-white p-4 rounded-xl shadow border space-y-3">
+                <div class="flex justify-between items-start border-b pb-2">
+                  <div>
+                    <h4 class="font-bold text-emerald-900 text-lg">${data.title}</h4>
+                    <p class="text-sm text-slate-500">سائل: ${data.askerName} (${data.phone || 'نمبر نہیں ہے'})</p>
+                    <span class="inline-block mt-1 bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded border border-slate-300">
+                      <i class="fa-solid fa-share-nodes"></i> ذریعہ: <b>${data.source || 'آن لائن فارم'}</b>
+                    </span>
+                  </div>
+                  <span class="text-xs font-bold px-2 py-1 rounded ${data.status === 'جواب شدہ' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}">${data.status}</span>
+                </div>
+                <p class="text-base text-slate-700 bg-slate-50 p-3 rounded-lg">${data.questionText}</p>
+
+                ${data.answerText ? `<div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200"><h5 class="font-bold text-sm text-emerald-900 mb-1">فتویٰ / جواب:</h5><p class="text-base text-slate-800">${data.answerText}</p></div>` : ''}
+
+                <div class="flex flex-wrap gap-2 items-center text-sm pt-1">
+                  <span class="font-bold">تفویض برائے مفتی:</span>
+                  <input type="email" id="assign-email-${id}" value="${data.assignedTo || ''}" placeholder="مفتی کا ای میل" class="border p-1.5 rounded w-48">
+                  <button onclick="window.assignQuestion('${id}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded font-bold">تفویض کریں</button>
+                </div>
+              </div>
+            `;
+          });
+          document.getElementById('admin-questions-list').innerHTML = html;
+        } catch(e) {
+          document.getElementById('admin-questions-list').innerHTML = '<div class="text-red-500 font-bold">ڈیٹا لوڈ کرنے میں ناکامی! Firestore Rules یا کنکشن چیک کریں۔</div>';
+        }
+      }
+
+      // Assign Question to Mufti
+      window.assignQuestion = async (docId) => {
+        const email = document.getElementById(`assign-email-${docId}`).value;
+        if(!email) { alert("مفتی صاحب کا ای میل درج کریں!"); return; }
+
+        try {
+          const qRef = doc(db, "questions", docId);
+          await updateDoc(qRef, {
+            assignedTo: email,
+            status: "مفتی کو منتقل شدہ"
+          });
+          alert("سوال مفتی صاحب کو کامیابی سے منتقل کر دیا گیا!");
+          loadAdminPortal();
+        } catch(e) {
+          alert("اپ ڈیٹ میں ناکامی!");
+        }
+      };
+
+      // Load Mufti Dashboard
+      async function loadMuftiPortal(muftiEmail) {
+        const container = document.getElementById('role-view-container');
+        container.innerHTML = `
+          <h3 class="text-xl font-bold text-emerald-900 mb-4"><i class="fa-solid fa-user-nib"></i> مفتی ڈیش بورڈ (${muftiEmail})</h3>
+          <div id="mufti-questions-list" class="space-y-4">آپ کے سوالات لوڈ ہو رہے ہیں...</div>
+        `;
+
+        try {
+          const q = query(collection(db, "questions"), where("assignedTo", "==", muftiEmail));
+          const qSnap = await getDocs(q);
+          let html = '';
+
+          if(qSnap.empty) {
+            document.getElementById('mufti-questions-list').innerHTML = '<div class="bg-white p-6 rounded-xl text-center text-slate-500">فی الحال آپ کے لیے کوئی سوال منتقل نہیں کیا گیا ہے۔</div>';
+            return;
+          }
+
+          qSnap.forEach(docSnap => {
+            const data = docSnap.data();
+            const id = docSnap.id;
+            html += `
+              <div class="bg-white p-5 rounded-xl shadow border space-y-3">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-bold text-emerald-900 text-lg">${data.title}</h4>
+                    <p class="text-xs text-slate-500">سائل: ${data.askerName}</p>
+                  </div>
+                  <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded border">
+                    ذریعہ: <b>${data.source || 'آن لائن فارم'}</b>
+                  </span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-lg border text-base text-slate-800">${data.questionText}</div>
+                
+                <div class="space-y-2 pt-2">
+                  <label class="block text-sm font-bold text-emerald-900">الجواب وباللہ التوفیق (فتویٰ لکھیں):</label>
+                  <textarea id="ans-text-${id}" rows="5" placeholder="یہاں فتویٰ تحریر کریں..." class="w-full border border-slate-300 p-3 rounded-lg text-base focus:ring-2 focus:ring-emerald-500 focus:outline-none">${data.answerText || ''}</textarea>
+                  <button onclick="window.saveAnswer('${id}')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-lg text-sm transition">
+                    <i class="fa-solid fa-floppy-disk"></i> فتویٰ محفوظ کریں اور شائع کریں
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+          document.getElementById('mufti-questions-list').innerHTML = html;
+        } catch(e) {
+          document.getElementById('mufti-questions-list').innerHTML = '<div class="text-red-500">سوالات لوڈ کرنے میں مسئلہ آیا!</div>';
+        }
+      }
+
+      // Save Fatwa / Answer
+      window.saveAnswer = async (docId) => {
+        const ans = document.getElementById(`ans-text-${docId}`).value;
+        if(!ans) { alert("فتویٰ تحریر کریں!"); return; }
+
+        try {
+          const qRef = doc(db, "questions", docId);
+          await updateDoc(qRef, {
+            answerText: ans,
+            status: "جواب شدہ"
+          });
+          alert("فتویٰ کامیابی کے ساتھ محفوظ اور شائع ہو گیا ہے!");
+          location.reload();
+        } catch(e) {
+          alert("فتویٰ سیو کرنے میں ناکامی ہوئی۔");
+        }
+      };
+    </script>
+</body>
+</html>
                     <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
                     <input type="email" id="login-email" required placeholder="mufti@darulifta.com" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
