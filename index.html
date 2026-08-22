@@ -1,516 +1,251 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl" class="scroll-smooth">
+<html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f172a">
-    <title>دارالافتاء جمشیدپور — مرکزی علمی و تحقیقاتی پورٹل</title>
-
+    <title>آن لائن دارالافتاء - AI Search</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              royal: { 50: '#f0f9ff', 100: '#e0f2fe', 800: '#1e40af', 900: '#1e3a8a', 950: '#0f172a' },
-              amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
-            }
-          }
-        }
-      }
-    </script>
-    <!-- Fonts & Icons -->
+    
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts (Urdu Nastaliq) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        urdu: ['"Noto Nastaliq Urdu"', 'serif'],
+                        sansEng: ['system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        royal: {
+                            800: '#1e3a8a',
+                            900: '#172554',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-      body, button, input, textarea, select { font-family: 'Jameel Noori Nastaleeq', 'Amiri', serif !important; line-height: 2.1 !important; }
-      .font-sans-eng { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important; }
-      /* Dropdown Hover Logic */
-      .group:hover .group-hover\:block { display: block; }
-      /* Mobile Menu hide/show */
-      .mobile-menu-active { display: block !important; }
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            background-color: #f8fafc;
+            line-height: 2.2;
+        }
+        .font-sans-eng {
+            font-family: system-ui, -apple-system, sans-serif;
+            direction: ltr;
+            display: inline-block;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="text-slate-800 h-screen flex flex-col">
 
-    <!-- Top Bar -->
-    <div class="bg-royal-950 text-slate-300 py-1 px-4 text-xs flex justify-between items-center border-b border-amber-500/30">
-        <span class="flex items-center gap-2"><i class="fa-regular fa-calendar text-amber-400"></i> ۸ ربیع الاول ۱۴۴۸ھ | 22 اگست 2026ء</span>
-        <div class="flex gap-4">
-            <span class="cursor-pointer hover:text-white"><i class="fa-solid fa-language"></i> اردو ▼</span>
-            <span class="cursor-pointer hover:text-white" onclick="window.showLoginModal()">لاگ ان <i class="fa-solid fa-lock text-[10px]"></i></span>
-        </div>
-    </div>
-
-    <!-- Header & Mega Navigation -->
-    <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Brand -->
+    <!-- Header / Navbar -->
+    <header class="bg-gradient-to-l from-royal-900 to-slate-800 text-white shadow-md relative z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.router('home')">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-royal-900 to-royal-950 flex items-center justify-center text-amber-400 text-2xl shadow-md border border-amber-500/30">
-                    <i class="fa-solid fa-kaaba"></i>
+                <div class="bg-amber-500 text-royal-900 p-2 rounded-lg">
+                    <i class="fa-solid fa-book-open text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-900 leading-none">دارالافتاء جمشیدپور</h1>
-                    <p class="text-[10px] text-slate-500 font-sans-eng tracking-wider uppercase mt-1">Research & Academic Portal</p>
+                    <h1 class="font-bold text-2xl leading-none">آن لائن دارالافتاء</h1>
+                    <p class="text-xs text-amber-300">جدید و مستند شرعی رہنمائی</p>
                 </div>
             </div>
-
-            <!-- Global Search (Desktop) -->
-            <div class="hidden md:flex flex-grow max-w-md mx-8 relative">
-                <input type="text" placeholder="فتاویٰ، مضامین یا کتب تلاش کریں..." class="w-full bg-slate-100 border border-slate-200 rounded-full py-2 px-5 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-royal-800">
-                <i class="fa-solid fa-search absolute left-4 top-3 text-slate-400"></i>
-            </div>
-
-            <!-- Mobile Toggle -->
-            <button class="md:hidden text-2xl text-royal-900" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- Quick Action -->
-            <button onclick="window.router('istifta')" class="hidden md:flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-5 py-2 rounded-xl shadow-md hover:scale-105 transition text-sm">
-                <i class="fa-solid fa-pen-nib"></i> سوال پوچھیں
-            </button>
-        </div>
-
-        <!-- Desktop Navigation (Mega Menu) -->
-        <nav class="hidden md:block bg-royal-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 flex">
-                <button onclick="window.router('home')" class="px-5 py-3 hover:bg-royal-800 font-bold transition"><i class="fa-solid fa-house ml-1"></i> ہوم</button>
-                
-                <!-- دارالافتاء Dropdown -->
-                <div class="group relative">
-                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">دارالافتاء <i class="fa-solid fa-angle-down text-xs"></i></button>
-                    <div class="hidden group-hover:block absolute top-full right-0 w-64 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
-                        <a href="#" onclick="window.router('istifta')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">نیا سوال بھیجیں</a>
-                        <a href="#" onclick="window.router('tracker')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">اپنے سوال کا جواب معلوم کریں</a>
-                        <a href="#" onclick="window.router('fatawa')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">تمام فتاویٰ / تلاش</a>
-                        <a href="#" onclick="window.router('names')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">اسلامی نام</a>
-                        <a href="#" onclick="window.router('duas')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700">مسنون دعائیں</a>
-                    </div>
-                </div>
-
-                <!-- نشر و اشاعت Dropdown -->
-                <div class="group relative">
-                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">نشر و اشاعت <i class="fa-solid fa-angle-down text-xs"></i></button>
-                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
-                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">اسلامی مضامین</a>
-                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">تحقیقی مقالات</a>
-                        <a href="#" onclick="window.router('library')" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">کتب (PDF)</a>
-                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800">مختصر تحریریں</a>
-                    </div>
-                </div>
-
-                <!-- تعارف Dropdown -->
-                <div class="group relative">
-                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">تعارف <i class="fa-solid fa-angle-down text-xs"></i></button>
-                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
-                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50 border-b">دارالافتاء کا تعارف</a>
-                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50 border-b">منہجِ افتاء و مقاصد</a>
-                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50">مفتیانِ کرام</a>
-                    </div>
-                </div>
-
-                <!-- رابطہ و تعاون Dropdown -->
-                <div class="group relative">
-                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">رابطہ و تعاون <i class="fa-solid fa-angle-down text-xs"></i></button>
-                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
-                        <a href="#" onclick="window.router('donation')" class="block px-4 py-2.5 hover:bg-emerald-50 text-emerald-700 font-bold border-b">آن لائن تعاون (Donation)</a>
-                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50">ہم سے رابطہ کریں</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden bg-white border-t border-slate-200 px-4 py-2 md:hidden space-y-2 text-sm shadow-inner">
-            <button onclick="window.router('istifta')" class="w-full text-right py-2 border-b font-bold text-amber-600">سوال پوچھیں</button>
-            <button onclick="window.router('tracker')" class="w-full text-right py-2 border-b">فتویٰ ٹریک کریں</button>
-            <button onclick="window.router('fatawa')" class="w-full text-right py-2 border-b">فتاویٰ و تلاش</button>
-            <button onclick="window.router('donation')" class="w-full text-right py-2 text-emerald-600 font-bold">تعاون کریں</button>
+            
+            <nav class="hidden md:flex gap-6 items-center">
+                <button onclick="window.router('home')" class="hover:text-amber-400 transition font-bold">صفحہ اول</button>
+                <button onclick="window.router('fatawa')" class="hover:text-amber-400 transition font-bold">فتاویٰ آرکائیو</button>
+                <button onclick="window.router('ask')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-5 py-2 rounded-full font-bold shadow transition">فتویٰ پوچھیں</button>
+            </nav>
         </div>
     </header>
 
-    <!-- Dynamic Container -->
-    <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
-        <!-- Rendered Content Goes Here -->
+    <!-- Main Content Area -->
+    <main class="flex-grow overflow-y-auto p-4 md:p-8">
+        <div id="app" class="container mx-auto max-w-5xl">
+            <!-- Content will be injected here by JavaScript -->
+        </div>
     </main>
 
-    <!-- Login Modal (Admin/Mufti) -> Kept Existing Functionality -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 relative">
-            <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center">
-                <div class="w-14 h-14 rounded-2xl bg-royal-50 text-royal-900 flex items-center justify-center mx-auto text-2xl mb-2"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3 class="text-xl font-bold text-slate-900">محفوظ پورٹل لاگ ان</h3>
-            </div>
-            <form id="login-form" class="space-y-3 text-sm">
-                <input type="email" id="login-email" required placeholder="ای میل" class="w-full border border-slate-300 rounded-xl p-3">
-                <input type="password" id="login-password" required placeholder="پاسورڈ" class="w-full border border-slate-300 rounded-xl p-3">
-                <button type="submit" class="w-full bg-royal-900 text-white font-bold py-3 rounded-xl">لاگ ان کریں</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Advanced Footer (4 Columns) -->
-    <footer class="bg-slate-900 text-slate-400 text-sm mt-12 border-t-4 border-amber-500">
-        <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="space-y-4">
-                <h4 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-kaaba text-amber-500"></i> دارالافتاء جمشیدپور</h4>
-                <p class="leading-relaxed">قرآن و سنت اور معتبر فقہ اسلامی کی روشنی میں آن لائن شرعی رہنمائی و تحقیقات کا مستند ادارہ۔</p>
-                <div class="flex gap-3">
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-amber-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="space-y-3">
-                <h5 class="text-white font-bold mb-4">فوری روابط</h5>
-                <p><a href="#" onclick="window.router('istifta')" class="hover:text-amber-400">آن لائن سوال پوچھیں</a></p>
-                <p><a href="#" onclick="window.router('tracker')" class="hover:text-amber-400">فتویٰ ٹریکنگ</a></p>
-                <p><a href="#" onclick="window.router('fatawa')" class="hover:text-amber-400">فتاویٰ آرکائیو</a></p>
-                <p><a href="#" onclick="window.router('donation')" class="hover:text-amber-400">ادارے کے ساتھ تعاون</a></p>
-            </div>
-            <div class="space-y-3">
-                <h5 class="text-white font-bold mb-4">علمی مواد</h5>
-                <p><a href="#" onclick="window.router('library')" class="hover:text-amber-400">کتب خانہ (PDF)</a></p>
-                <p><a href="#" onclick="window.router('names')" class="hover:text-amber-400">اسلامی نام</a></p>
-                <p><a href="#" onclick="window.router('duas')" class="hover:text-amber-400">مسنون دعائیں</a></p>
-                <p><a href="#" class="hover:text-amber-400">فقہی مقالات</a></p>
-            </div>
-            <div class="space-y-3">
-                <h5 class="text-white font-bold mb-4">رابطہ</h5>
-                <p><i class="fa-solid fa-location-dot w-5 text-center text-amber-500"></i> جمشیدپور، جھارکھنڈ، انڈیا</p>
-                <p><i class="fa-solid fa-envelope w-5 text-center text-amber-500"></i> info@darulifta-jsr.org</p>
-                <p><i class="fa-brands fa-whatsapp w-5 text-center text-amber-500"></i> +91-0000000000</p>
-            </div>
-        </div>
-        <div class="bg-slate-950 py-4 text-center text-xs border-t border-slate-800">
-            © 2026 دارالافتاء جمشیدپور | All Rights Reserved.
-        </div>
-    </footer>
-
-    <!-- Javascript Engine & Logic -->
     <script>
-      // State & Mock Data (Preserving existing data + adding new structures)
-      const state = {
-        currentUser: null,
-        questions: [
-          { id: 'DIJ-2026-001', askerName: 'عبداللہ', title: 'آن لائن ٹریڈنگ کا شرعی حکم', text: 'کیا شیئرز کی ڈے ٹریڈنگ جائز ہے؟', status: 'جواب شدہ', category: 'معاملات', ans: 'شرائط کے ساتھ جائز ہے۔ تفصیل ملاحظہ فرمائیں...' }
-        ]
-      };
+        // --- 1. STATE MANAGEMENT (Mock Data) ---
+        const state = {
+            currentView: 'home',
+            questions: [
+                { id: 'F-104', category: 'جدید مالی معاملات', title: 'ڈیجیٹل کرنسی میں سرمایہ کاری', text: 'کیا کرپٹو کرنسی میں سرمایہ کاری کرنا شرعاً جائز ہے؟', answer: 'ڈیجیٹل کرنسی میں غرر اور جہالت پائی جاتی ہے، نیز یہ کسی مستند حکومت کی طرف سے جاری کردہ نہیں ہے، اس لیے اس میں سرمایہ کاری سے اجتناب ضروری ہے۔' },
+                { id: 'F-103', category: 'زکوۃ و صدقات', title: 'پراپرٹی پر زکوٰۃ کا حکم', text: 'جو پلاٹ بیچنے کی نیت سے خریدا ہو کیا اس پر زکوٰۃ فرض ہے؟', answer: 'جی ہاں، جو پلاٹ تجارت (بیچنے) کی نیت سے خریدا گیا ہو اس کی موجودہ مالیت پر زکوٰۃ فرض ہے۔' },
+                { id: 'F-102', category: 'نماز', title: 'سفر میں قصر کا تفصیلی حکم', text: 'شرعی سفر کی مسافت کتنی ہے اور قصر کب تک کی جائے گی؟', answer: 'شرعی سفر کی مسافت 48 میل (تقریباً 77.24 کلومیٹر) ہے۔ اگر کوئی شخص اتنے سفر کے ارادے سے اپنی بستی سے نکلے تو وہ مسافر کہلائے گا۔' }
+            ]
+        };
 
-      // Main Router
-      window.router = (view, param = null) => {
-        const app = document.getElementById('app-view');
-        window.scrollTo(0, 0);
-        document.getElementById('mobile-menu').classList.add('hidden'); // Close mobile menu
+        // --- 2. ROUTER ---
+        window.router = function(view, id = null) {
+            state.currentView = view;
+            const app = document.getElementById('app');
+            app.innerHTML = ''; // Clear current content
 
-        if (view === 'home') renderHome(app);
-        else if (view === 'istifta') renderIstifta(app);
-        else if (view === 'tracker') renderTracker(app);
-        else if (view === 'fatawa') renderFatawa(app);
-        else if (view === 'names') renderNames(app);
-        else if (view === 'duas') renderDuas(app);
-        else if (view === 'library') renderLibrary(app);
-        else if (view === 'donation') renderDonation(app);
-        else if (view === 'fatwaDetail') renderFatwaDetail(app, param);
-        else renderHome(app);
-      };
+            if (view === 'home') renderHome(app);
+            if (view === 'ask') renderAsk(app);
+            if (view === 'fatawa') renderFatawa(app);
+            if (view === 'detail' && id) renderDetail(app, id);
+        };
 
-      // Modals Logic
-      window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
-      window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
+        // --- 3. VIEWS ---
 
-      // 1. SMART HOMEPAGE (With Quick Actions)
-      function renderHome(c) {
-        c.innerHTML = `
-          <!-- Hero Section -->
-          <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-royal-950 via-royal-900 to-slate-900 text-white p-8 md:p-14 shadow-xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-8">
-             <div class="max-w-2xl space-y-5 relative z-10">
-                <span class="bg-amber-500/20 text-amber-400 text-sm font-bold px-4 py-1.5 rounded-full border border-amber-500/30 inline-block">آن لائن شرعی رہنمائی</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-amber-400 leading-snug">قرآن، سنت اور فقہ حنفی کی روشنی میں مستند فتاویٰ</h2>
-                <p class="text-base text-slate-300">دارالافتاء جمشیدپور کے مفتیان کرام سے اپنے دینی و دنیاوی مسائل کا شرعی حل معلوم کریں۔ مکمل راز داری کے ساتھ۔</p>
-                <div class="flex flex-wrap gap-3 pt-3">
-                   <button onclick="window.router('istifta')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition">سوال پوچھیں</button>
-                   <button onclick="window.router('tracker')" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl border border-white/20 transition">فتویٰ ٹریک کریں</button>
-                </div>
-             </div>
-             <!-- Prayer Times Card on Hero -->
-             <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 w-full md:w-72 text-center">
-                <h3 class="text-amber-400 font-bold border-b border-white/20 pb-2 mb-3">نماز کے اوقات (جمشیدپور)</h3>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span>فجر</span><span>04:15 AM</span></div>
-                    <div class="flex justify-between"><span>ظہر</span><span>12:30 PM</span></div>
-                    <div class="flex justify-between bg-white/20 p-1 rounded font-bold"><span>عصر (موجودہ)</span><span>04:45 PM</span></div>
-                    <div class="flex justify-between"><span>مغرب</span><span>06:20 PM</span></div>
-                    <div class="flex justify-between"><span>عشاء</span><span>07:45 PM</span></div>
-                </div>
-             </div>
-          </div>
-
-          <!-- Feature Shortcuts (Quick Actions) -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-             <button onclick="window.router('fatawa')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-blue-50 text-royal-800 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-book-open"></i></div>
-                <div class="font-bold text-slate-800">تفصیلی فتاویٰ</div>
-             </button>
-             <button onclick="window.router('names')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-child-reaching"></i></div>
-                <div class="font-bold text-slate-800">اسلامی نام</div>
-             </button>
-             <button onclick="window.router('duas')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-hands-praying"></i></div>
-                <div class="font-bold text-slate-800">مسنون دعائیں</div>
-             </button>
-             <button onclick="window.router('library')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-700 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-file-pdf"></i></div>
-                <div class="font-bold text-slate-800">کتب PDF</div>
-             </button>
-          </div>
-
-          <!-- Latest Fatawa -->
-          <div class="mt-12 space-y-4">
-             <div class="flex justify-between items-center border-b pb-2">
-                <h3 class="text-2xl font-bold text-royal-950">تازہ ترین فتاویٰ</h3>
-                <button onclick="window.router('fatawa')" class="text-amber-600 text-sm font-bold">سب دیکھیں ➔</button>
-             </div>
-             <div class="grid md:grid-cols-2 gap-4">
-                ${state.questions.map(q => `
-                  <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-royal-500 transition" onclick="window.router('fatwaDetail', '${q.id}')">
-                    <span class="text-xs font-sans-eng bg-slate-100 text-slate-600 px-2 py-1 rounded border">${q.id}</span>
-                    <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded mr-2">${q.category}</span>
-                    <h4 class="font-bold text-lg text-slate-900 mt-2">${q.title}</h4>
-                    <p class="text-sm text-slate-500 line-clamp-2">${q.text}</p>
-                  </div>
-                `).join('')}
-             </div>
-          </div>
-        `;
-      }
-
-      // 2. ADVANCED ISTIFTA FORM
-      function renderIstifta(c) {
-        c.innerHTML = `
-          <div class="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-slate-200">
-             <div class="text-center space-y-2 border-b pb-6 mb-6">
-                <h2 class="text-3xl font-bold text-royal-950">آن لائن استفتاء فارم</h2>
-                <p class="text-sm text-slate-500">اپنا سوال تفصیل سے تحریر کریں، ان شاء اللہ جلد جواب دیا جائے گا۔</p>
-             </div>
-             <form id="new-question-form" class="space-y-5">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                   <div><label class="block text-sm font-bold mb-1">نام (اختیاری)</label><input type="text" class="w-full border rounded-xl p-3 bg-slate-50"></div>
-                   <div><label class="block text-sm font-bold mb-1">واٹس ایپ نمبر (جواب بھیجنے کے لیے)</label><input type="text" class="w-full border rounded-xl p-3 bg-slate-50"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                   <div>
-                       <label class="block text-sm font-bold mb-1">موضوع (Category)</label>
-                       <select class="w-full border rounded-xl p-3 bg-slate-50">
-                           <option>عقائد</option><option>طہارت و نماز</option><option>زکوۃ و صدقات</option><option>معاملات و تجارت</option><option>نکاح و طلاق</option>
-                       </select>
-                   </div>
-                   <div><label class="block text-sm font-bold mb-1">عنوان (Title)</label><input type="text" required class="w-full border rounded-xl p-3 bg-slate-50"></div>
-                </div>
-                <div>
-                   <label class="block text-sm font-bold mb-1">تفصیلی سوال</label>
-                   <textarea rows="6" required class="w-full border rounded-xl p-3 bg-slate-50"></textarea>
-                </div>
-                <div class="flex items-center gap-2 bg-amber-50 p-3 rounded-xl border border-amber-200">
-                    <input type="checkbox" id="private-q" class="w-4 h-4">
-                    <label for="private-q" class="text-sm font-bold text-amber-900">میرے سوال کو پبلک ویب سائٹ پر شائع نہ کیا جائے (خفیہ رکھیں)</label>
-                </div>
-                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-4 rounded-xl shadow-lg transition text-lg">سوال ارسال کریں</button>
-             </form>
-          </div>
-        `;
-        document.getElementById('new-question-form').addEventListener('submit', (e) => {
-          e.preventDefault();
-          alert('آپ کا سوال موصول ہوگیا ہے۔ ٹریکنگ آئی ڈی: DIJ-2026-002\nآپ کے واٹس ایپ پر جلد اطلاع دی جائے گی۔');
-          window.router('tracker');
-        });
-      }
-
-      // 3. FATWA TRACKER
-      function renderTracker(c) {
-        c.innerHTML = `
-          <div class="max-w-2xl mx-auto space-y-6">
-             <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 text-center space-y-4">
-                <h2 class="text-2xl font-bold text-royal-950">اپنے سوال کا اسٹیٹس معلوم کریں</h2>
-                <p class="text-sm text-slate-500">سوال بھیجنے کے بعد ملنے والا Tracking ID نیچے درج کریں۔</p>
-                <div class="flex gap-2 max-w-sm mx-auto">
-                    <input type="text" id="track-id" placeholder="DIJ-2026-..." class="w-full border border-slate-300 p-3 rounded-xl font-sans-eng text-center uppercase">
-                    <button onclick="alert('اسٹیٹس: مفتی صاحب کے زیرِ تحقیق ہے\\nمطلوبہ وقت: 2 دن')" class="bg-amber-500 text-slate-900 font-bold px-6 rounded-xl">تلاش</button>
-                </div>
-             </div>
-          </div>
-        `;
-      }
-
-      // 4. INDIVIDUAL FATWA PAGE (With PDF / Print)
-      function renderFatwaDetail(c, id) {
-        const q = state.questions.find(x => x.id === id) || state.questions[0];
-        c.innerHTML = `
-          <div class="max-w-4xl mx-auto space-y-4">
-             <!-- Tools Bar -->
-             <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                 <div class="text-sm font-bold text-slate-500">موضوع: ${q.category}</div>
-                 <div class="flex gap-2">
-                     <button onclick="window.print()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-sm font-bold"><i class="fa-solid fa-print"></i> پرنٹ</button>
-                     <button onclick="alert('دارالافتاء کی آفیشل مہر اور لیٹر ہیڈ کے ساتھ PDF ڈاؤن لوڈ ہو رہی ہے...')" class="px-3 py-1.5 bg-royal-900 text-white rounded text-sm font-bold"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-                 </div>
-             </div>
-
-             <!-- Fatwa Content -->
-             <div class="bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-lg space-y-6">
-                <div class="text-center border-b pb-6">
-                    <span class="text-sm font-bold text-royal-900 font-sans-eng bg-royal-50 px-3 py-1 rounded-full border border-royal-200">فتویٰ نمبر: ${q.id}</span>
-                    <h2 class="text-3xl font-bold text-slate-900 mt-4 leading-relaxed">${q.title}</h2>
-                </div>
-                
-                <div class="space-y-2">
-                    <h3 class="text-xl font-bold text-amber-600">الاستفتاء (سوال):</h3>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-lg leading-loose text-slate-800">${q.text}</div>
-                </div>
-
-                <div class="space-y-2 pt-4">
-                    <h3 class="text-xl font-bold text-royal-900">الجواب وباللہ التوفیق:</h3>
-                    <div class="p-6 rounded-2xl bg-royal-50/50 border border-royal-100 text-lg leading-loose text-slate-800">
-                        ${q.ans}
-                        <br><br>
-                        <b>واللہ اعلم بالصواب</b>
+        // Home View
+        function renderHome(c) {
+            c.innerHTML = `
+                <div class="text-center space-y-6 mt-10">
+                    <h2 class="text-3xl md:text-5xl font-bold text-royal-900 leading-tight">آپ کے شرعی مسائل، <br><span class="text-amber-500">مستند رہنمائی</span></h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">قرآن و سنت کی روشنی میں اپنے روزمرہ مسائل کا حل جانیے۔ ہمارا سمارٹ سسٹم آپ کو مطلوبہ فتاویٰ تک باآسانی پہنچنے میں مدد فراہم کرتا ہے۔</p>
+                    
+                    <div class="flex justify-center gap-4 pt-6">
+                        <button onclick="window.router('ask')" class="bg-royal-900 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-royal-800 transition"><i class="fa-solid fa-pen-nib ml-2"></i> سوال بھیجیں</button>
+                        <button onclick="window.router('fatawa')" class="bg-white text-royal-900 border border-royal-900 px-8 py-3 rounded-full font-bold shadow-sm hover:bg-slate-50 transition"><i class="fa-solid fa-magnifying-glass ml-2"></i> فتاویٰ تلاش کریں</button>
                     </div>
                 </div>
+            `;
+        }
 
-                <!-- Footer Signatures -->
-                <div class="flex justify-between items-center pt-10 border-t text-sm font-bold text-slate-600">
-                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>دستخط مفتی</div>
-                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>مہر دارالافتاء</div>
-                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>تصدیق ناظم</div>
+        // Ask Fatwa View
+        function renderAsk(c) {
+            c.innerHTML = `
+                <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <h3 class="text-2xl font-bold text-royal-900 mb-6 border-b pb-4"><i class="fa-solid fa-pen text-amber-500 ml-2"></i> نیا سوال / فتویٰ پوچھیں</h3>
+                    <form onsubmit="event.preventDefault(); alert('آپ کا سوال موصول ہوگیا ہے! جلد جواب دیا جائے گا۔'); window.router('home');" class="space-y-5">
+                        <div>
+                            <label class="block font-bold mb-2">نام (اختیاری)</label>
+                            <input type="text" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="اپنا نام درج کریں">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">موضوع / عنوان <span class="text-red-500">*</span></label>
+                            <input type="text" required class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="سوال کا مختصر عنوان">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">تفصیلی سوال <span class="text-red-500">*</span></label>
+                            <textarea required rows="5" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="اپنا مسئلہ تفصیل سے واضح کریں..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl shadow transition text-lg">سوال ارسال کریں</button>
+                    </form>
                 </div>
-             </div>
-          </div>
-        `;
-      }
+            `;
+        }
 
-      // 5. FATAWA ARCHIVE (Taxonomy)
-      function renderFatawa(c) {
-        c.innerHTML = `
-          <div class="flex flex-col md:flex-row gap-6">
-             <!-- Sidebar Filters -->
-             <div class="w-full md:w-64 bg-white p-5 rounded-2xl border border-slate-200 h-fit space-y-4">
-                <h3 class="font-bold text-lg border-b pb-2">ابواب و موضوعات</h3>
-                <ul class="space-y-2 text-sm text-slate-700">
-                    <li class="hover:text-amber-600 cursor-pointer font-bold">عقائد و ایمانیات</li>
-                    <li class="hover:text-amber-600 cursor-pointer">طہارت و نماز</li>
-                    <li class="hover:text-amber-600 cursor-pointer">زکوۃ و صدقات</li>
-                    <li class="hover:text-amber-600 cursor-pointer">نکاح، طلاق و خلع</li>
-                    <li class="hover:text-amber-600 cursor-pointer">جدید مالی معاملات</li>
-                    <li class="hover:text-amber-600 cursor-pointer">میڈیکل مسائل (DNA/IVF)</li>
-                </ul>
-             </div>
-             <!-- List -->
-             <div class="flex-grow space-y-4">
-                <div class="flex relative">
-                   <input type="text" placeholder="فتویٰ کے متن سے تلاش کریں..." class="w-full border p-3 rounded-xl bg-white shadow-sm pr-4">
-                   <button class="absolute left-2 top-2 bg-royal-900 text-white px-4 py-1.5 rounded-lg text-sm">تلاش</button>
-                </div>
-                <!-- Loop Fatawa -->
-                ${state.questions.map(q => `
-                  <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md" onclick="window.router('fatwaDetail', '${q.id}')">
-                    <div class="flex justify-between items-center mb-2">
-                       <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">${q.category}</span>
-                       <span class="text-xs text-slate-500 font-sans-eng">${q.id}</span>
+        // Fatawa Archive View (WITH AI SEARCH)
+        function renderFatawa(c) {
+            c.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    
+                    <!-- Sidebar Filters -->
+                    <div class="w-full md:w-64 bg-white p-5 rounded-3xl border border-slate-200 h-fit space-y-4 shadow-sm">
+                        <h3 class="font-bold text-lg border-b pb-2 text-royal-900"><i class="fa-solid fa-layer-group ml-2 text-amber-500"></i> ابواب و موضوعات</h3>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="hover:text-amber-600 cursor-pointer font-bold bg-slate-50 p-2 rounded-lg">تمام فتاویٰ</li>
+                            <li class="hover:text-amber-600 cursor-pointer p-2">عقائد و ایمانیات</li>
+                            <li class="hover:text-amber-600 cursor-pointer p-2">طہارت و نماز</li>
+                            <li class="hover:text-amber-600 cursor-pointer p-2">زکوۃ و صدقات</li>
+                            <li class="hover:text-amber-600 cursor-pointer p-2">نکاح و طلاق</li>
+                            <li class="hover:text-amber-600 cursor-pointer p-2">جدید مالی معاملات</li>
+                        </ul>
                     </div>
-                    <h4 class="font-bold text-xl text-slate-900">${q.title}</h4>
-                    <p class="text-sm text-slate-600 mt-2 line-clamp-2">${q.text}</p>
-                  </div>
-                `).join('')}
-             </div>
-          </div>
-        `;
-      }
+                    
+                    <!-- Main List & AI Search -->
+                    <div class="flex-grow space-y-6">
+                        
+                        <!-- AI Smart Search Box (New Integration) -->
+                        <div class="bg-gradient-to-br from-royal-900 to-slate-900 p-6 md:p-8 rounded-3xl shadow-lg relative overflow-hidden border border-amber-500/30">
+                            <!-- Decorative background icon -->
+                            <i class="fa-solid fa-microchip absolute -right-4 -bottom-4 text-8xl text-white opacity-5"></i>
+                            
+                            <h3 class="text-white font-bold text-xl md:text-2xl mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> اے آئی سمارٹ تلاش (AI Search)
+                            </h3>
+                            <p class="text-slate-300 text-sm md:text-base mb-5 leading-loose">اپنا مسئلہ اپنی عام زبان میں لکھیے، ہمارا AI سسٹم مفہوم سمجھ کر درست فتویٰ تلاش کرے گا۔ (مثال: قسطوں پر بائیک لینا)</p>
+                            
+                            <div class="relative flex flex-col md:flex-row gap-2">
+                                <input type="text" id="ai-search-input" placeholder="کیا سوال ہے آپ کا؟..." class="w-full border-none p-4 rounded-xl bg-white/95 shadow-inner pr-4 focus:outline-none focus:ring-4 focus:ring-amber-500/50 text-slate-900 font-bold">
+                                <button onclick="triggerAISearch()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 px-8 py-4 md:py-auto rounded-xl font-bold shadow-md hover:scale-105 transition shrink-0 whitespace-nowrap">
+                                    <i class="fa-solid fa-robot ml-2"></i> تلاش کریں
+                                </button>
+                            </div>
+                        </div>
 
-      // 6. ISLAMIC NAMES (اسلامی نام)
-      function renderNames(c) {
-        c.innerHTML = `
-          <div class="space-y-6">
-             <div class="bg-white p-6 rounded-2xl border text-center space-y-3">
-                <h2 class="text-3xl font-bold text-royal-950">اسلامی نام اور ان کے معنی</h2>
-                <div class="flex max-w-md mx-auto relative">
-                   <input type="text" placeholder="نام یا معنی لکھیں..." class="w-full border p-3 rounded-xl bg-slate-50 pr-4">
-                   <button class="absolute left-2 top-2 bg-amber-500 px-4 py-1.5 rounded-lg text-sm font-bold">تلاش</button>
+                        <!-- Fatawa List -->
+                        <div class="space-y-4 pt-2">
+                            <h4 class="font-bold text-slate-600 text-lg border-b pb-2">حالیہ شائع شدہ فتاویٰ</h4>
+                            ${state.questions.map(q => `
+                                <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-amber-400 transition" onclick="window.router('detail', '${q.id}')">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-bold shadow-sm">${q.category}</span>
+                                        <span class="text-xs text-slate-500 font-sans-eng font-bold bg-slate-100 px-2 py-1 rounded">${q.id}</span>
+                                    </div>
+                                    <h4 class="font-bold text-xl text-royal-900 mb-2">${q.title}</h4>
+                                    <p class="text-slate-600 line-clamp-2">${q.text}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 </div>
-             </div>
-             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 <div class="bg-white p-4 rounded-xl border text-center"><h3 class="font-bold text-xl text-royal-900 mb-1">محمد</h3><p class="text-xs text-slate-500">تعریف کیا گیا (Arabic)</p></div>
-                 <div class="bg-white p-4 rounded-xl border text-center"><h3 class="font-bold text-xl text-royal-900 mb-1">عائشہ</h3><p class="text-xs text-slate-500">آرام پانے والی، زندہ</p></div>
-             </div>
-          </div>
-        `;
-      }
+            `;
+        }
 
-      // 7. MASNOON DUAS (مسنون دعائیں)
-      function renderDuas(c) {
-        c.innerHTML = `
-          <div class="space-y-6">
-             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">مسنون و مأثور دعائیں</h2>
-             <div class="grid md:grid-cols-2 gap-4">
-                 <div class="bg-white p-6 rounded-2xl border shadow-sm">
-                     <h3 class="font-bold text-lg text-amber-600 mb-3">گھر سے نکلنے کی دعا</h3>
-                     <p class="font-sans-eng text-2xl text-right text-royal-900 mb-3" style="font-family: 'Amiri', serif !important;" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>
-                     <p class="text-sm text-slate-600"><b>ترجمہ:</b> اللہ کے نام سے، میں نے اللہ پر بھروسہ کیا، اور گناہوں سے بچنے کی طاقت اور نیکی کرنے کی قوت اللہ ہی کی توفیق سے ہے۔</p>
-                     <div class="mt-4 flex gap-2"><button class="text-xs bg-slate-100 px-3 py-1 rounded hover:bg-slate-200">Copy</button><button class="text-xs bg-slate-100 px-3 py-1 rounded hover:bg-slate-200">Share</button></div>
-                 </div>
-             </div>
-          </div>
-        `;
-      }
+        // Fatwa Detail View
+        function renderDetail(c, id) {
+            const fatwa = state.questions.find(q => q.id === id);
+            if (!fatwa) return;
 
-      // 8. LIBRARY & PUBLISHING (کتب خانہ)
-      function renderLibrary(c) {
-        c.innerHTML = `
-          <div class="space-y-6">
-             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">ڈیجیٹل کتب خانہ (PDF)</h2>
-             <div class="grid md:grid-cols-3 gap-6">
-                 <div class="bg-white rounded-2xl border overflow-hidden shadow-sm">
-                     <div class="h-40 bg-slate-200 flex items-center justify-center text-4xl text-slate-400"><i class="fa-solid fa-book"></i></div>
-                     <div class="p-4 space-y-2">
-                         <span class="text-[10px] bg-royal-100 text-royal-800 px-2 py-1 rounded">فقہ حنفی</span>
-                         <h3 class="font-bold text-lg text-slate-900">فتاویٰ شامی (جلد اول)</h3>
-                         <button class="w-full mt-2 bg-royal-900 text-white py-2 rounded-lg text-sm font-bold">PDF ڈاؤن لوڈ</button>
-                     </div>
-                 </div>
-             </div>
-          </div>
-        `;
-      }
+            c.innerHTML = `
+                <div class="max-w-3xl mx-auto">
+                    <button onclick="window.router('fatawa')" class="text-slate-500 hover:text-amber-600 mb-4 font-bold transition"><i class="fa-solid fa-arrow-right ml-2"></i> واپس فہرست میں جائیں</button>
+                    
+                    <div class="bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-6 border-b pb-4">
+                            <span class="bg-royal-900 text-white px-4 py-1 rounded-full text-sm font-bold">${fatwa.category}</span>
+                            <span class="text-sm text-slate-500 font-sans-eng font-bold">رقم الفتوی: ${fatwa.id}</span>
+                        </div>
+                        
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-6 leading-relaxed">${fatwa.title}</h2>
+                        
+                        <div class="bg-slate-50 p-6 rounded-2xl mb-8 border border-slate-100 relative">
+                            <h3 class="font-bold text-amber-600 mb-2">سوال:</h3>
+                            <p class="text-slate-800 text-lg">${fatwa.text}</p>
+                        </div>
+                        
+                        <div class="p-2">
+                            <h3 class="font-bold text-royal-900 mb-3 text-xl border-b inline-block pb-1">الجواب بعون الوہاب:</h3>
+                            <p class="text-slate-800 text-lg leading-loose">${fatwa.answer}</p>
+                        </div>
+                        
+                        <div class="mt-10 pt-6 border-t border-slate-200 text-center">
+                            <p class="text-slate-500 text-sm font-bold mb-2">واللہ اعلم بالصواب</p>
+                            <p class="text-slate-400 text-xs">دارالافتاء، آن لائن</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-      // 9. DONATION / تعاون
-      function renderDonation(c) {
-        c.innerHTML = `
-          <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border shadow-xl text-center space-y-6">
-             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl"><i class="fa-solid fa-hand-holding-heart"></i></div>
-             <h2 class="text-3xl font-bold text-slate-900">ادارے کے علمی و تحقیقی مشن میں تعاون کریں</h2>
-             <p class="text-slate-600 text-sm">آپ کے تعاون سے دارالافتاء کی خدمات (فتاویٰ، اشاعتِ کتب اور تحقیقات) کو مزید وسعت دی جا سکتی ہے۔</p>
-             <div class="grid grid-cols-2 gap-4 pt-4">
-                 <div class="border p-4 rounded-xl">
-                     <h4 class="font-bold text-royal-900">Bank Transfer</h4>
-                     <p class="text-xs text-slate-500 font-sans-eng mt-2">A/C: 1234567890<br>IFSC: SBIN0001234</p>
-                 </div>
-                 <div class="border p-4 rounded-xl">
-                     <h4 class="font-bold text-royal-900">UPI / QR Code</h4>
-                     <p class="text-xs text-slate-500 font-sans-eng mt-2">darulifta@upi</p>
-                 </div>
-             </div>
-          </div>
-        `;
-      }
+        // Dummy Function for AI Search Button
+        window.triggerAISearch = function() {
+            const query = document.getElementById('ai-search-input').value;
+            if(!query) {
+                alert("براہ کرم تلاش کے لیے کوئی سوال یا لفظ درج کریں۔");
+                return;
+            }
+            alert("AI Processing...\\nآپ کا سوال: " + query + "\\n\\nیہاں بیک اینڈ کی API کال ہوگی اور ویکٹر ڈیٹا بیس (Vector DB) سے مفہوم کے لحاظ سے درست جواب تلاش کر کے نیچے دکھایا جائے گا۔");
+        }
 
-      // Initialize
-      window.router('home');
+        // --- 4. INITIALIZE APP ---
+        window.router('home');
     </script>
 </body>
 </html>
