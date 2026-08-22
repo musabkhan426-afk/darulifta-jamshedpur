@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آن لائن دارالافتاء - AI Search</title>
+    <title>دارالافتاء جمشیدپور - AI Search</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,10 +53,10 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.router('home')">
                 <div class="bg-amber-500 text-royal-900 p-2 rounded-lg">
-                    <i class="fa-solid fa-book-open text-xl"></i>
+                    <i class="fa-solid fa-mosque text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-2xl leading-none">آن لائن دارالافتاء</h1>
+                    <h1 class="font-bold text-2xl leading-none">دارالافتاء جمشیدپور</h1>
                     <p class="text-xs text-amber-300">جدید و مستند شرعی رہنمائی</p>
                 </div>
             </div>
@@ -91,7 +91,7 @@
         window.router = function(view, id = null) {
             state.currentView = view;
             const app = document.getElementById('app');
-            app.innerHTML = ''; // Clear current content
+            app.innerHTML = ''; 
 
             if (view === 'home') renderHome(app);
             if (view === 'ask') renderAsk(app);
@@ -105,8 +105,9 @@
         function renderHome(c) {
             c.innerHTML = `
                 <div class="text-center space-y-6 mt-10">
-                    <h2 class="text-3xl md:text-5xl font-bold text-royal-900 leading-tight">آپ کے شرعی مسائل، <br><span class="text-amber-500">مستند رہنمائی</span></h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">قرآن و سنت کی روشنی میں اپنے روزمرہ مسائل کا حل جانیے۔ ہمارا سمارٹ سسٹم آپ کو مطلوبہ فتاویٰ تک باآسانی پہنچنے میں مدد فراہم کرتا ہے۔</p>
+                    <span class="bg-amber-100 text-amber-800 text-xs px-4 py-1.5 rounded-full font-bold border border-amber-300">خوش آمدید - دارالافتاء جمشیدپور</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-royal-900 leading-tight">آپ کے شرعی مسائل، <br><span class="text-amber-500">مستند شرعی حل</span></h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">قرآن و سنت کی روشنی میں اپنے روزمرہ مسائل کا حل جانیے۔ دارالافتاء جمشیدپور کا سمارٹ سسٹم آپ کو مطلوبہ فتاویٰ تک باآسانی پہنچنے میں مدد فراہم کرتا ہے۔</p>
                     
                     <div class="flex justify-center gap-4 pt-6">
                         <button onclick="window.router('ask')" class="bg-royal-900 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-royal-800 transition"><i class="fa-solid fa-pen-nib ml-2"></i> سوال بھیجیں</button>
@@ -120,14 +121,14 @@
         function renderAsk(c) {
             c.innerHTML = `
                 <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-                    <h3 class="text-2xl font-bold text-royal-900 mb-6 border-b pb-4"><i class="fa-solid fa-pen text-amber-500 ml-2"></i> نیا سوال / فتویٰ پوچھیں</h3>
-                    <form onsubmit="event.preventDefault(); alert('آپ کا سوال موصول ہوگیا ہے! جلد جواب دیا جائے گا۔'); window.router('home');" class="space-y-5">
+                    <h3 class="text-2xl font-bold text-royal-900 mb-6 border-b pb-4"><i class="fa-solid fa-pen text-amber-500 ml-2"></i> دارالافتاء جمشیدپور - سوال ارسال کریں</h3>
+                    <form onsubmit="event.preventDefault(); alert('آپ کا سوال دارالافتاء جمشیدپور کو موصول ہوگیا ہے! جلد جواب دیا جائے گا۔'); window.router('home');" class="space-y-5">
                         <div>
                             <label class="block font-bold mb-2">نام (اختیاری)</label>
                             <input type="text" class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="اپنا نام درج کریں">
                         </div>
                         <div>
-                            <label class="block font-bold mb-2">موضوع / عنوان <span class="text-red-500">*</span></label>
+                            <label class="block font-bold mb-2">عنوان <span class="text-red-500">*</span></label>
                             <input type="text" required class="w-full border p-3 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none" placeholder="سوال کا مختصر عنوان">
                         </div>
                         <div>
@@ -161,15 +162,14 @@
                     <!-- Main List & AI Search -->
                     <div class="flex-grow space-y-6">
                         
-                        <!-- AI Smart Search Box (New Integration) -->
+                        <!-- AI Smart Search Box -->
                         <div class="bg-gradient-to-br from-royal-900 to-slate-900 p-6 md:p-8 rounded-3xl shadow-lg relative overflow-hidden border border-amber-500/30">
-                            <!-- Decorative background icon -->
                             <i class="fa-solid fa-microchip absolute -right-4 -bottom-4 text-8xl text-white opacity-5"></i>
                             
                             <h3 class="text-white font-bold text-xl md:text-2xl mb-3 flex items-center gap-2">
                                 <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> اے آئی سمارٹ تلاش (AI Search)
                             </h3>
-                            <p class="text-slate-300 text-sm md:text-base mb-5 leading-loose">اپنا مسئلہ اپنی عام زبان میں لکھیے، ہمارا AI سسٹم مفہوم سمجھ کر درست فتویٰ تلاش کرے گا۔ (مثال: قسطوں پر بائیک لینا)</p>
+                            <p class="text-slate-300 text-sm md:text-base mb-5 leading-loose">اپنا مسئلہ اپنی عام زبان میں لکھیے، ہمارا AI سسٹم مفہوم سمجھ کر درست فتویٰ تلاش کرے گا۔</p>
                             
                             <div class="relative flex flex-col md:flex-row gap-2">
                                 <input type="text" id="ai-search-input" placeholder="کیا سوال ہے آپ کا؟..." class="w-full border-none p-4 rounded-xl bg-white/95 shadow-inner pr-4 focus:outline-none focus:ring-4 focus:ring-amber-500/50 text-slate-900 font-bold">
@@ -181,7 +181,7 @@
 
                         <!-- Fatawa List -->
                         <div class="space-y-4 pt-2">
-                            <h4 class="font-bold text-slate-600 text-lg border-b pb-2">حالیہ شائع شدہ فتاویٰ</h4>
+                            <h4 class="font-bold text-slate-600 text-lg border-b pb-2">حالیہ فتاویٰ - دارالافتاء جمشیدپور</h4>
                             ${state.questions.map(q => `
                                 <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-amber-400 transition" onclick="window.router('detail', '${q.id}')">
                                     <div class="flex justify-between items-center mb-3">
@@ -226,8 +226,8 @@
                         </div>
                         
                         <div class="mt-10 pt-6 border-t border-slate-200 text-center">
-                            <p class="text-slate-500 text-sm font-bold mb-2">واللہ اعلم بالصواب</p>
-                            <p class="text-slate-400 text-xs">دارالافتاء، آن لائن</p>
+                            <p class="text-slate-600 font-bold text-sm mb-1">واللہ اعلم بالصواب</p>
+                            <p class="text-amber-700 font-bold text-base">دارالافتاء جمشیدپور</p>
                         </div>
                     </div>
                 </div>
@@ -241,7 +241,7 @@
                 alert("براہ کرم تلاش کے لیے کوئی سوال یا لفظ درج کریں۔");
                 return;
             }
-            alert("AI Processing...\\nآپ کا سوال: " + query + "\\n\\nیہاں بیک اینڈ کی API کال ہوگی اور ویکٹر ڈیٹا بیس (Vector DB) سے مفہوم کے لحاظ سے درست جواب تلاش کر کے نیچے دکھایا جائے گا۔");
+            alert("AI Processing...\\nآپ کا سوال: " + query + "\\n\\nدارالافتاء جمشیدپور کا ویکٹر ڈیٹا بیس اس سوال کے مفہوم کے مطابق درست ترین فتویٰ تلاش کر رہا ہے۔");
         }
 
         // --- 4. INITIALIZE APP ---
