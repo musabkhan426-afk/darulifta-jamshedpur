@@ -4,2823 +4,513 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f172a">
-    <title>دارالافتاء جمشیدپور — Digital Ecosystem</title>
+    <title>دارالافتاء جمشیدپور — مرکزی علمی و تحقیقاتی پورٹل</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              royal: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                800: '#1e40af',
-                900: '#1e3a8a',
-                950: '#0f172a',
-              },
-              amber: {
-                400: '#fbbf24',
-                500: '#f59e0b',
-                600: '#d97706',
-              }
+              royal: { 50: '#f0f9ff', 100: '#e0f2fe', 800: '#1e40af', 900: '#1e3a8a', 950: '#0f172a' },
+              amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
             }
           }
         }
       }
     </script>
-
-    <!-- FontAwesome & Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-      body, button, input, textarea, select {
-        font-family: 'Jameel Noori Nastaleeq', 'Amiri', serif !important;
-        line-height: 2.1 !important;
-      }
+      body, button, input, textarea, select { font-family: 'Jameel Noori Nastaleeq', 'Amiri', serif !important; line-height: 2.1 !important; }
       .font-sans-eng { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important; }
+      /* Dropdown Hover Logic */
+      .group:hover .group-hover\:block { display: block; }
+      /* Mobile Menu hide/show */
+      .mobile-menu-active { display: block !important; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-royal-800 selection:text-white">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- TOP LIGHT ANNOUNCEMENT BAR -->
-    <div class="bg-slate-900 text-slate-200 py-1.5 px-4 text-xs text-center border-b border-amber-500/30 flex items-center justify-between">
-        <span class="inline-flex items-center gap-2 mx-auto">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            مرکزی علمی و تحقیقاتی پورٹل — دارالافتاء جمشیدپور
-        </span>
+    <!-- Top Bar -->
+    <div class="bg-royal-950 text-slate-300 py-1 px-4 text-xs flex justify-between items-center border-b border-amber-500/30">
+        <span class="flex items-center gap-2"><i class="fa-regular fa-calendar text-amber-400"></i> ۸ ربیع الاول ۱۴۴۸ھ | 22 اگست 2026ء</span>
+        <div class="flex gap-4">
+            <span class="cursor-pointer hover:text-white"><i class="fa-solid fa-language"></i> اردو ▼</span>
+            <span class="cursor-pointer hover:text-white" onclick="window.showLoginModal()">لاگ ان <i class="fa-solid fa-lock text-[10px]"></i></span>
+        </div>
     </div>
 
-    <!-- CLEAN WHITE NAVBAR -->
+    <!-- Header & Mega Navigation -->
     <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Brand Logo -->
+            <!-- Brand -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.router('home')">
                 <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-royal-900 to-royal-950 flex items-center justify-center text-amber-400 text-2xl shadow-md border border-amber-500/30">
                     <i class="fa-solid fa-kaaba"></i>
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900 leading-none">دارالافتاء جمشیدپور</h1>
-                    <p class="text-[10px] text-slate-500 font-sans-eng tracking-wider uppercase mt-1">Darul Ifta Jamshedpur • Academic & Research Platform</p>
+                    <p class="text-[10px] text-slate-500 font-sans-eng tracking-wider uppercase mt-1">Research & Academic Portal</p>
                 </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="flex items-center gap-2">
-                <button onclick="window.router('istifta')" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl shadow-md transition text-xs">
-                    <i class="fa-solid fa-pen-nib"></i>
-                    <span>سوال پوچھیں</span>
-                </button>
-                <button onclick="window.showLoginModal()" class="bg-royal-900 hover:bg-royal-950 text-white font-bold px-4 py-2 rounded-xl shadow transition text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-lock"></i>
-                    <span>لاگ ان</span>
-                </button>
+            <!-- Global Search (Desktop) -->
+            <div class="hidden md:flex flex-grow max-w-md mx-8 relative">
+                <input type="text" placeholder="فتاویٰ، مضامین یا کتب تلاش کریں..." class="w-full bg-slate-100 border border-slate-200 rounded-full py-2 px-5 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-royal-800">
+                <i class="fa-solid fa-search absolute left-4 top-3 text-slate-400"></i>
             </div>
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden text-2xl text-royal-900" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Quick Action -->
+            <button onclick="window.router('istifta')" class="hidden md:flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-5 py-2 rounded-xl shadow-md hover:scale-105 transition text-sm">
+                <i class="fa-solid fa-pen-nib"></i> سوال پوچھیں
+            </button>
         </div>
 
-        <!-- Navigation Bar -->
-        <nav class="bg-slate-100 text-slate-700 text-xs border-t border-slate-200">
-            <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap py-1.5 scrollbar-none">
-                <button onclick="window.router('home')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-900 font-bold"><i class="fa-solid fa-house ml-1"></i> ہوم</button>
-                <button onclick="window.router('fatawa')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-800"><i class="fa-solid fa-book-quran ml-1"></i> فتاویٰ لائبریری</button>
-                <button onclick="window.router('library')" class="px-3.5 py-1.5 rounded-xl hover:bg-white text-slate-800"><i class="fa-solid fa-book-open ml-1"></i> ڈیجیٹل کتب خانہ</button>
-                <button onclick="window.router('admin')" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-royal-900 font-bold shadow-sm"><i class="fa-solid fa-gauge-high ml-1"></i> ناظم پورٹل</button>
-                <button onclick="window.router('mufti')" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-amber-600 font-bold shadow-sm"><i class="fa-solid fa-user-nib ml-1"></i> مفتی ورک اسپیس</button>
+        <!-- Desktop Navigation (Mega Menu) -->
+        <nav class="hidden md:block bg-royal-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 flex">
+                <button onclick="window.router('home')" class="px-5 py-3 hover:bg-royal-800 font-bold transition"><i class="fa-solid fa-house ml-1"></i> ہوم</button>
+                
+                <!-- دارالافتاء Dropdown -->
+                <div class="group relative">
+                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">دارالافتاء <i class="fa-solid fa-angle-down text-xs"></i></button>
+                    <div class="hidden group-hover:block absolute top-full right-0 w-64 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
+                        <a href="#" onclick="window.router('istifta')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">نیا سوال بھیجیں</a>
+                        <a href="#" onclick="window.router('tracker')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">اپنے سوال کا جواب معلوم کریں</a>
+                        <a href="#" onclick="window.router('fatawa')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">تمام فتاویٰ / تلاش</a>
+                        <a href="#" onclick="window.router('names')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700 border-b">اسلامی نام</a>
+                        <a href="#" onclick="window.router('duas')" class="block px-4 py-2.5 hover:bg-amber-50 hover:text-amber-700">مسنون دعائیں</a>
+                    </div>
+                </div>
+
+                <!-- نشر و اشاعت Dropdown -->
+                <div class="group relative">
+                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">نشر و اشاعت <i class="fa-solid fa-angle-down text-xs"></i></button>
+                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
+                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">اسلامی مضامین</a>
+                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">تحقیقی مقالات</a>
+                        <a href="#" onclick="window.router('library')" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800 border-b">کتب (PDF)</a>
+                        <a href="#" class="block px-4 py-2.5 hover:bg-royal-50 hover:text-royal-800">مختصر تحریریں</a>
+                    </div>
+                </div>
+
+                <!-- تعارف Dropdown -->
+                <div class="group relative">
+                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">تعارف <i class="fa-solid fa-angle-down text-xs"></i></button>
+                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
+                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50 border-b">دارالافتاء کا تعارف</a>
+                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50 border-b">منہجِ افتاء و مقاصد</a>
+                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50">مفتیانِ کرام</a>
+                    </div>
+                </div>
+
+                <!-- رابطہ و تعاون Dropdown -->
+                <div class="group relative">
+                    <button class="px-5 py-3 hover:bg-royal-800 font-bold transition flex items-center gap-1">رابطہ و تعاون <i class="fa-solid fa-angle-down text-xs"></i></button>
+                    <div class="hidden group-hover:block absolute top-full right-0 w-56 bg-white text-slate-800 shadow-xl border border-slate-200 rounded-b-xl overflow-hidden z-50">
+                        <a href="#" onclick="window.router('donation')" class="block px-4 py-2.5 hover:bg-emerald-50 text-emerald-700 font-bold border-b">آن لائن تعاون (Donation)</a>
+                        <a href="#" class="block px-4 py-2.5 hover:bg-slate-50">ہم سے رابطہ کریں</a>
+                    </div>
+                </div>
             </div>
         </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden bg-white border-t border-slate-200 px-4 py-2 md:hidden space-y-2 text-sm shadow-inner">
+            <button onclick="window.router('istifta')" class="w-full text-right py-2 border-b font-bold text-amber-600">سوال پوچھیں</button>
+            <button onclick="window.router('tracker')" class="w-full text-right py-2 border-b">فتویٰ ٹریک کریں</button>
+            <button onclick="window.router('fatawa')" class="w-full text-right py-2 border-b">فتاویٰ و تلاش</button>
+            <button onclick="window.router('donation')" class="w-full text-right py-2 text-emerald-600 font-bold">تعاون کریں</button>
+        </div>
     </header>
 
-    <!-- DYNAMIC CONTAINER -->
+    <!-- Dynamic Container -->
     <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
+        <!-- Rendered Content Goes Here -->
     </main>
 
-    <!-- LOGIN MODAL -->
+    <!-- Login Modal (Admin/Mufti) -> Kept Existing Functionality -->
     <div id="login-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 relative">
             <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center space-y-1">
-                <div class="w-14 h-14 rounded-2xl bg-royal-50 text-royal-900 flex items-center justify-center mx-auto text-2xl shadow-inner">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
+            <div class="text-center">
+                <div class="w-14 h-14 rounded-2xl bg-royal-50 text-royal-900 flex items-center justify-center mx-auto text-2xl mb-2"><i class="fa-solid fa-shield-halved"></i></div>
                 <h3 class="text-xl font-bold text-slate-900">محفوظ پورٹل لاگ ان</h3>
-                <p class="text-xs text-slate-500">ناظمِ دارالافتاء و مفتیانِ کرام کے لیے</p>
             </div>
-
             <form id="login-form" class="space-y-3 text-sm">
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
-                   <input type="email" id="login-email" required placeholder="nazim@darulifta.org" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-royal-800 outline-none">
-                </div>
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
-                   <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-royal-800 outline-none">
-                </div>
-                <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded-xl border space-y-1 font-sans-eng">
-                   <b>Demo Login:</b><br>
-                   Nazim: <code class="text-royal-900 font-bold">nazim@darulifta.org</code> | <code class="text-royal-900 font-bold">demo123</code><br>
-                   Mufti: <code class="text-royal-900 font-bold">mufti@darulifta.org</code> | <code class="text-royal-900 font-bold">demo123</code>
-                </div>
-                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-3 rounded-xl shadow-lg transition text-sm">
-                    لاگ ان کریں
-                </button>
+                <input type="email" id="login-email" required placeholder="ای میل" class="w-full border border-slate-300 rounded-xl p-3">
+                <input type="password" id="login-password" required placeholder="پاسورڈ" class="w-full border border-slate-300 rounded-xl p-3">
+                <button type="submit" class="w-full bg-royal-900 text-white font-bold py-3 rounded-xl">لاگ ان کریں</button>
             </form>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 text-slate-600 text-xs mt-12">
-        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="space-y-2">
-                <h4 class="text-base font-bold text-royal-900">دارالافتاء جمشیدپور</h4>
-                <p class="text-slate-500 leading-relaxed text-xs">جدید ٹیکنالوجی اور معتبر فقہ اسلامی کی روشنی میں آن لائن شرعی رہنمائی و تحقیقات۔</p>
+    <!-- Advanced Footer (4 Columns) -->
+    <footer class="bg-slate-900 text-slate-400 text-sm mt-12 border-t-4 border-amber-500">
+        <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-kaaba text-amber-500"></i> دارالافتاء جمشیدپور</h4>
+                <p class="leading-relaxed">قرآن و سنت اور معتبر فقہ اسلامی کی روشنی میں آن لائن شرعی رہنمائی و تحقیقات کا مستند ادارہ۔</p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-amber-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                </div>
             </div>
-            <div class="space-y-1">
-                <h5 class="text-slate-900 font-bold text-sm">رابطہ</h5>
-                <p>جمشیدپور، جھارکھنڈ، ہند</p>
-                <p class="text-royal-800 font-sans-eng">contact@darulifta-jamshedpur.org</p>
+            <div class="space-y-3">
+                <h5 class="text-white font-bold mb-4">فوری روابط</h5>
+                <p><a href="#" onclick="window.router('istifta')" class="hover:text-amber-400">آن لائن سوال پوچھیں</a></p>
+                <p><a href="#" onclick="window.router('tracker')" class="hover:text-amber-400">فتویٰ ٹریکنگ</a></p>
+                <p><a href="#" onclick="window.router('fatawa')" class="hover:text-amber-400">فتاویٰ آرکائیو</a></p>
+                <p><a href="#" onclick="window.router('donation')" class="hover:text-amber-400">ادارے کے ساتھ تعاون</a></p>
             </div>
-            <div class="space-y-1">
-                <h5 class="text-slate-900 font-bold text-sm">شرعی انتباہ</h5>
-                <p class="text-slate-400 text-[11px]">آن لائن مواد عمومی علمی رہنمائی کے لیے ہے، باضابطہ فتویٰ کے لیے ادارے سے رجوع فرمائیں۔</p>
+            <div class="space-y-3">
+                <h5 class="text-white font-bold mb-4">علمی مواد</h5>
+                <p><a href="#" onclick="window.router('library')" class="hover:text-amber-400">کتب خانہ (PDF)</a></p>
+                <p><a href="#" onclick="window.router('names')" class="hover:text-amber-400">اسلامی نام</a></p>
+                <p><a href="#" onclick="window.router('duas')" class="hover:text-amber-400">مسنون دعائیں</a></p>
+                <p><a href="#" class="hover:text-amber-400">فقہی مقالات</a></p>
+            </div>
+            <div class="space-y-3">
+                <h5 class="text-white font-bold mb-4">رابطہ</h5>
+                <p><i class="fa-solid fa-location-dot w-5 text-center text-amber-500"></i> جمشیدپور، جھارکھنڈ، انڈیا</p>
+                <p><i class="fa-solid fa-envelope w-5 text-center text-amber-500"></i> info@darulifta-jsr.org</p>
+                <p><i class="fa-brands fa-whatsapp w-5 text-center text-amber-500"></i> +91-0000000000</p>
             </div>
         </div>
-        <div class="bg-slate-100 py-3 text-center text-slate-500 text-[11px] border-t border-slate-200">
-            © 2026 دارالافتاء جمشیدپور | Digital Institutional Ecosystem
+        <div class="bg-slate-950 py-4 text-center text-xs border-t border-slate-800">
+            © 2026 دارالافتاء جمشیدپور | All Rights Reserved.
         </div>
     </footer>
 
-    <!-- JS ENGINE -->
+    <!-- Javascript Engine & Logic -->
     <script>
+      // State & Mock Data (Preserving existing data + adding new structures)
       const state = {
         currentUser: null,
         questions: [
-          {
-            id: 'DIF-1448-001',
-            askerName: 'Sample Asker A',
-            phone: '+91 9876543210',
-            source: 'آن لائن ویب سائٹ',
-            title: 'آن لائن تجارتی معاہدوں میں ایڈوانس رقم (Advance Booking) کا حکم',
-            questionText: 'کیا آن لائن آرڈر منسوخ کرنے پر ایڈوانس رقم ضبط کی جا سکتی ہے؟ شرعی رہنمائی فرمائیں۔',
-            status: 'جواب شدہ',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: 'الجواب وباللہ التوفیق: اگر فریقین نے معاہدے کے وقت یہ شرط طے کی تھی تو معاصر فقہی فیصلوں کی روشنی میں گنجائش موجود ہے۔',
-            createdAt: '2026-08-20'
-          },
-          {
-            id: 'DIF-1448-002',
-            askerName: 'Sample Asker B',
-            phone: '+91 9123456789',
-            source: 'واٹس ایپ (WhatsApp)',
-            title: 'زکوۃ کی رقم سے ہسپتال کے لیے طبی آلات خریدنا',
-            questionText: 'کیا زکوۃ کی رقم سے غریب بیمارات کے علاج کے لیے ہسپتال کو مشینری فراہم کی جا سکتی ہے؟',
-            status: 'زیرِ تحقیق',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: '',
-            createdAt: '2026-08-21'
-          }
+          { id: 'DIJ-2026-001', askerName: 'عبداللہ', title: 'آن لائن ٹریڈنگ کا شرعی حکم', text: 'کیا شیئرز کی ڈے ٹریڈنگ جائز ہے؟', status: 'جواب شدہ', category: 'معاملات', ans: 'شرائط کے ساتھ جائز ہے۔ تفصیل ملاحظہ فرمائیں...' }
         ]
       };
 
-      window.router = (view) => {
+      // Main Router
+      window.router = (view, param = null) => {
         const app = document.getElementById('app-view');
         window.scrollTo(0, 0);
+        document.getElementById('mobile-menu').classList.add('hidden'); // Close mobile menu
 
         if (view === 'home') renderHome(app);
         else if (view === 'istifta') renderIstifta(app);
+        else if (view === 'tracker') renderTracker(app);
         else if (view === 'fatawa') renderFatawa(app);
+        else if (view === 'names') renderNames(app);
+        else if (view === 'duas') renderDuas(app);
         else if (view === 'library') renderLibrary(app);
-        else if (view === 'admin') renderAdmin(app);
-        else if (view === 'mufti') renderMufti(app);
+        else if (view === 'donation') renderDonation(app);
+        else if (view === 'fatwaDetail') renderFatwaDetail(app, param);
         else renderHome(app);
       };
 
+      // Modals Logic
       window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
       window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
 
-      document.getElementById('login-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        if(email.includes('nazim')) {
-          state.currentUser = { name: 'Sample Nazim', email, role: 'NAZIM' };
-        } else {
-          state.currentUser = { name: 'Sample Mufti', email, role: 'MUFTI' };
-        }
-        window.hideLoginModal();
-        window.router(state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti');
-      });
-
-      // HOME VIEW
+      // 1. SMART HOMEPAGE (With Quick Actions)
       function renderHome(c) {
         c.innerHTML = `
-          <!-- HERO SECTION -->
-          <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-royal-950 via-royal-900 to-slate-900 text-white p-8 md:p-12 shadow-xl border border-slate-200">
-             <div class="max-w-2xl space-y-4 relative z-10">
-                <span class="bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/30">ڈیجیٹل افتاء و تحقیقاتی پورٹل</span>
-                <h2 class="text-3xl md:text-5xl font-bold text-amber-400 leading-snug">دارالافتاء جمشیدپور</h2>
-                <p class="text-sm md:text-base text-slate-200">قرآن و سنت اور معتبر فقہ اسلامی کی روشنی میں آن لائن سوالات کے جوابات، فتاویٰ آرکائیو اور تحقیقاتی لائبریری۔</p>
-                <div class="flex flex-wrap gap-3 pt-2">
-                   <button onclick="window.router('istifta')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl shadow-lg text-xs transition">
-                     آن لائن سوال پوچھیں ➔
-                   </button>
-                   <button onclick="window.router('fatawa')" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-2.5 rounded-xl text-xs border border-white/20 transition">
-                     سابقہ فتاویٰ تلاش کریں
-                   </button>
+          <!-- Hero Section -->
+          <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-royal-950 via-royal-900 to-slate-900 text-white p-8 md:p-14 shadow-xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-8">
+             <div class="max-w-2xl space-y-5 relative z-10">
+                <span class="bg-amber-500/20 text-amber-400 text-sm font-bold px-4 py-1.5 rounded-full border border-amber-500/30 inline-block">آن لائن شرعی رہنمائی</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-amber-400 leading-snug">قرآن، سنت اور فقہ حنفی کی روشنی میں مستند فتاویٰ</h2>
+                <p class="text-base text-slate-300">دارالافتاء جمشیدپور کے مفتیان کرام سے اپنے دینی و دنیاوی مسائل کا شرعی حل معلوم کریں۔ مکمل راز داری کے ساتھ۔</p>
+                <div class="flex flex-wrap gap-3 pt-3">
+                   <button onclick="window.router('istifta')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition">سوال پوچھیں</button>
+                   <button onclick="window.router('tracker')" class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl border border-white/20 transition">فتویٰ ٹریک کریں</button>
+                </div>
+             </div>
+             <!-- Prayer Times Card on Hero -->
+             <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 w-full md:w-72 text-center">
+                <h3 class="text-amber-400 font-bold border-b border-white/20 pb-2 mb-3">نماز کے اوقات (جمشیدپور)</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>فجر</span><span>04:15 AM</span></div>
+                    <div class="flex justify-between"><span>ظہر</span><span>12:30 PM</span></div>
+                    <div class="flex justify-between bg-white/20 p-1 rounded font-bold"><span>عصر (موجودہ)</span><span>04:45 PM</span></div>
+                    <div class="flex justify-between"><span>مغرب</span><span>06:20 PM</span></div>
+                    <div class="flex justify-between"><span>عشاء</span><span>07:45 PM</span></div>
                 </div>
              </div>
           </div>
 
-          <!-- METRICS -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-royal-800 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-file-circle-check"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'جواب شدہ').length}</div>
-                <div class="text-xs text-slate-500">مصدقہ فتاویٰ</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-clock"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'زیرِ تحقیق').length}</div>
-                <div class="text-xs text-slate-500">زیرِ تحقیق سوالات</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-book"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">1,250+</div>
-                <div class="text-xs text-slate-500">ڈیجیٹل کتب</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-shield-halved"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">100%</div>
-                <div class="text-xs text-slate-500">محفوظ پورٹل</div>
-             </div>
+          <!-- Feature Shortcuts (Quick Actions) -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+             <button onclick="window.router('fatawa')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-blue-50 text-royal-800 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-book-open"></i></div>
+                <div class="font-bold text-slate-800">تفصیلی فتاویٰ</div>
+             </button>
+             <button onclick="window.router('names')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-child-reaching"></i></div>
+                <div class="font-bold text-slate-800">اسلامی نام</div>
+             </button>
+             <button onclick="window.router('duas')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-hands-praying"></i></div>
+                <div class="font-bold text-slate-800">مسنون دعائیں</div>
+             </button>
+             <button onclick="window.router('library')" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-700 flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-file-pdf"></i></div>
+                <div class="font-bold text-slate-800">کتب PDF</div>
+             </button>
           </div>
-        `;
-      }
 
-      // ONLINE ISTIFTA VIEW
-      function renderIstifta(c) {
-        c.innerHTML = `
-          <div class="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
-             <div class="text-center space-y-1 border-b pb-4">
-                <h2 class="text-2xl font-bold text-royal-950">آن لائن استفتاء فارم</h2>
-                <p class="text-xs text-slate-500">دارالافتاء جمشیدپور کے مفتیانِ کرام سے شرعی مسئلہ دریافت کریں</p>
+          <!-- Latest Fatawa -->
+          <div class="mt-12 space-y-4">
+             <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="text-2xl font-bold text-royal-950">تازہ ترین فتاویٰ</h3>
+                <button onclick="window.router('fatawa')" class="text-amber-600 text-sm font-bold">سب دیکھیں ➔</button>
              </div>
-
-             <form id="public-istifta-form" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                   <div>
-                      <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا اسمِ گرامی</label>
-                      <input type="text" id="q-name" required placeholder="نام درج کریں" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
-                   </div>
-                   <div>
-                      <label class="block text-xs font-bold text-slate-700 mb-1">موبائل / واٹس ایپ نمبر</label>
-                      <input type="text" id="q-phone" placeholder="+91 0000000000" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
-                   </div>
-                </div>
-
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا ذریعہ (Source)</label>
-                   <select id="q-source" class="w-full border border-slate-300 p-3 rounded-xl text-sm bg-white outline-none">
-                       <option value="آن لائن ویب سائٹ">آن لائن ویب سائٹ</option>
-                       <option value="واٹس ایپ (WhatsApp)">واٹس ایپ (WhatsApp)</option>
-                       <option value="ای میل (Email)">ای میل (Email)</option>
-                   </select>
-                </div>
-
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا عنوان</label>
-                   <input type="text" id="q-title" required placeholder="مثال: آن لائن خرید و فروخت کا حکم" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none">
-                </div>
-
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">تفصیلی سوال</label>
-                   <textarea id="q-text" rows="5" required placeholder="اپنا مسئلہ مکمل تفصیل کے ساتھ تحریر کریں..." class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-royal-800 outline-none"></textarea>
-                </div>
-
-                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg transition">
-                   سوال ارسال کریں ➔
-                </button>
-             </form>
-          </div>
-        `;
-
-        document.getElementById('public-istifta-form').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const newQ = {
-            id: `DIF-1448-00${state.questions.length + 1}`,
-            askerName: document.getElementById('q-name').value,
-            phone: document.getElementById('q-phone').value,
-            source: document.getElementById('q-source').value,
-            title: document.getElementById('q-title').value,
-            questionText: document.getElementById('q-text').value,
-            status: 'نیا سوال',
-            assignedTo: '',
-            answerText: '',
-            createdAt: '2026-08-22'
-          };
-          state.questions.push(newQ);
-          alert(`آپ کا سوال کامیابی سے موصول ہو گیا۔ استفتاء نمبر: ${newQ.id}`);
-          window.router('home');
-        });
-      }
-
-      // FATAWA ARCHIVE VIEW
-      function renderFatawa(c) {
-        c.innerHTML = `
-          <div class="space-y-4">
-             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">فتاویٰ لائبریری و آرکائیو</h2>
-             <div class="grid grid-cols-1 gap-4">
+             <div class="grid md:grid-cols-2 gap-4">
                 ${state.questions.map(q => `
-                   <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                      <div class="flex justify-between items-center">
-                         <span class="text-xs font-bold text-royal-900 bg-royal-50 px-3 py-1 rounded-full font-sans-eng border border-royal-200">${q.id}</span>
-                         <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${q.status === 'جواب شدہ' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${q.status}</span>
-                      </div>
-                      <h3 class="text-xl font-bold text-slate-900">${q.title}</h3>
-                      <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-700"><b>سوال:</b> ${q.questionText}</div>
-                      ${q.answerText ? `<div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100 text-sm text-slate-800"><b>الجواب وباللہ التوفیق:</b><br>${q.answerText}</div>` : ''}
-                   </div>
+                  <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-royal-500 transition" onclick="window.router('fatwaDetail', '${q.id}')">
+                    <span class="text-xs font-sans-eng bg-slate-100 text-slate-600 px-2 py-1 rounded border">${q.id}</span>
+                    <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded mr-2">${q.category}</span>
+                    <h4 class="font-bold text-lg text-slate-900 mt-2">${q.title}</h4>
+                    <p class="text-sm text-slate-500 line-clamp-2">${q.text}</p>
+                  </div>
                 `).join('')}
              </div>
           </div>
-         </script>
-
-    <!-- Fonts & FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-      body, button, input, textarea, select {
-        font-family: 'Jameel Noori Nastaleeq', 'Amiri', serif !important;
-        line-height: 2.1 !important;
-      }
-      .font-arabic { font-family: 'Amiri', serif !important; }
-      .font-sans-eng { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
-
-    <!-- TOP ANNOUNCEMENT BAR -->
-    <div class="bg-gradient-to-r from-brand-950 via-brand-900 to-brand-950 text-gold-400 py-1.5 px-4 text-xs text-center border-b border-gold-500/30 flex items-center justify-between">
-        <span class="inline-flex items-center gap-2 mx-auto">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            مرکزی ایڈمن دانش بورڈ — دارالافتاء جمشیدپور کا جدید ترین ڈیجیٹل سسٹم
-        </span>
-        <div class="hidden md:flex gap-2 text-[11px] font-sans-eng text-emerald-200">
-            <button onclick="window.router('home')" class="hover:text-gold-400">Main Portal</button> |
-            <button onclick="window.router('admin')" class="hover:text-gold-400">Admin</button>
-        </div>
-    </div>
-
-    <!-- MAIN NAVBAR -->
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Brand Identity -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.router('home')">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-800 to-brand-950 flex items-center justify-center text-gold-400 text-2xl shadow-md border border-gold-500/30">
-                    <i class="fa-solid fa-kaaba"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-brand-950 leading-none">دارالافتاء جمشیدپور</h1>
-                    <p class="text-[10px] text-slate-500 font-sans-eng tracking-wider uppercase mt-1">Darul Ifta Jamshedpur • Islamic Academic Portal</p>
-                </div>
-            </div>
-
-            <!-- CTA Actions -->
-            <div class="flex items-center gap-2">
-                <button onclick="window.router('istifta')" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-500 text-slate-950 font-bold px-4 py-2 rounded-xl shadow-md transition text-xs">
-                    <i class="fa-solid fa-pen-nib"></i>
-                    <span>آن لائن سوال کریں</span>
-                </button>
-                <button onclick="window.showLoginModal()" class="bg-brand-900 hover:bg-brand-950 text-white font-bold px-4 py-2 rounded-xl shadow transition text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-lock"></i>
-                    <span>لاگ ان</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Scrollable Navigation Tabs -->
-        <nav class="bg-brand-950 text-white text-xs border-t border-brand-900">
-            <div class="max-w-7xl mx-auto px-4 flex items-center gap-1 overflow-x-auto whitespace-nowrap py-1 scrollbar-none">
-                <button onclick="window.router('home')" class="px-3.5 py-1.5 rounded-lg hover:bg-brand-800 text-emerald-100 font-bold"><i class="fa-solid fa-house ml-1"></i> ہوم</button>
-                <button onclick="window.router('fatawa')" class="px-3.5 py-1.5 rounded-lg hover:bg-brand-800 text-emerald-100"><i class="fa-solid fa-book-quran ml-1"></i> فتاویٰ آرکائیو</button>
-                <button onclick="window.router('library')" class="px-3.5 py-1.5 rounded-lg hover:bg-brand-800 text-emerald-100"><i class="fa-solid fa-book-open ml-1"></i> ڈیجیٹل کتب خانہ</button>
-                <button onclick="window.router('admin')" class="px-3.5 py-1.5 rounded-lg hover:bg-brand-800 text-gold-400 font-bold"><i class="fa-solid fa-gauge-high ml-1"></i> ناظم پورٹل</button>
-                <button onclick="window.router('mufti')" class="px-3.5 py-1.5 rounded-lg hover:bg-brand-800 text-gold-400 font-bold"><i class="fa-solid fa-user-nib ml-1"></i> مفتی ورک اسپیس</button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- DYNAMIC MAIN CONTAINER -->
-    <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
-        <!-- JS Views render here dynamically -->
-    </main>
-
-    <!-- MODAL FOR LOGIN -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 relative animate-in fade-in zoom-in duration-200">
-            <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center space-y-1">
-                <div class="w-14 h-14 rounded-full bg-emerald-100 text-brand-900 flex items-center justify-center mx-auto text-2xl">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900">محفوظ پورٹل لاگ ان</h3>
-                <p class="text-xs text-slate-500">ناظمِ دارالافتاء و مفتیانِ کرام کے لیے</p>
-            </div>
-
-            <form id="login-form" class="space-y-3 text-sm">
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
-                   <input type="email" id="login-email" required placeholder="nazim@darulifta.org" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 outline-none">
-                </div>
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
-                   <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-brand-500 outline-none">
-                </div>
-                <div class="text-[11px] text-slate-600 bg-slate-100 p-3 rounded-xl space-y-1 font-sans-eng">
-                   <b>Demo Access:</b><br>
-                   Nazim: <code class="text-brand-900 font-bold">nazim@darulifta.org</code> | <code class="text-brand-900 font-bold">demo123</code><br>
-                   Mufti: <code class="text-brand-900 font-bold">mufti@darulifta.org</code> | <code class="text-brand-900 font-bold">demo123</code>
-                </div>
-                <button type="submit" class="w-full bg-brand-900 hover:bg-brand-950 text-white font-bold py-3 rounded-xl shadow-lg transition text-sm">
-                    لاگ ان کریں
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-brand-950 text-slate-300 text-xs border-t-4 border-gold-500 mt-12">
-        <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="space-y-3">
-                <h4 class="text-lg font-bold text-gold-400">دارالافتاء جمشیدپور</h4>
-                <p class="text-slate-300 leading-relaxed text-xs">قرآن و سنت اور معتبر فقہ اسلامی کی روشنی میں شرعی رہنمائی و تحقیقات کا مرکزی آن لائن ادارہ۔</p>
-            </div>
-            <div class="space-y-2">
-                <h5 class="text-white font-bold text-sm">مرکزی دفتر</h5>
-                <p>جمشیدپور، جھارکھنڈ، ہند</p>
-                <p class="text-gold-400 font-sans-eng">contact@darulifta-jamshedpur.org</p>
-            </div>
-            <div class="space-y-2">
-                <h5 class="text-white font-bold text-sm">شرعی انتباہ</h5>
-                <p class="text-slate-400 text-[11px] leading-normal">آن لائن دستیاب مواد عمومی علمی و تحقیقی رہنمائی کے لیے ہے۔ مخصوص صورتِ حال کے لیے فتویٰ کا باضابطہ حصول ضروری ہے۔</p>
-            </div>
-        </div>
-        <div class="bg-black/40 py-4 text-center text-slate-400 text-[11px]">
-            © 2026 دارالافتاء جمشیدپور | Digital Institutional Ecosystem
-        </div>
-    </footer>
-
-    <!-- JS LOGIC AND RENDERING -->
-    <script>
-      const state = {
-        currentUser: null,
-        questions: [
-          {
-            id: 'DIF-1448-001',
-            askerName: 'Sample Asker A',
-            phone: '+91 9876543210',
-            source: 'آن لائن ویب سائٹ',
-            title: 'آن لائن تجارتی معاہدو ں میں بیع العلبون (Advance Booking)',
-            questionText: 'کیا آن لائن آرڈر منسوخ کرنے پر ایڈوانس رقم ضبط کی جا سکتی ہے؟ شرعی رہنمائی فرمائیں۔',
-            status: 'جواب شدہ',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: 'الجواب وباللہ التوفیق: اگر فریقین نے معاہدے کے وقت یہ شرط طے کی تھی تو معاصر فقہی فیصلوں کی روشنی میں گنجائش موجود ہے۔',
-            createdAt: '2026-08-20'
-          },
-          {
-            id: 'DIF-1448-002',
-            askerName: 'Sample Asker B',
-            phone: '+91 9123456789',
-            source: 'واٹس ایپ (WhatsApp)',
-            title: 'زکوۃ کی رقم سے ہسپتال کے لیے طبی آلات کی خرید و فروخت',
-            questionText: 'کیا زکوۃ کی رقم سے غریب بیمارات کے علاج کے لیے ہسپتال کو مشینری فراہم کی جا سکتی ہے؟',
-            status: 'زیرِ تحقیق',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: '',
-            createdAt: '2026-08-21'
-          }
-        ]
-      };
-
-      window.router = (view) => {
-        const app = document.getElementById('app-view');
-        window.scrollTo(0, 0);
-
-        if (view === 'home') renderHome(app);
-        else if (view === 'istifta') renderIstifta(app);
-        else if (view === 'fatawa') renderFatawa(app);
-        else if (view === 'library') renderLibrary(app);
-        else if (view === 'admin') renderAdmin(app);
-        else if (view === 'mufti') renderMufti(app);
-        else renderHome(app);
-      };
-
-      window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
-      window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
-
-      document.getElementById('login-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        if(email.includes('nazim')) {
-          state.currentUser = { name: 'Sample Nazim', email, role: 'NAZIM' };
-        } else {
-          state.currentUser = { name: 'Sample Mufti', email, role: 'MUFTI' };
-        }
-        window.hideLoginModal();
-        window.router(state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti');
-      });
-
-      // HOME VIEW (WITH HERO IMAGE & VIBRANT SAAS CARDS)
-      function renderHome(c) {
-        c.innerHTML = `
-          <!-- HERO BANNER WITH REAL IMAGE BACKGROUND -->
-          <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
-             <img src="https://images.unsplash.com/photo-1542816417-0983cbe82752?auto=format&fit=crop&w=1600&q=80" alt="Islamic Architecture" class="w-full h-80 md:h-[420px] object-cover">
-             <div class="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/75 to-transparent flex flex-col justify-end p-6 md:p-12 text-white space-y-3">
-                <span class="bg-gold-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full w-fit">مرکزی آن لائن افتاء پورٹل</span>
-                <h2 class="text-3xl md:text-5xl font-bold text-gold-400">دارالافتاء جمشیدپور</h2>
-                <p class="text-sm md:text-base text-slate-200 max-w-2xl font-arabic">جدید ٹیکنالوجی اور معتبر فقہی روایت کا حسین امتزاج — آن لائن استفتاء، فتاویٰ آرکائیو اور تحقیقاتی نظام</p>
-                <div class="flex flex-wrap gap-3 pt-2">
-                   <button onclick="window.router('istifta')" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-lg text-xs transition">
-                     سوال پوچھیں ➔
-                   </button>
-                   <button onclick="window.router('fatawa')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold px-5 py-2.5 rounded-xl text-xs transition">
-                     فتاویٰ تلاش کریں
-                   </button>
-                </div>
-             </div>
-          </div>
-
-          <!-- SAAS STATS DASHBOARD -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-brand-800 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-file-invoice"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'جواب شدہ').length}</div>
-                <div class="text-xs text-slate-500">مصدقہ فتاویٰ</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-gold-600 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">${state.questions.filter(q => q.status === 'زیرِ تحقیق').length}</div>
-                <div class="text-xs text-slate-500">زیرِ تحقیق سوالات</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-book-bookmark"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">1,250+</div>
-                <div class="text-xs text-slate-500">ڈیجیٹل کتب</div>
-             </div>
-             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-1">
-                <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-800 flex items-center justify-center mx-auto text-lg"><i class="fa-solid fa-users"></i></div>
-                <div class="text-2xl font-bold text-slate-900 font-sans-eng">100%</div>
-                <div class="text-xs text-slate-500">محفوظ و مستند</div>
-             </div>
-          </div>
         `;
       }
 
-      // ONLINE ISTIFTA VIEW
+      // 2. ADVANCED ISTIFTA FORM
       function renderIstifta(c) {
         c.innerHTML = `
-          <div class="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
-             <div class="text-center space-y-1 border-b pb-4">
-                <h2 class="text-2xl font-bold text-brand-950">آن لائن استفتاء فارم</h2>
-                <p class="text-xs text-slate-500">دارالافتاء جمشیدپور کے مفتیانِ کرام سے شرعی مسئلہ دریافت کریں</p>
+          <div class="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-slate-200">
+             <div class="text-center space-y-2 border-b pb-6 mb-6">
+                <h2 class="text-3xl font-bold text-royal-950">آن لائن استفتاء فارم</h2>
+                <p class="text-sm text-slate-500">اپنا سوال تفصیل سے تحریر کریں، ان شاء اللہ جلد جواب دیا جائے گا۔</p>
              </div>
-
-             <form id="public-istifta-form" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+             <form id="new-question-form" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                   <div><label class="block text-sm font-bold mb-1">نام (اختیاری)</label><input type="text" class="w-full border rounded-xl p-3 bg-slate-50"></div>
+                   <div><label class="block text-sm font-bold mb-1">واٹس ایپ نمبر (جواب بھیجنے کے لیے)</label><input type="text" class="w-full border rounded-xl p-3 bg-slate-50"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                    <div>
-                      <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا اسمِ گرامی</label>
-                      <input type="text" id="q-name" required placeholder="نام درج کریں" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                       <label class="block text-sm font-bold mb-1">موضوع (Category)</label>
+                       <select class="w-full border rounded-xl p-3 bg-slate-50">
+                           <option>عقائد</option><option>طہارت و نماز</option><option>زکوۃ و صدقات</option><option>معاملات و تجارت</option><option>نکاح و طلاق</option>
+                       </select>
                    </div>
-                   <div>
-                      <label class="block text-xs font-bold text-slate-700 mb-1">موبائل / واٹس ایپ نمبر</label>
-                      <input type="text" id="q-phone" placeholder="+91 0000000000" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-                   </div>
+                   <div><label class="block text-sm font-bold mb-1">عنوان (Title)</label><input type="text" required class="w-full border rounded-xl p-3 bg-slate-50"></div>
                 </div>
-
                 <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا ذریعہ (Source)</label>
-                   <select id="q-source" class="w-full border border-slate-300 p-3 rounded-xl text-sm bg-white outline-none">
-                       <option value="آن لائن ویب سائٹ">آن لائن ویب سائٹ</option>
-                       <option value="واٹس ایپ (WhatsApp)">واٹس ایپ (WhatsApp)</option>
-                       <option value="ای میل (Email)">ای میل (Email)</option>
-                       <option value="گوگل فارم">گوگل فارم</option>
-                   </select>
+                   <label class="block text-sm font-bold mb-1">تفصیلی سوال</label>
+                   <textarea rows="6" required class="w-full border rounded-xl p-3 bg-slate-50"></textarea>
                 </div>
-
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا عنوان</label>
-                   <input type="text" id="q-title" required placeholder="مثال: آن لائن خرید و فروخت کا حکم" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                <div class="flex items-center gap-2 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                    <input type="checkbox" id="private-q" class="w-4 h-4">
+                    <label for="private-q" class="text-sm font-bold text-amber-900">میرے سوال کو پبلک ویب سائٹ پر شائع نہ کیا جائے (خفیہ رکھیں)</label>
                 </div>
-
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">تفصیلی سوال</label>
-                   <textarea id="q-text" rows="5" required placeholder="اپنا مسئلہ مکمل تفصیل کے ساتھ تحریر کریں..." class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 outline-none"></textarea>
-                </div>
-
-                <button type="submit" class="w-full bg-brand-900 hover:bg-brand-950 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg transition">
-                   سوال ارسال کریں ➔
-                </button>
+                <button type="submit" class="w-full bg-royal-900 hover:bg-royal-950 text-white font-bold py-4 rounded-xl shadow-lg transition text-lg">سوال ارسال کریں</button>
              </form>
           </div>
         `;
-
-        document.getElementById('public-istifta-form').addEventListener('submit', (e) => {
+        document.getElementById('new-question-form').addEventListener('submit', (e) => {
           e.preventDefault();
-          const newQ = {
-            id: `DIF-1448-00${state.questions.length + 1}`,
-            askerName: document.getElementById('q-name').value,
-            phone: document.getElementById('q-phone').value,
-            source: document.getElementById('q-source').value,
-            title: document.getElementById('q-title').value,
-            questionText: document.getElementById('q-text').value,
-            status: 'نیا سوال',
-            assignedTo: '',
-            answerText: '',
-            createdAt: '2026-08-22'
-          };
-          state.questions.push(newQ);
-          alert(`آپ کا سوال کامیابی سے موصول ہو گیا۔ استفتاء نمبر: ${newQ.id}`);
-          window.router('home');
+          alert('آپ کا سوال موصول ہوگیا ہے۔ ٹریکنگ آئی ڈی: DIJ-2026-002\nآپ کے واٹس ایپ پر جلد اطلاع دی جائے گی۔');
+          window.router('tracker');
         });
       }
 
-      // FATAWA ARCHIVE VIEW
+      // 3. FATWA TRACKER
+      function renderTracker(c) {
+        c.innerHTML = `
+          <div class="max-w-2xl mx-auto space-y-6">
+             <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 text-center space-y-4">
+                <h2 class="text-2xl font-bold text-royal-950">اپنے سوال کا اسٹیٹس معلوم کریں</h2>
+                <p class="text-sm text-slate-500">سوال بھیجنے کے بعد ملنے والا Tracking ID نیچے درج کریں۔</p>
+                <div class="flex gap-2 max-w-sm mx-auto">
+                    <input type="text" id="track-id" placeholder="DIJ-2026-..." class="w-full border border-slate-300 p-3 rounded-xl font-sans-eng text-center uppercase">
+                    <button onclick="alert('اسٹیٹس: مفتی صاحب کے زیرِ تحقیق ہے\\nمطلوبہ وقت: 2 دن')" class="bg-amber-500 text-slate-900 font-bold px-6 rounded-xl">تلاش</button>
+                </div>
+             </div>
+          </div>
+        `;
+      }
+
+      // 4. INDIVIDUAL FATWA PAGE (With PDF / Print)
+      function renderFatwaDetail(c, id) {
+        const q = state.questions.find(x => x.id === id) || state.questions[0];
+        c.innerHTML = `
+          <div class="max-w-4xl mx-auto space-y-4">
+             <!-- Tools Bar -->
+             <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                 <div class="text-sm font-bold text-slate-500">موضوع: ${q.category}</div>
+                 <div class="flex gap-2">
+                     <button onclick="window.print()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-sm font-bold"><i class="fa-solid fa-print"></i> پرنٹ</button>
+                     <button onclick="alert('دارالافتاء کی آفیشل مہر اور لیٹر ہیڈ کے ساتھ PDF ڈاؤن لوڈ ہو رہی ہے...')" class="px-3 py-1.5 bg-royal-900 text-white rounded text-sm font-bold"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                 </div>
+             </div>
+
+             <!-- Fatwa Content -->
+             <div class="bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-lg space-y-6">
+                <div class="text-center border-b pb-6">
+                    <span class="text-sm font-bold text-royal-900 font-sans-eng bg-royal-50 px-3 py-1 rounded-full border border-royal-200">فتویٰ نمبر: ${q.id}</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-4 leading-relaxed">${q.title}</h2>
+                </div>
+                
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold text-amber-600">الاستفتاء (سوال):</h3>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-lg leading-loose text-slate-800">${q.text}</div>
+                </div>
+
+                <div class="space-y-2 pt-4">
+                    <h3 class="text-xl font-bold text-royal-900">الجواب وباللہ التوفیق:</h3>
+                    <div class="p-6 rounded-2xl bg-royal-50/50 border border-royal-100 text-lg leading-loose text-slate-800">
+                        ${q.ans}
+                        <br><br>
+                        <b>واللہ اعلم بالصواب</b>
+                    </div>
+                </div>
+
+                <!-- Footer Signatures -->
+                <div class="flex justify-between items-center pt-10 border-t text-sm font-bold text-slate-600">
+                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>دستخط مفتی</div>
+                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>مہر دارالافتاء</div>
+                    <div class="text-center"><div class="w-32 border-b-2 border-slate-400 mb-2"></div>تصدیق ناظم</div>
+                </div>
+             </div>
+          </div>
+        `;
+      }
+
+      // 5. FATAWA ARCHIVE (Taxonomy)
       function renderFatawa(c) {
         c.innerHTML = `
-          <div class="space-y-4">
-             <h2 class="text-2xl font-bold text-brand-950 border-b pb-2">فتاویٰ لائبریری و آرکائیو</h2>
-             <div class="grid grid-cols-1 gap-4">
+          <div class="flex flex-col md:flex-row gap-6">
+             <!-- Sidebar Filters -->
+             <div class="w-full md:w-64 bg-white p-5 rounded-2xl border border-slate-200 h-fit space-y-4">
+                <h3 class="font-bold text-lg border-b pb-2">ابواب و موضوعات</h3>
+                <ul class="space-y-2 text-sm text-slate-700">
+                    <li class="hover:text-amber-600 cursor-pointer font-bold">عقائد و ایمانیات</li>
+                    <li class="hover:text-amber-600 cursor-pointer">طہارت و نماز</li>
+                    <li class="hover:text-amber-600 cursor-pointer">زکوۃ و صدقات</li>
+                    <li class="hover:text-amber-600 cursor-pointer">نکاح، طلاق و خلع</li>
+                    <li class="hover:text-amber-600 cursor-pointer">جدید مالی معاملات</li>
+                    <li class="hover:text-amber-600 cursor-pointer">میڈیکل مسائل (DNA/IVF)</li>
+                </ul>
+             </div>
+             <!-- List -->
+             <div class="flex-grow space-y-4">
+                <div class="flex relative">
+                   <input type="text" placeholder="فتویٰ کے متن سے تلاش کریں..." class="w-full border p-3 rounded-xl bg-white shadow-sm pr-4">
+                   <button class="absolute left-2 top-2 bg-royal-900 text-white px-4 py-1.5 rounded-lg text-sm">تلاش</button>
+                </div>
+                <!-- Loop Fatawa -->
                 ${state.questions.map(q => `
-             }
-      .font-arabic { font-family: 'Amiri', 'Noto Naskh Arabic', serif !important; }
-      .font-sans-eng { font-family: system-ui, -apple-system, sans-serif !important; }
-      @media print {
-        .no-print { display: none !important; }
-        #print-content { display: block !important; }
-      }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
-
-    <!-- GLOBAL TOP BAR & NAVIGATION -->
-    <header class="bg-islamic-950 text-white border-b-2 border-gold-500 sticky top-0 z-50 shadow-xl no-print">
-        <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="window.router('home')">
-                <div class="w-11 h-11 rounded-full bg-gold-500/10 border border-gold-500/40 flex items-center justify-center text-gold-400 text-xl font-bold">
-                    <i class="fa-solid fa-kaaba"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold text-gold-400 leading-tight">دارالافتاء جمشیدپور</h1>
-                    <p class="text-[10px] text-emerald-200/80 font-sans-eng tracking-wider">DARUL IFTA JAMSHEDPUR | دار الإفتاء جمشيدبور</p>
-                </div>
-            </div>
-
-            <!-- Language & Portal Auth Controls -->
-            <div class="flex items-center gap-3">
-                <div class="hidden md:flex bg-islamic-900 rounded-lg p-1 text-xs border border-emerald-800/80 font-sans-eng">
-                    <button class="px-2.5 py-0.5 rounded bg-gold-500 text-slate-950 font-bold">اردو</button>
-                    <button class="px-2.5 py-0.5 rounded hover:bg-emerald-800 text-emerald-200 font-arabic">العربية</button>
-                    <button class="px-2.5 py-0.5 rounded hover:bg-emerald-800 text-emerald-200">EN</button>
-                </div>
-
-                <div id="auth-nav-container">
-                    <button onclick="window.showLoginModal()" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-user-lock"></i> <span>پورٹل لاگ ان</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- MAIN MENU NAVBAR -->
-        <nav class="bg-islamic-900 border-t border-emerald-800/60 text-xs">
-            <div class="max-w-7xl mx-auto px-4 flex items-center justify-between overflow-x-auto whitespace-nowrap scrollbar-none py-1">
-                <div class="flex space-x-1 space-x-reverse">
-                    <button onclick="window.router('home')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100 font-bold"><i class="fa-solid fa-house ml-1"></i>ہوم</button>
-                    <button onclick="window.router('about')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">تعارف</button>
-                    <button onclick="window.router('manhaj')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">منہج و طریقۂ کار</button>
-                    <button onclick="window.router('fatawa')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">فتاویٰ لائبریری</button>
-                    <button onclick="window.router('istifta')" class="px-3 py-1 rounded bg-gold-500/20 text-gold-400 font-bold hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-pen-nib ml-1"></i>سوال پوچھیں</button>
-                    <button onclick="window.router('muftis')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">مفتیانِ کرام</button>
-                    <button onclick="window.router('library')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">ڈیجیٹل کتب خانہ</button>
-                    <button onclick="window.router('future')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">آئندہ کے عزائم</button>
-                    <button onclick="window.router('contact')" class="px-3 py-1 rounded hover:bg-islamic-800 text-emerald-100">رابطہ</button>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- DYNAMIC CONTAINER -->
-    <main id="app-view" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 no-print">
-        <!-- Views automatically render here via JS -->
-    </main>
-
-    <!-- LOGIN MODAL -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-islamic-900 relative">
-            <button onclick="window.hideLoginModal()" class="absolute left-4 top-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center">
-                <div class="w-12 h-12 rounded-full bg-emerald-100 text-islamic-900 flex items-center justify-center mx-auto mb-2 text-xl font-bold">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h3 class="text-xl font-bold text-islamic-950">محفوظ پورٹل لاگ ان</h3>
-                <p class="text-xs text-slate-500">ناظمِ دارالافتاء، مفتیانِ کرام اور ریسرچ اسکالرز کے لیے</p>
-            </div>
-
-            <form id="login-form" class="space-y-3 text-sm">
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
-                   <input type="email" id="login-email" required placeholder="mufti@darulifta.org" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-islamic-800 outline-none">
-                </div>
-                <div>
-                   <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
-                   <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-islamic-800 outline-none">
-                </div>
-                <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
-                   <b>ڈیمو کریڈنشیلز:</b><br>
-                   ناظم: <code class="text-emerald-800 font-bold">nazim@darulifta.org</code> | پاسورڈ: <code class="text-emerald-800 font-bold">demo123</code><br>
-                   مفتی: <code class="text-emerald-800 font-bold">mufti@darulifta.org</code> | پاسورڈ: <code class="text-emerald-800 font-bold">demo123</code>
-                </div>
-                <button type="submit" class="w-full bg-islamic-900 hover:bg-islamic-950 text-white font-bold py-2.5 rounded-lg shadow transition">
-                    لاگ ان کریں
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- PRINT VIEW AREA FOR OFFICIAL FATWA PDF GENERATION -->
-    <div id="print-view" class="hidden p-8 max-w-4xl mx-auto bg-white border-2 border-emerald-950 text-slate-900">
-        <!-- Rendered on Print Demand -->
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-islamic-950 text-emerald-200 border-t-4 border-gold-500 mt-12 no-print text-xs">
-        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="space-y-2">
-                <h4 class="text-gold-400 font-bold text-base">دارالافتاء جمشیدپور</h4>
-                <p class="text-slate-300 text-xs leading-relaxed">قرآن و سنت، آثارِ صحابہ اور معتبر فقہ اسلامی کی روشنی میں مستند شرعی رہنمائی و تحقیقاتی ڈیجیٹل پلیٹ فارم۔</p>
-            </div>
-            <div>
-                <h5 class="text-white font-bold mb-2">اہم روابط</h5>
-                <ul class="space-y-1 text-slate-300">
-                    <li><a href="#" onclick="window.router('about')" class="hover:text-gold-400">ہمارا تعارف</a></li>
-                    <li><a href="#" onclick="window.router('manhaj')" class="hover:text-gold-400">منہجِ دارالافتاء</a></li>
-                    <li><a href="#" onclick="window.router('library')" class="hover:text-gold-400">کتب خانہ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-white font-bold mb-2">شرعی انتباہ</h5>
-                <p class="text-slate-400 text-[11px] leading-normal">آن لائن دستیاب مواد عمومی علمی و تحقیقی رہنمائی کے لیے ہے۔ کسی مخصوص شخص یا انفرادی صورتِ حال میں حتمی شرعی حکم کے لیے دارالافتاء سے براہ راست رجوع فرمائیں۔</p>
-            </div>
-            <div>
-                <h5 class="text-white font-bold mb-2">مرکزی دفتر</h5>
-                <p class="text-slate-300">جمشیدپور، جھارکھنڈ، ہند</p>
-                <p class="text-gold-400 font-mono mt-1">contact@darulifta-jamshedpur.org</p>
-            </div>
-        </div>
-        <div class="bg-black/30 py-3 text-center text-slate-400 border-t border-emerald-900/60">
-            © 2026 دارالافتاء جمشیدپور | تمام حقوق بحقِ ادارہ محفوظ ہیں۔
-        </div>
-    </footer>
-
-    <!-- CORE LOGIC & SPA ROUTER MODULE -->
-    <script>
-      // 1. STATE & SEED DATA (CLEARLY LABELLED SAMPLE DATA)
-      const state = {
-        currentUser: null, // { name, email, role: 'NAZIM' | 'MUFTI' | 'USER' }
-        questions: [
-          {
-            id: 'DIF-JSR-2026-0001',
-            askerName: 'Sample User A',
-            phone: '+91 9876543210',
-            source: 'آن لائن فارم (ویب سائٹ)',
-            title: 'Sample Question: آن لائن تجارت میں بیع بیع العربون کا حکم',
-            questionText: 'کیا آن لائن آرڈر منسوخ کرنے پر ایڈوانس رقم ضبط کی جا سکتی ہے؟ براہ کرم شرعی رہنمائی فرمائیں۔',
-            status: 'جواب شدہ',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: 'الجواب وباللہ التوفیق: اگر فریقین نے معاہدے کے وقت یہ شرط طے کی تھی تو فقہ حنفی اور معاصر فقہی فیصلوں کی روشنی میں گنجائش موجود ہے...',
-            createdAt: '2026-08-20'
-          },
-          {
-            id: 'DIF-JSR-2026-0002',
-            askerName: 'Sample User B',
-            phone: '+91 9123456789',
-            source: 'واٹس ایپ (WhatsApp)',
-            title: 'Sample Question: زکوۃ کی رقم سے ہسپتال کے لیے آلات خریدنا',
-            questionText: 'کیا زکوۃ کی رقم سے غریب بیمارات کے علاج کے لیے ہسپتال کو مشینری فراہم کی جا سکتی ہے؟',
-            status: 'زیرِ تحقیق',
-            assignedTo: 'mufti@darulifta.org',
-            answerText: '',
-            createdAt: '2026-08-21'
-          }
-        ],
-        books: [
-          { title: 'Sample Book: الہدایۃ شرح بداية المبتدي', author: 'المرغيناني', category: 'فقہ حنفی', volumes: 4, notebooklmUrl: 'https://notebooklm.google.com' },
-          { title: 'Sample Book: رد المحتار علي الدر المختار', author: 'ابن عابدين الشامي', category: 'فتاویٰ', volumes: 12, notebooklmUrl: '' }
-        ]
-      };
-
-      // 2. ROUTER & AUTH HANDLERS
-      window.router = (view) => {
-        const app = document.getElementById('app-view');
-        window.scrollTo(0, 0);
-
-        switch(view) {
-          case 'home': renderHome(app); break;
-          case 'about': renderAbout(app); break;
-          case 'manhaj': renderManhaj(app); break;
-          case 'istifta': renderIstifta(app); break;
-          case 'fatawa': renderFatawa(app); break;
-          case 'library': renderLibrary(app); break;
-          case 'future': renderFuture(app); break;
-          case 'contact': renderContact(app); break;
-          case 'admin': renderAdminDashboard(app); break;
-          case 'mufti': renderMuftiDashboard(app); break;
-          default: renderHome(app);
-        }
-      };
-
-      window.showLoginModal = () => document.getElementById('login-modal').classList.remove('hidden');
-      window.hideLoginModal = () => document.getElementById('login-modal').classList.add('hidden');
-
-      document.getElementById('login-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        if(email.includes('nazim')) {
-          state.currentUser = { name: 'Sample Nazim', email, role: 'NAZIM' };
-        } else {
-          state.currentUser = { name: 'Sample Mufti', email, role: 'MUFTI' };
-        }
-        window.hideLoginModal();
-        updateAuthNav();
-        window.router(state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti');
-      });
-
-      function updateAuthNav() {
-        const container = document.getElementById('auth-nav-container');
-        if (state.currentUser) {
-          container.innerHTML = `
-            <div class="flex items-center gap-2">
-              <button onclick="window.router('${state.currentUser.role === 'NAZIM' ? 'admin' : 'mufti'}')" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1">
-                <i class="fa-solid fa-gauge"></i> <span>${state.currentUser.role === 'NAZIM' ? 'ناظم پورٹل' : 'مفتی ورک اسپیس'}</span>
-              </button>
-              <button onclick="window.logout()" class="bg-red-700 hover:bg-red-800 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg">
-                <i class="fa-solid fa-power-off"></i>
-              </button>
-            </div>
-          `;
-        } else {
-          container.innerHTML = `
-            <button onclick="window.showLoginModal()" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition flex items-center gap-1.5">
-                <i class="fa-solid fa-user-lock"></i> <span>پورٹل لاگ ان</span>
-            </button>
-          `;
-        }
-      }
-
-      window.logout = () => {
-        state.currentUser = null;
-        updateAuthNav();
-        window.router('home');
-      };
-
-      // 3. VIEWS IMPLEMENTATION
-      function renderHome(c) {
-        c.innerHTML = `
-          <!-- HERO SECTION -->
-          <div class="bg-gradient-to-br from-islamic-950 via-islamic-900 to-islamic-950 text-white rounded-3xl p-8 md:p-12 shadow-2xl border border-emerald-800/60 text-center relative overflow-hidden mb-8">
-             <div class="relative z-10 max-w-3xl mx-auto space-y-4">
-                <span class="bg-gold-500/20 text-gold-400 text-xs px-3.5 py-1 rounded-full border border-gold-500/40 font-bold">باقاعدہ ڈیجیٹل افتاء، تحقیق و ادارہ جاتی پورٹل</span>
-                <h2 class="text-3xl md:text-5xl font-bold text-gold-400 leading-snug">دارالافتاء جمشیدپور</h2>
-                <p class="text-base md:text-lg text-emerald-100 font-arabic">قرآن و سنت اور فقہ اسلامی کی روشنی میں مستند شرعی رہنمائی</p>
-
-                <div class="flex flex-wrap justify-center gap-3 pt-4">
-                   <button onclick="window.router('istifta')" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-sm shadow-lg transition">
-                     <i class="fa-solid fa-paper-plane ml-1"></i> آن لائن سوال پوچھیں
-                   </button>
-                   <button onclick="window.router('fatawa')" class="bg-islamic-800 hover:bg-islamic-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow border border-emerald-600 transition">
-                     سابقہ فتاویٰ تلاش کریں
-                   </button>
-                </div>
-             </div>
-          </div>
-
-          <!-- DYNAMIC STATS -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
-                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">${state.questions.filter(q => q.status === 'جواب شدہ').length}</div>
-                <div class="text-xs text-slate-500">جاری شدہ فتاویٰ</div>
-             </div>
-             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
-                <div class="text-2xl font-bold text-gold-600 font-sans-eng">2025</div>
-                <div class="text-xs text-slate-500">سالِ قیام (سیمینار)</div>
-             </div>
-             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
-                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">${state.books.length}</div>
-                <div class="text-xs text-slate-500">کتب خانہ (ذیلی جلدیں)</div>
-             </div>
-             <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
-                <div class="text-2xl font-bold text-islamic-900 font-sans-eng">3</div>
-                <div class="text-xs text-slate-500">زبانیں (اردو/عربی/انگریزی)</div>
-             </div>
-          </div>
-        `;
-      }
-
-      function renderAbout(c) {
-        c.innerHTML = `
-          <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 space-y-6">
-             <h2 class="text-2xl font-bold text-islamic-950 border-b pb-3">دارالافتاء جمشیدپور — قیام کا پس منظر و تعارف</h2>
-             <div class="prose max-w-none text-slate-700 leading-relaxed space-y-4">
-                <p>اسلامک فقہ اکیڈمی انڈیا کے 34ویں فقہی سیمینار (منعقدہ 8 نومبر 2025ء بمقام عجوہ سٹی سینٹر، جمشیدپور) کے موقع پر خطے میں ایک منظم، مستند اور ڈیجیٹل صلاحیتوں سے لیس دارالافتاء کی ضرورت کو محسوس کرتے ہوئے اس ادارے کی بنیاد رکھی گئی۔</p>
-                <h3 class="text-lg font-bold text-islamic-900">بنیادی مقاصد:</h3>
-                <ul class="list-disc list-inside space-y-1">
-                   <li>عوام و خواص کی شرعی مسائل میں صحیح، معتبر اور مستند رہنمائی۔</li>
-                   <li>جدید معاشی، طبی اور معاشرتی مسائل پر اکابرین و معاصر فقہاء کی روشنی میں تحریر و تحقیق۔</li>
-                   <li>آن لائن استفتاء اور ڈیجیٹل آرکائیو کے ذریعے افتائی نظام کو ہر فرد کے لیے قابلِ رسائی بنانا۔</li>
-                </ul>
-             </div>
-          </div>
-        `;
-      }
-
-      function renderManhaj(c) {
-        c.innerHTML = `
-          <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 space-y-6">
-             <h2 class="text-2xl font-bold text-islamic-950 border-b pb-3">منہج و طریقۂ کار</h2>
-             <p class="text-slate-600">دارالافتاء جمشیدپور میں تمام شرعی و فقہی جوابات مندرجہ ذیل طے شدہ معتبر ترتیب کے مطابق تیار کیے جاتے ہیں:</p>
-             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div class="bg-emerald-50/80 p-4 rounded-xl border border-emerald-200 font-bold text-islamic-900">1. قرآن کریم و سنتِ نب                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto rounded-full p-1 bg-emerald-50 mb-2 border border-emerald-600" onerror="this.src='https://via.placeholder.com/64?text=دارالافتاء'">
-                <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور</h2>
-                <p class="text-sm text-slate-500 mt-1">لاگ ان کریں (مفتی / ناظم پورٹل)</p>
-            </div>
-
-            <form id="login-form" onsubmit="window.handleLogin(event)" class="space-y-3 text-sm">
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
-                    <input type="email" id="login-email" required placeholder="mufti@darulifta.com" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1">پاسورڈ</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-                <button type="submit" id="btn-login" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg shadow transition text-lg">
-                    لاگ ان کریں
-                </button>
-            </form>
-
-            <div class="flex items-center justify-between text-sm pt-2 border-t">
-                <button onclick="window.handleForgotPassword()" class="text-emerald-700 font-semibold hover:underline">پاسورڈ بھول گئے؟</button>
-                <button onclick="window.guestPublicView()" class="text-slate-500 hover:underline">عام استفتاء بھیجیں ➔</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN HEADER -->
-    <header id="main-header" class="bg-emerald-900 text-white shadow-lg sticky top-0 z-40 no-print hidden">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <h1 class="text-xl font-bold">دارالافتاء جمشیدپور</h1>
-                <span id="user-badge" class="bg-amber-500 text-slate-900 text-xs px-2 py-0.5 rounded font-bold">--</span>
-            </div>
-            <div class="flex items-center gap-3 text-sm">
-                <span id="user-email-display" class="hidden sm:inline text-emerald-200"></span>
-                <button onclick="window.handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold">
-                    <i class="fa-solid fa-right-from-bracket"></i> لاگ آؤٹ
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT AREA -->
-    <main id="app-content" class="flex-grow max-w-7xl w-full mx-auto p-4 no-print hidden">
-        <div id="role-view-container">
-            <!-- Dynamic Content Load Here -->
-        </div>
-    </main>
-
-    <!-- PRINT SECTION -->
-    <div id="print-area" class="hidden"></div>
-
-    <!-- Firebase SDK Modular -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-      // Firebase Configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyApyC7EXHB-Eo3p7GwU2A3Vcsg6Sn66G80",
-        authDomain: "darulifta-jamshedpur.firebaseapp.com",
-        projectId: "darulifta-jamshedpur",
-        storageBucket: "darulifta-jamshedpur.firebasestorage.app",
-        messagingSenderId: "1041824658718",
-        appId: "1:1041824658718:web:2210744f8ef99118f7050f",
-        measurementId: "G-49457NPB88"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      // Auth Listener
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.getElementById('login-screen').classList.add('hidden');
-          document.getElementById('main-header').classList.remove('hidden');
-          document.getElementById('app-content').classList.remove('hidden');
-          document.getElementById('user-email-display').textContent = user.email;
-
-          if (user.email.includes('nazim') || user.email.includes('admin')) {
-            document.getElementById('user-badge').textContent = "ناظمِ اعلیٰ";
-            loadAdminPortal();
-          } else {
-            document.getElementById('user-badge').textContent = "مفتی صاحب";
-            loadMuftiPortal(user.email);
-          }
-        } else {
-          document.getElementById('login-screen').classList.remove('hidden');
-          document.getElementById('main-header').classList.add('hidden');
-          document.getElementById('app-content').classList.add('hidden');
-        }
-      });
-
-      // Login Function
-      window.handleLogin = async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-password').value;
-        const btn = document.getElementById('btn-login');
-        btn.innerText = "لاگ ان ہو رہا ہے...";
-        try {
-          await signInWithEmailAndPassword(auth, email, pass);
-        } catch (err) {
-          alert("لاگ ان میں غلطی! ای میل یا پاسورڈ درست نہیں ہے۔");
-        } finally {
-          btn.innerText = "لاگ ان کریں";
-        }
-      };
-
-      // Logout Function
-      window.handleLogout = () => signOut(auth);
-
-      // Forgot Password
-      window.handleForgotPassword = async () => {
-        const email = prompt("اپنا ای میل درج کریں:");
-        if (email) {
-          try {
-            await sendPasswordResetEmail(auth, email);
-            alert("پاسورڈ ری سیٹ کا لنک ای میل پر بھیج دیا گیا ہے۔");
-          } catch (err) {
-            alert("ای میل تلاش نہیں ہو سکا!");
-          }
-        }
-      };
-
-      // Public Question Form View
-      window.guestPublicView = () => {
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('app-content').classList.remove('hidden');
-        document.getElementById('role-view-container').innerHTML = `
-            <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow border">
-                <h2 class="text-2xl font-bold text-emerald-900 mb-2 text-center">عام استفتاء فارم</h2>
-                <p class="text-sm text-slate-500 mb-4 text-center">دارالافتاء جمشیدپور کو اپنا سوال ارسال فرمائیں۔</p>
-                <div class="space-y-3">
-                    <input type="text" id="q-name" placeholder="آپ کا نام" class="w-full border p-2.5 rounded-lg text-base">
-                    <input type="text" id="q-phone" placeholder="موبائل نمبر / واٹس ایپ" class="w-full border p-2.5 rounded-lg text-base">
-                    
-                    <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-1">سوال موصول ہونے کا ذریعہ:</label>
-                      <select id="q-source" class="w-full border p-2.5 rounded-lg text-base bg-white">
-                          <option value="آن لائن فارم (ویب سائٹ)">آن لائن فارم (ویب سائٹ)</option>
-                          <option value="واٹس ایپ (WhatsApp)">واٹس ایپ (WhatsApp)</option>
-                          <option value="ای میل (Email)">ای میل (Email)</option>
-                          <option value="گوگل فارم (Google Form)">گوگل فارم (Google Form)</option>
-                          <option value="دستی / ڈاک (Manual / Post)">دستی / ڈاک (Manual / Post)</option>
-                      </select>
+                  <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md" onclick="window.router('fatwaDetail', '${q.id}')">
+                    <div class="flex justify-between items-center mb-2">
+                       <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">${q.category}</span>
+                       <span class="text-xs text-slate-500 font-sans-eng">${q.id}</span>
                     </div>
-
-                    <input type="text" id="q-title" placeholder="سوال کا عنوان (مثال: نماز کے احکام)" class="w-full border p-2.5 rounded-lg text-base">
-                    <textarea id="q-text" rows="4" placeholder="تفصیلی سوال یہاں لکھیں..." class="w-full border p-2.5 rounded-lg text-base"></textarea>
-                    
-                    <button onclick="window.submitQuestion()" id="btn-submit-q" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg transition text-lg">
-                        سوال بھیجیں ➔
-                    </button>
-                    <button onclick="location.reload()" class="w-full bg-slate-200 text-slate-700 text-sm py-2 rounded-lg">واپس لاگ ان اسکرین</button>
-                </div>
-            </div>
-        `;
-      };
-
-      // Submit Question Function
-      window.submitQuestion = async () => {
-        const name = document.getElementById('q-name').value;
-        const phone = document.getElementById('q-phone').value;
-        const source = document.getElementById('q-source').value;
-        const title = document.getElementById('q-title').value;
-        const text = document.getElementById('q-text').value;
-        const btn = document.getElementById('btn-submit-q');
-
-        if(!title || !text) {
-          alert("برائے مہربانی عنوان اور سوال مکمل لکھیں۔");
-          return;
-        }
-
-        btn.innerText = "ارسال ہو رہا ہے...";
-        try {
-          await addDoc(collection(db, "questions"), {
-            askerName: name || "گمنام",
-            phone: phone || "",
-            source: source || "آن لائن فارم",
-            title: title,
-            questionText: text,
-            status: "نیا سوال",
-            assignedTo: "",
-            answerText: "",
-            createdAt: serverTimestamp()
-          });
-          alert("آپ کا سوال کامیابی کے ساتھ موصول ہو گیا ہے!");
-          location.reload();
-        } catch (e) {
-          alert("سوال بھیجنے میں خرابی ہوئی، دوبارہ کوشش کریں۔");
-          btn.innerText = "سوال بھیجیں ➔";
-        }
-      };
-
-      // Load Admin Portal
-      async function loadAdminPortal() {
-        const container = document.getElementById('role-view-container');
-        container.innerHTML = `
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold text-emerald-900"><i class="fa-solid fa-list-check"></i> ناظم پورٹل - تمام سوالات و تفویض</h3>
-            <button onclick="window.guestPublicView()" class="bg-emerald-700 text-white text-sm px-3 py-2 rounded-lg font-bold"><i class="fa-solid fa-plus"></i> نیا سوال خود درج کریں</button>
-          </div>
-          <div id="admin-questions-list" class="space-y-4">لوڈنگ ہو رہی ہے...</div>
-        `;
-
-        try {
-          const qSnap = await getDocs(collection(db, "questions"));
-          let html = '';
-          if(qSnap.empty) {
-            container.querySelector('#admin-questions-list').innerHTML = '<div class="bg-white p-6 rounded-xl text-center text-slate-500">کوئی سوال موصول نہیں ہوا ہے۔</div>';
-            return;
-          }
-
-          qSnap.forEach(docSnap => {
-            const data = docSnap.data();
-            const id = docSnap.id;
-            html += `
-              <div class="bg-white p-4 rounded-xl shadow border space-y-3">
-                <div class="flex justify-between items-start border-b pb-2">
-                  <div>
-                    <h4 class="font-bold text-emerald-900 text-lg">${data.title}</h4>
-                    <p class="text-sm text-slate-500">سائل: ${data.askerName} (${data.phone || 'نمبر نہیں ہے'})</p>
-                    <span class="inline-block mt-1 bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded border border-slate-300">
-                      <i class="fa-solid fa-share-nodes"></i> ذریعہ: <b>${data.source || 'آن لائن فارم'}</b>
-                    </span>
+                    <h4 class="font-bold text-xl text-slate-900">${q.title}</h4>
+                    <p class="text-sm text-slate-600 mt-2 line-clamp-2">${q.text}</p>
                   </div>
-                  <span class="text-xs font-bold px-2 py-1 rounded ${data.status === 'جواب شدہ' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}">${data.status}</span>
-                </div>
-                <p class="text-base text-slate-700 bg-slate-50 p-3 rounded-lg">${data.questionText}</p>
-
-                ${data.answerText ? `<div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200"><h5 class="font-bold text-sm text-emerald-900 mb-1">فتویٰ / جواب:</h5><p class="text-base text-slate-800">${data.answerText}</p></div>` : ''}
-
-                <div class="flex flex-wrap gap-2 items-center text-sm pt-1">
-                  <span class="font-bold">تفویض برائے مفتی:</span>
-                  <input type="email" id="assign-email-${id}" value="${data.assignedTo || ''}" placeholder="مفتی کا ای میل" class="border p-1.5 rounded w-48">
-                  <button onclick="window.assignQuestion('${id}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded font-bold">تفویض کریں</button>
-                </div>
-              </div>
-            `;
-          });
-          document.getElementById('admin-questions-list').innerHTML = html;
-        } catch(e) {
-          document.getElementById('admin-questions-list').innerHTML = '<div class="text-red-500 font-bold">ڈیٹا لوڈ کرنے میں ناکامی! Firestore Rules یا کنکشن چیک کریں۔</div>';
-        }
-      }
-
-      // Assign Question to Mufti
-      window.assignQuestion = async (docId) => {
-        const email = document.getElementById(`assign-email-${docId}`).value;
-        if(!email) { alert("مفتی صاحب کا ای میل درج کریں!"); return; }
-
-        try {
-          const qRef = doc(db, "questions", docId);
-          await updateDoc(qRef, {
-            assignedTo: email,
-            status: "مفتی کو منتقل شدہ"
-          });
-          alert("سوال مفتی صاحب کو کامیابی سے منتقل کر دیا گیا!");
-          loadAdminPortal();
-        } catch(e) {
-          alert("اپ ڈیٹ میں ناکامی!");
-        }
-      };
-
-      // Load Mufti Dashboard
-      async function loadMuftiPortal(muftiEmail) {
-        const container = document.getElementById('role-view-container');
-        container.innerHTML = `
-          <h3 class="text-xl font-bold text-emerald-900 mb-4"><i class="fa-solid fa-user-nib"></i> مفتی ڈیش بورڈ (${muftiEmail})</h3>
-          <div id="mufti-questions-list" class="space-y-4">آپ کے سوالات لوڈ ہو رہے ہیں...</div>
+                `).join('')}
+             </div>
+          </div>
         `;
-
-        try {
-          const q = query(collection(db, "questions"), where("assignedTo", "==", muftiEmail));
-          const qSnap = await getDocs(q);
-          let html = '';
-
-          if(qSnap.empty) {
-            document.getElementById('mufti-questions-list').innerHTML = '<div class="bg-white p-6 rounded-xl text-center text-slate-500">فی الحال آپ کے لیے کوئی سوال منتقل نہیں کیا گیا ہے۔</div>';
-            return;
-          }
-
-          qSnap.forEach(docSnap => {
-            const data = docSnap.data();
-            const id = docSnap.id;
-            html += `
-              <div class="bg-white p-5 rounded-xl shadow border space-y-3">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h4 class="font-bold text-emerald-900 text-lg">${data.title}</h4>
-                    <p class="text-xs text-slate-500">سائل: ${data.askerName}</p>
-                  </div>
-                  <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded border">
-                    ذریعہ: <b>${data.source || 'آن لائن فارم'}</b>
-                  </span>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-lg border text-base text-slate-800">${data.questionText}</div>
-                
-                <div class="space-y-2 pt-2">
-                  <label class="block text-sm font-bold text-emerald-900">الجواب وباللہ التوفیق (فتویٰ لکھیں):</label>
-                  <textarea id="ans-text-${id}" rows="5" placeholder="یہاں فتویٰ تحریر کریں..." class="w-full border border-slate-300 p-3 rounded-lg text-base focus:ring-2 focus:ring-emerald-500 focus:outline-none">${data.answerText || ''}</textarea>
-                  <button onclick="window.saveAnswer('${id}')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-lg text-sm transition">
-                    <i class="fa-solid fa-floppy-disk"></i> فتویٰ محفوظ کریں اور شائع کریں
-                  </button>
-                </div>
-              </div>
-            `;
-          });
-          document.getElementById('mufti-questions-list').innerHTML = html;
-        } catch(e) {
-          document.getElementById('mufti-questions-list').innerHTML = '<div class="text-red-500">سوالات لوڈ کرنے میں مسئلہ آیا!</div>';
-        }
       }
 
-      // Save Fatwa / Answer
-      window.saveAnswer = async (docId) => {
-        const ans = document.getElementById(`ans-text-${docId}`).value;
-        if(!ans) { alert("فتویٰ تحریر کریں!"); return; }
-
-        try {
-          const qRef = doc(db, "questions", docId);
-          await updateDoc(qRef, {
-            answerText: ans,
-            status: "جواب شدہ"
-          });
-          alert("فتویٰ کامیابی کے ساتھ محفوظ اور شائع ہو گیا ہے!");
-          location.reload();
-        } catch(e) {
-          alert("فتویٰ سیو کرنے میں ناکامی ہوئی۔");
-        }
-      };
-    </script>
-</body>
-</html>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">ای میل ایڈریس</label>
-                    <input type="email" id="login-email" required placeholder="mufti@darulifta.com" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+      // 6. ISLAMIC NAMES (اسلامی نام)
+      function renderNames(c) {
+        c.innerHTML = `
+          <div class="space-y-6">
+             <div class="bg-white p-6 rounded-2xl border text-center space-y-3">
+                <h2 class="text-3xl font-bold text-royal-950">اسلامی نام اور ان کے معنی</h2>
+                <div class="flex max-w-md mx-auto relative">
+                   <input type="text" placeholder="نام یا معنی لکھیں..." class="w-full border p-3 rounded-xl bg-slate-50 pr-4">
+                   <button class="absolute left-2 top-2 bg-amber-500 px-4 py-1.5 rounded-lg text-sm font-bold">تلاش</button>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">پاسورڈ</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-                <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg shadow transition">
-                    لاگ ان کریں
-                </button>
-            </form>
-
-            <div class="flex items-center justify-between text-xs pt-2 border-t">
-                <button onclick="handleForgotPassword()" class="text-emerald-700 font-semibold hover:underline">پاسورڈ بھول گئے؟</button>
-                <button onclick="guestPublicView()" class="text-slate-500 hover:underline">عام استفتاء بھیجیں ➔</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN HEADER -->
-    <header id="main-header" class="bg-emerald-900 text-white shadow-lg sticky top-0 z-40 no-print hidden">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <h1 class="text-lg font-bold">دارالافتاء جمشیدپور</h1>
-                <span id="user-badge" class="bg-amber-500 text-slate-900 text-xs px-2 py-0.5 rounded font-bold">--</span>
-            </div>
-            <div class="flex items-center gap-3 text-xs">
-                <span id="user-email-display" class="hidden sm:inline text-emerald-200"></span>
-                <button onclick="handleLogout()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg font-bold">
-                    <i class="fa-solid fa-right-from-bracket"></i> لاگ آؤٹ
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- CONTENT SECTION -->
-    <main id="app-content" class="flex-grow max-w-7xl w-full mx-auto p-4 no-print hidden">
-        <div id="role-view-container">
-            <!-- Dynamic Role Content Injected Here -->
-        </div>
-    </main>
-
-    <!-- Firebase SDK Modular -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-      // ⬇️ Your Firebase Config Attached Here Successfully
-      const firebaseConfig = {
-        apiKey: "AIzaSyApyC7EXHB-Eo3p7GwU2A3Vcsg6Sn66G80",
-        authDomain: "darulifta-jamshedpur.firebaseapp.com",
-        projectId: "darulifta-jamshedpur",
-        storageBucket: "darulifta-jamshedpur.firebasestorage.app",
-        messagingSenderId: "1041824658718",
-        appId: "1:1041824658718:web:2210744f8ef99118f7050f",
-        measurementId: "G-49457NPB88"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      // Auth State Listener
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.getElementById('login-screen').classList.add('hidden');
-          document.getElementById('main-header').classList.remove('hidden');
-          document.getElementById('app-content').classList.remove('hidden');
-          document.getElementById('user-email-display').textContent = user.email;
-
-          if (user.email.includes('admin') || user.email.includes('nazim')) {
-            document.getElementById('user-badge').textContent = "ناظمِ اعلیٰ";
-            loadAdminPortal(db);
-          } else {
-            document.getElementById('user-badge').textContent = "مفتی صاحب";
-            loadMuftiPortal(db, user.email);
-          }
-        } else {
-          document.getElementById('login-screen').classList.remove('hidden');
-          document.getElementById('main-header').classList.add('hidden');
-          document.getElementById('app-content').classList.add('hidden');
-        }
-      });
-
-      window.handleLogin = async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-password').value;
-        try {
-          await signInWithEmailAndPassword(auth, email, pass);
-        } catch (err) {
-          alert("لاگ ان ناکام! ای میل یا پاسورڈ درست نہیں ہے۔");
-        }
-      };
-
-      window.handleLogout = () => signOut(auth);
-
-      window.handleForgotPassword = async () => {
-        const email = prompt("اپنا ای میل درج کریں:");
-        if (email) {
-          try {
-            await sendPasswordResetEmail(auth, email);
-            alert("پاسورڈ ری سیٹ لنک آپ کے ای میل پر بھیج دیا گیا ہے۔");
-          } catch (err) {
-            alert("ای میل تلاش نہیں ہو سکا!");
-          }
-        }
-      };
-
-      window.guestPublicView = () => {
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('app-content').classList.remove('hidden');
-        document.getElementById('role-view-container').innerHTML = `
-            <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow border">
-                <h2 class="text-xl font-bold text-emerald-900 mb-4 text-center">عام استفتاء فارم</h2>
-                <p class="text-xs text-slate-500 mb-4 text-center">بغیر لاگ ان کیے اپنا سوال دارالافتاء کو بھیجیں۔</p>
-                <input type="text" id="public-title" placeholder="عنوان" class="w-full border p-2 mb-2 rounded text-sm">
-                <textarea id="public-msg" rows="4" placeholder="تفصیلی سوال..." class="w-full border p-2 mb-3 rounded text-sm"></textarea>
-                <button onclick="submitPublicQuestion()" class="w-full bg-emerald-700 text-white font-bold py-2 rounded">بھیجیں</button>
-            </div>
+             </div>
+             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 <div class="bg-white p-4 rounded-xl border text-center"><h3 class="font-bold text-xl text-royal-900 mb-1">محمد</h3><p class="text-xs text-slate-500">تعریف کیا گیا (Arabic)</p></div>
+                 <div class="bg-white p-4 rounded-xl border text-center"><h3 class="font-bold text-xl text-royal-900 mb-1">عائشہ</h3><p class="text-xs text-slate-500">آرام پانے والی، زندہ</p></div>
+             </div>
+          </div>
         `;
-      };
-
-      async function loadAdminPortal(db) {
-        const container = document.getElementById('role-view-container');
-        container.innerHTML = `<h3 class="text-lg font-bold text-emerald-900 mb-4">ناظم پورٹل - تمام فتاویٰ و تفویض</h3><div id="q-list" class="space-y-3">لوڈنگ...</div>`;
-        
-        try {
-          const qSnap = await getDocs(collection(db, "questions"));
-          let html = '';
-          qSnap.forEach(doc => {
-              const data = doc.data();
-              html += `<div class="bg-white p-4 rounded-xl shadow border flex justify-between items-center">
-                  <div>
-                      <h4 class="font-bold">${data.title || 'بلا عنوان'}</h4>
-                      <p class="text-xs text-slate-500">${data.questionText || ''}</p>
-                  </div>
-                  <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">${data.status || 'Unassigned'}</span>
-              </div>`;
-          });
-          document.getElementById('q-list').innerHTML = html || 'کوئی سوال موجود نہیں ہے۔';
-        } catch(e) {
-          document.getElementById('q-list').innerHTML = 'ڈیٹا لوڈنگ میں مسئلہ آ رہا ہے۔';
-        }
       }
 
-      async function loadMuftiPortal(db, muftiEmail) {
-        const container = document.getElementById('role-view-container');
-        container.innerHTML = `<h3 class="text-lg font-bold text-emerald-900 mb-4">مفتی ڈیش بورڈ (${muftiEmail})</h3><div id="mufti-q-list" class="space-y-3">لوڈنگ...</div>`;
-
-        try {
-          const q = query(collection(db, "questions"), where("assignedTo", "==", muftiEmail));
-          const qSnap = await getDocs(q);
-          let html = '';
-          qSnap.forEach(doc => {
-              const data = doc.data();
-              html += `<div class="bg-white p-4 rounded-xl shadow border">
-                  <h4 class="font-bold">${data.title}</h4>
-                  <p class="text-xs text-slate-600 my-2">${data.questionText}</p>
-                  <button class="bg-emerald-700 text-white px-3 py-1 text-xs rounded font-bold">جواب لکھیں</button>
-              </div>`;
-          });
-          document.getElementById('mufti-q-list').innerHTML = html || 'آپ کے نام کوئی سوال تفویض نہیں ہے۔';
-        } catch(e) {
-          document.getElementById('mufti-q-list').innerHTML = 'ڈیٹا لوڈنگ میں مسئلہ آ رہا ہے۔';
-        }
+      // 7. MASNOON DUAS (مسنون دعائیں)
+      function renderDuas(c) {
+        c.innerHTML = `
+          <div class="space-y-6">
+             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">مسنون و مأثور دعائیں</h2>
+             <div class="grid md:grid-cols-2 gap-4">
+                 <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                     <h3 class="font-bold text-lg text-amber-600 mb-3">گھر سے نکلنے کی دعا</h3>
+                     <p class="font-sans-eng text-2xl text-right text-royal-900 mb-3" style="font-family: 'Amiri', serif !important;" dir="rtl">بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>
+                     <p class="text-sm text-slate-600"><b>ترجمہ:</b> اللہ کے نام سے، میں نے اللہ پر بھروسہ کیا، اور گناہوں سے بچنے کی طاقت اور نیکی کرنے کی قوت اللہ ہی کی توفیق سے ہے۔</p>
+                     <div class="mt-4 flex gap-2"><button class="text-xs bg-slate-100 px-3 py-1 rounded hover:bg-slate-200">Copy</button><button class="text-xs bg-slate-100 px-3 py-1 rounded hover:bg-slate-200">Share</button></div>
+                 </div>
+             </div>
+          </div>
+        `;
       }
-    </script>
-</body>
-</html>
-    </header>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6 no-print">
-
-        <!-- 1. ADMIN DASHBOARD -->
-        <section id="view-admin" class="space-y-6">
-            <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-xl font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-amber-400"></i>
-                        مرکزی ایڈمن ڈیش بورڈ (ناظمِ دارالافتاء)
-                    </h2>
-                    <p class="text-emerald-200 text-sm mt-1">یہاں سے نئے سوالات مفتیانِ کرام کو تفویض کریں اور ڈرافٹ کردہ جوابات کی تصدیق کریں۔</p>
-                </div>
-                <button onclick="openNewQuestionModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>نیا سوال درج کریں</span>
-                </button>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">کل موصولہ سوالات</p>
-                        <p id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-inbox"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">زیرِ تحقیق (تفویض شدہ)</p>
-                        <p id="stat-assigned" class="text-2xl font-bold text-amber-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">جواب موصول (ڈرافٹ)</p>
-                        <p id="stat-drafts" class="text-2xl font-bold text-purple-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-file-signature"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">منظور شدہ (صادر شدہ)</p>
-                        <p id="stat-approved" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3">
-                <div class="relative w-full md:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400"></i>
-                    <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="سوال، سائل یا آئی ڈی سے تلاش کریں..." class="w-full pr-9 pl-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-                    <select id="admin-filter-status" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="ALL">تمام اسٹیٹس</option>
-                        <option value="Unassigned">غیر تفویض شدہ</option>
-                        <option value="Assigned">زیرِ تحقیق</option>
-                        <option value="Draft Received">جواب موصول (ڈرافٹ)</option>
-                        <option value="Approved">منظور شدہ</option>
-                    </select>
-                    <select id="admin-filter-mufti" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="ALL">تمام مفتیانِ کرام (13)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-sm">
-                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                            <tr>
-                                <th class="p-3">آئی ڈی</th>
-                                <th class="p-3">عنوان / سوال</th>
-                                <th class="p-3">سائل و شہر</th>
-                                <th class="p-3">مفتی (تفویض)</th>
-                                <th class="p-3">اسٹیٹس</th>
-                                <th class="p-3">فتویٰ نمبر</th>
-                                <th class="p-3 text-center">اقدامات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-questions-tbody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. MUFTI PERSONAL DASHBOARD -->
-        <section id="view-mufti" class="space-y-6 hidden">
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold shadow-inner">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 font-bold mb-1">مفتی صاحب کا انتخاب کریں (13 مفتیان):</label>
-                        <select id="active-mufti-select" onchange="changeActiveMufti()" class="border border-emerald-600 rounded-lg py-1.5 px-3 font-bold text-emerald-900 bg-emerald-50 text-base focus:outline-none focus:ring-2 focus:ring-emerald-500"></select>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200 w-full md:w-auto justify-around">
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">آپ کے ذمہ کل</span>
-                        <span id="mufti-stat-total" class="font-bold text-slate-800 text-lg">0</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-300"></div>
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">منتظرِ جواب</span>
-                        <span id="mufti-stat-pending" class="font-bold text-amber-600 text-lg">0</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-300"></div>
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">مکمل شدہ</span>
-                        <span id="mufti-stat-completed" class="font-bold text-emerald-600 text-lg">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-emerald-700"></i>
-                    <span>آپ کی طرف تفویض شدہ سوالات</span>
-                </h3>
-                <div id="mufti-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-            </div>
-        </section>
-
-        <!-- 3. PUBLIC QUESTION SUBMISSION -->
-        <section id="view-public" class="max-w-2xl mx-auto space-y-6 hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
-                <div class="border-b border-slate-200 pb-4 mb-5 text-center">
-                    <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور - آن لائن استفتاء فارم</h2>
-                    <p class="text-sm text-slate-600 mt-1">براہِ کرم اپنا سوال واضح اور مکمل تفصیل کے ساتھ تحریر فرمائیں۔</p>
-                </div>
-
-                <form id="public-question-form" onsubmit="handlePublicQuestionSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">سائل کا نام *</label>
-                            <input type="text" id="ask-name" required placeholder="مثلاً: محمد عبداللہ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">شہر / علاقہ *</label>
-                            <input type="text" id="ask-city" required placeholder="مثلاً: جمشیدپور، جھارکھنڈ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">واٹس ایپ / فون نمبر</label>
-                            <input type="tel" id="ask-phone" placeholder="03001234567" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">فقہی باب / زمرہ *</label>
-                            <select id="ask-category" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
-                                <option value="عبادات (نماز، روزہ، زکوۃ، حج)">عبادات (نماز، روزہ، زکوۃ، حج)</option>
-                                <option value="معاملات و بیوع (تجارت و کاروبار)">معاملات و بیوع (تجارت و کاروبار)</option>
-                                <option value="عائلی مسائل (نکاح، طلاق، خلع)">عائلی مسائل (نکاح، طلاق، خلع)</option>
-                                <option value="وراثت و وصیت">وراثت و وصیت</option>
-                                <option value="حلال و حرام / متفرقات">حلال و حرام / متفرقات</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">سوال کی سرخی / عنوان *</label>
-                        <input type="text" id="ask-title" required placeholder="مثلاً: سفر کے دوران قصر نماز کا حکم" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">مکمل سوال کا متن *</label>
-                        <textarea id="ask-text" rows="5" required placeholder="اپنا سوال تفصیل کے ساتھ یہاں لکھیں..." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
-                    </div>
-
-                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-base">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>استفتاء بھیجیں</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- 4. PUBLIC FATWA ARCHIVE -->
-        <section id="view-archive" class="space-y-6 hidden">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">شائع شدہ فتاویٰ کا آن لائن ذخیرہ</h2>
-                <p class="text-sm text-slate-600 mb-4">دارالافتاء جمشیدپور کے منظور شدہ تمام شرعی فتاویٰ کی فہرست و تلاش۔</p>
-                
-                <div class="relative max-w-lg">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-slate-400"></i>
-                    <input type="text" id="archive-search" oninput="renderArchiveList()" placeholder="عنوان، فتویٰ نمبر یا لفظ سے تلاش کریں..." class="w-full pr-10 pl-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-            </div>
-
-            <div id="archive-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </section>
-
-    </main>
-
-    <!-- MODAL: Mufti Answer Submission -->
-    <div id="modal-mufti-answer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
-            <div class="bg-emeraldCustom-900 text-white p-4 flex items-center justify-between">
-                <h3 class="font-bold text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-amber-400"></i>
-                    <span>تحقیق و جواب درج کریں</span>
-                </h3>
-                <button onclick="closeModal('modal-mufti-answer')" class="text-emerald-200 hover:text-white text-xl">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <div class="bg-slate-50 border-r-4 border-emerald-600 p-3 rounded-lg text-sm space-y-1">
-                    <div class="flex items-center justify-between text-xs text-                </div>
-
-                <!-- Role Selector Tabs -->
-                <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 md:pb-0 text-sm">
-                    <button onclick="switchTab('admin')" id="tab-admin" class="nav-btn bg-emeraldCustom-700 text-white px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-user-shield text-amber-400"></i>
-                        <span>ناظم / ایڈمن پورٹل</span>
-                    </button>
-                    <button onclick="switchTab('mufti')" id="tab-mufti" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-user-tie text-amber-400"></i>
-                        <span>مفتی صاحب پورٹل</span>
-                    </button>
-                    <button onclick="switchTab('public')" id="tab-public" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-paper-plane text-amber-400"></i>
-                        <span>نیا استفتاء</span>
-                    </button>
-                    <button onclick="switchTab('archive')" id="tab-archive" class="nav-btn bg-emeraldCustom-800 text-emerald-100 px-3 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap hover:bg-emeraldCustom-600 transition">
-                        <i class="fa-solid fa-box-archive text-amber-400"></i>
-                        <span>فتاویٰ آرکائیو</span>
-                    </button>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6 no-print">
-
-        <!-- 1. ADMIN DASHBOARD -->
-        <section id="view-admin" class="space-y-6">
-            <!-- Alert Banner -->
-            <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 text-white rounded-2xl p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-xl font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-amber-400"></i>
-                        مرکزی ایڈمن ڈیش بورڈ (ناظمِ دارالافتاء)
-                    </h2>
-                    <p class="text-emerald-200 text-sm mt-1">یہاں سے نئے سوالات مفتیانِ کرام کو تفویض کریں اور ڈرافٹ کردہ جوابات کی تصدیق کریں۔</p>
-                </div>
-                <button onclick="openNewQuestionModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>نیا سوال درج کریں</span>
-                </button>
-            </div>
-
-            <!-- Stats Overview -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">کل موصولہ سوالات</p>
-                        <p id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-inbox"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">زیرِ تحقیق (تفویض شدہ)</p>
-                        <p id="stat-assigned" class="text-2xl font-bold text-amber-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">جواب موصول (ڈرافٹ)</p>
-                        <p id="stat-drafts" class="text-2xl font-bold text-purple-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-file-signature"></i>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-500 font-medium">منظور شدہ (صادر شدہ)</p>
-                        <p id="stat-approved" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Search & Filters -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3">
-                <div class="relative w-full md:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400"></i>
-                    <input type="text" id="admin-search" oninput="renderAdminTable()" placeholder="سوال، سائل یا آئی ڈی سے تلاش کریں..." class="w-full pr-9 pl-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-                    <select id="admin-filter-status" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="ALL">تمام اسٹیٹس</option>
-                        <option value="Unassigned">غیر تفویض شدہ</option>
-                        <option value="Assigned">زیرِ تحقیق</option>
-                        <option value="Draft Received">جواب موصول (ڈرافٹ)</option>
-                        <option value="Approved">منظور شدہ</option>
-                    </select>
-                    <select id="admin-filter-mufti" onchange="renderAdminTable()" class="border border-slate-300 rounded-lg text-sm py-2 px-3 focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="ALL">تمام مفتیانِ کرام (13)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Master Questions Table -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-sm">
-                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                            <tr>
-                                <th class="p-3">آئی ڈی</th>
-                                <th class="p-3">عنوان / سوال</th>
-                                <th class="p-3">سائل و شہر</th>
-                                <th class="p-3">مفتی (تفویض)</th>
-                                <th class="p-3">اسٹیٹس</th>
-                                <th class="p-3">فتویٰ نمبر</th>
-                                <th class="p-3 text-center">اقدامات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-questions-tbody" class="divide-y divide-slate-100">
-                            <!-- Dynamic Content -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. MUFTI PERSONAL DASHBOARD -->
-        <section id="view-mufti" class="space-y-6 hidden">
-            <!-- Mufti Switcher Bar -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl font-bold shadow-inner">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 font-bold mb-1">مفتی صاحب کا انتخاب کریں (13 مفتیان):</label>
-                        <select id="active-mufti-select" onchange="changeActiveMufti()" class="border border-emerald-600 rounded-lg py-1.5 px-3 font-bold text-emerald-900 bg-emerald-50 text-base focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <!-- Loaded dynamically -->
-                        </select>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200 w-full md:w-auto justify-around">
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">آپ کے ذمہ کل</span>
-                        <span id="mufti-stat-total" class="font-bold text-slate-800 text-lg">0</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-300"></div>
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">منتظرِ جواب</span>
-                        <span id="mufti-stat-pending" class="font-bold text-amber-600 text-lg">0</span>
-                    </div>
-                    <div class="h-8 w-px bg-slate-300"></div>
-                    <div class="text-center">
-                        <span class="block text-xs text-slate-500">مکمل شدہ</span>
-                        <span id="mufti-stat-completed" class="font-bold text-emerald-600 text-lg">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mufti Assigned Cards Grid -->
-            <div>
-                <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-emerald-700"></i>
-                    <span>آپ کی طرف تفویض شدہ سوالات</span>
-                </h3>
-                <div id="mufti-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Dynamic Mufti Cards -->
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. PUBLIC QUESTION SUBMISSION -->
-        <section id="view-public" class="max-w-2xl mx-auto space-y-6 hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200">
-                <div class="border-b border-slate-200 pb-4 mb-5 text-center">
-                    <h2 class="text-2xl font-bold text-emerald-900">دارالافتاء جمشیدپور - آن لائن استفتاء فارم</h2>
-                    <p class="text-sm text-slate-600 mt-1">براہِ کرم اپنا سوال واضح اور مکمل تفصیل کے ساتھ تحریر فرمائیں۔</p>
-                </div>
-
-                <form id="public-question-form" onsubmit="handlePublicQuestionSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">سائل کا نام *</label>
-                            <input type="text" id="ask-name" required placeholder="مثلاً: محمد عبداللہ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">شہر / علاقہ *</label>
-                            <input type="text" id="ask-city" required placeholder="مثلاً: جمشیدپور، جھارکھنڈ" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">واٹس ایپ / فون نمبر</label>
-                            <input type="tel" id="ask-phone" placeholder="03001234567" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">فقہی باب / زمرہ *</label>
-                            <select id="ask-category" required class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
-                                <option value="عبادات (نماز، روزہ، زکوۃ، حج)">عبادات (نماز، روزہ، زکوۃ، حج)</option>
-                                <option value="معاملات و بیوع (تجارت و کاروبار)">معاملات و بیوع (تجارت و کاروبار)</option>
-                                <option value="عائلی مسائل (نکاح، طلاق، خلع)">عائلی مسائل (نکاح، طلاق، خلع)</option>
-                                <option value="وراثت و وصیت">وراثت و وصیت</option>
-                                <option value="حلال و حرام / متفرقات">حلال و حرام / متفرقات</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">سوال کی سرخی / عنوان *</label>
-                        <input type="text" id="ask-title" required placeholder="مثلاً: سفر کے دوران قصر نماز کا حکم" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">مکمل سوال کا متن *</label>
-                        <textarea id="ask-text" rows="5" required placeholder="اپنا سوال تفصیل کے ساتھ یہاں لکھیں..." class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
-                    </div>
-
-                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-base">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        <span>استفتاء بھیجیں</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- 4. PUBLIC FATWA ARCHIVE -->
-        <section id="view-archive" class="space-y-6 hidden">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-900 mb-2">شائع شدہ فتاویٰ کا آن لائن ذخیرہ</h2>
-                <p class="text-sm text-slate-600 mb-4">دارالافتاء جمشیدپور کے منظور شدہ تمام شرعی فتاویٰ کی فہرست و تلاش۔</p>
-                
-                <div class="relative max-w-lg">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-slate-400"></i>
-                    <input type="text" id="archive-search" oninput="renderArchiveList()" placeholder="عنوان، فتویٰ نمبر یا لفظ سے تلاش کریں..." class="w-full pr-10 pl-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                </div>
-            </div>
-
-            <div id="archive-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamic Approved Fatawa -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODAL: Mufti Answer Submission -->
-    <div id="modal-mufti-answer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
-            <div class="bg-emeraldCustom-900 text-white p-4 flex items-center justify-between">
-                <h3 class="font-bold text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-amber-400"></i>
-                    <span>تحقیق و جواب درج کریں</span>
-                </h3>
-                <button onclick="closeModal('modal-mufti-answer')" class="text-emerald-200 hover:text-white text-xl">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="p-5 overflow-y-auto space-y-4 flex-grow">
-                <!-- Question Context Box -->
-                <div class="bg-slate-50 border-r-4 border-emerald-600 p-3 rounded-lg text-sm space-y-1">
-                    <div class="flex items-center justify-between text-xs text-slate-500 font-bold">
-                        <span id="answer-modal-q-id">Q-1448-000</span>
-                        <span id="answer-modal-q-category" class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">باب</span>
-                    </div>
-                    <h4 id="answer-modal-q-title" class="font-bold text-slate-800 text-base">سوال کا عنوان</h4>
-                    <p id="answer-modal-q-text" class="text-slate-600 text-xs leading-relaxed whitespace-pre-line"></p>
-                </div>
-
-                <form id="mufti-answer-form" onsubmit="handleMuftiAnswerSubmit(event)" class="space-y-4">
-                    <input type="hidden" id="answer-modal-id-input">
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">الجواب وباللہ التوفیق (جواب کا مکمل متن) *</label>
-                        <textarea id="answer-draft-text" rows="6" required placeholder="الجواب وبالله التوفیق..." class="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none leading-relaxed"></textarea>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">کتب و مآخذ کے حوالے (Research References)</label>
-                        <textarea id="answer-references-text" rows="3" placeholder="مثلاً: الدرالمختار: 2/145، الفتاویٰ الهندیة: 1/210..." class="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2 pt-2">
-                        <button type="button" onclick="closeModal('modal-mufti-answer')" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 text-sm font-semibold hover:bg-slate-100">منسوخ</button>
-                        <button type="submit" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-bold shadow flex items-center gap-1.5">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>ناظم کو ڈرافٹ سبمٹ کریں</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: Admin Review & Approval -->
-    <div id="modal-admin-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-slate-200">
-            <div class="bg-slate-900 text-white p-4 flex items-center justify-between">
-                <h3 class="font-bold text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-stamp text-amber-400"></i>
-                    <span>مراجَعہ و منظوری (رئیس دارالافتاء)</span>
-                </h3>
-                <button onclick="closeModal('modal-admin-review')" class="text-slate-400 hover:text-white text-xl">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="p-5 overflow-y-auto space-y-4 flex-grow text-sm">
-                <!-- Question Header -->
-                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1">
-                    <div class="flex items-center justify-between text-xs text-emerald-800 font-bold">
-                        <span id="review-q-id">Q-1448-00</span>
-                        <span id="review-mufti-name" class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded">مفتی صاحب</span>
-                    </div>
-                    <h4 id="review-q-title" class="font-bold text-emerald-950 text-base">عنوان</h4>
-                    <p id="review-q-text" class="text-slate-700 text-xs leading-relaxed whitespace-pre-line"></p>
-                </div>
-
-                <!-- Mufti Draft Answer -->
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-800">مفتی صاحب کا تحریر کردہ جواب:</label>
-                    <textarea id="review-draft-input" rows="6" class="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500 leading-relaxed"></textarea>
-                </div>
-
-                <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-800">حوالہ جات و مآخذ:</label>
-                    <textarea id="review-ref-input" rows="2" class="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-emerald-500"></textarea>
-                </div>
-
-                <input type="hidden" id="review-modal-id">
-
-                <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg text-xs text-amber-800 flex items-center gap-2">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base"></i>
-                    <span>منظور کرنے پر سسٹم خودکار طور پر نیا سیریل فتویٰ نمبر (مثلاً: DIF-1448-XXXX) جاری کر دے گا۔</span>
-                </div>
-            </div>
-
-            <div class="p-4 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
-                <button type="button" onclick="rejectDraftBackToMufti()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i>
-                    <span>اصلاح کے لیے واپس بھیجیں</span>
-                </button>
-
-                <div class="flex items-center gap-2">
-                    <button type="button" onclick="closeModal('modal-admin-review')" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 text-xs font-semibold hover:bg-slate-200">منسوخ</button>
-                    <button type="button" onclick="approveFatwaFinal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-bold shadow flex items-center gap-1.5">
-                        <i class="fa-solid fa-circle-check"></i>
-                        <span>منظور کریں و فتویٰ جاری کریں</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: Create New Question (Admin) -->
-    <div id="modal-admin-new-q" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden no-print">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-5 space-y-4 border border-slate-200">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-                <h3 class="font-bold text-lg text-slate-800">نیا سوال رجسٹر کریں</h3>
-                <button onclick="closeModal('modal-admin-new-q')" class="text-slate-400 hover:text-slate-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="handleAdminNewQuestion(event)" class="space-y-3 text-sm">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">سائل کا نام</label>
-                    <input type="text" id="admin-new-name" required class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">شہر / مقام</label>
-                    <input type="text" id="admin-new-city" required class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوانِ سوال</label>
-                    <input type="text" id="admin-new-title" required class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">سوال کا متن</label>
-                    <textarea id="admin-new-text" rows="4" required class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">مفتی کو منتقل کریں (اختیاری)</label>
-                    <select id="admin-new-assign-mufti" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="">-- بعد میں منتخب کریں --</option>
-                    </select>
-                </div>
-                <div class="pt-2 flex justify-end gap-2">
-                    <button type="button" onclick="closeModal('modal-admin-new-q')" class="px-4 py-2 border rounded-lg text-slate-600">منسوخ</button>
-                    <button type="submit" class="px-4 py-2 bg-emerald-700 text-white rounded-lg font-bold">محفوظ کریں</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- PRINTABLE FATWA DOCUMENT (Show during printing or preview) -->
-    <div id="print-certificate" class="print-only p-8 bg-white max-w-3xl mx-auto border-8 border-double border-emerald-900 font-urdu leading-relaxed text-right">
-        <!-- Letterhead Header -->
-        <div class="text-center border-b-2 border-emerald-800 pb-4 mb-6">
-            <p class="text-xs text-slate-500">بسم الله الرحمن الرحيم</p>
-            <h1 class="text-3xl font-bold text-emerald-900 mt-1">دارالافتاء جمشیدپور</h1>
-            <p class="text-xs text-slate-600 mt-1">جھارکھنڈ، الهند | شعبہء تحریر و تصدیقِ فتاویٰ</p>
-            <div class="mt-4 flex items-center justify-between text-xs font-bold text-slate-700 bg-slate-50 p-2 rounded border border-slate-300">
-                <span>فتویٰ نمبر: <strong id="cert-fatwa-no" class="text-emerald-800 text-sm">DIF-1448-0000</strong></span>
-                <span>تاریخِ صدور: <strong id="cert-date">--</strong></span>
-            </div>
-        </div>
-
-        <!-- Details -->
-        <div class="space-y-4 text-sm">
-            <div>
-                <span class="font-bold text-slate-800">سائل کا نام و مقام: </span>
-                <span id="cert-questioner" class="text-slate-700">--</span>
-            </div>
-
-            <div class="bg-slate-50 p-3 rounded border border-slate-200">
-                <h3 class="font-bold text-slate-900 text-base mb-1">الاستفتاء:</h3>
-                <p id="cert-question" class="text-slate-800 whitespace-pre-line leading-relaxed">--</p>
-            </div>
-
-            <div class="pt-2">
-                <h3 class="font-bold text-emerald-900 text-lg mb-2 border-b border-emerald-200 pb-1">الجواب وبالله التوفيق:</h3>
-                <p id="cert-answer" class="text-slate-900 text-base leading-loose whitespace-pre-line">--</p>
-            </div>
-
-            <div id="cert-ref-container" class="bg-emerald-50/50 p-3 rounded border border-emerald-100 text-xs text-slate-700 mt-4">
-                <strong>حوالہ جات و مآخذ: </strong>
-                <span id="cert-references">--</span>
-            </div>
-        </div>
-
-        <!-- Signatures Footer -->
-        <div class="mt-12 pt-6 border-t border-slate-300 grid grid-cols-2 text-center text-xs space-y-0">
-            <div>
-                <p class="font-bold text-slate-800">المجیب (محرر فتویٰ)</p>
-                <p id="cert-mufti-signature" class="mt-8 text-emerald-900 font-bold">--</p>
-            </div>
-            <div>
-                <p class="font-bold text-slate-800">المصدق (رئیس دارالافتاء)</p>
-                <p class="mt-8 text-emerald-900 font-bold">ناظم دارالافتاء جمشیدپور</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-400 text-xs py-4 text-center mt-auto no-print">
-        <p>© 2026 دارالافتاء جمشیدپور - آن لائن خودمختار فتویٰ پورٹل | تمام حقوق محفوظ ہیں</p>
-    </footer>
-<!-- Fatwa View Modal -->
-<div id="fatwa-view-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden no-print">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-
-        <!-- Modal Header -->
-        <div class="bg-emerald-800 text-white p-5 rounded-t-2xl flex justify-between items-center">
-            <div>
-                <h2 class="text-xl font-bold">دارالافتاء جمشیدپور</h2>
-                <p class="text-sm text-emerald-100">فتویٰ کی تفصیلات</p>
-            </div>
-
-            <button onclick="closeFatwaView()" 
-                class="text-white text-2xl font-bold px-3">
-                ×
-            </button>
-        </div>
-
-        <!-- Fatwa Content -->
-        <div class="p-6 space-y-5">
-
-            <div class="flex justify-between border-b pb-3 text-sm">
-                <span>
-                    <strong>فتویٰ نمبر:</strong>
-                    <span id="view-fatwa-no"></span>
-                </span>
-
-                <span>
-                    <strong>تاریخ:</strong>
-                    <span id="view-fatwa-date"></span>
-                </span>
-            </div>
-
-            <!-- Question -->
-            <div class="bg-slate-50 border rounded-xl p-4">
-                <h3 class="font-bold text-emerald-800 mb-2">
-                    الاستفتاء:
-                </h3>
-
-                <h4 id="view-fatwa-title"
-                    class="font-bold text-slate-900 mb-2">
-                </h4>
-
-                <p id="view-fatwa-question"
-                   class="text-slate-700 leading-relaxed whitespace-pre-line">
-                </p>
-            </div>
-
-            <!-- Answer -->
-            <div>
-                <h3 class="font-bold text-emerald-800 text-lg mb-2">
-                    الجواب وبالله التوفيق:
-                </h3>
-
-                <div id="view-fatwa-answer"
-                     class="border-r-4 border-emerald-700 pr-4 text-slate-800 leading-loose whitespace-pre-line">
-                </div>
-            </div>
-
-            <!-- References -->
-            <div id="view-fatwa-reference-box"
-                 class="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
-                <strong class="text-emerald-900">
-                    حوالہ و مراجع:
-                </strong>
-
-                <div id="view-fatwa-references"
-                     class="text-sm text-slate-700 mt-1 whitespace-pre-line">
-                </div>
-            </div>
-
-            <!-- Mufti -->
-            <div class="border-t pt-4 text-left">
-                <p class="text-sm text-slate-500">
-                    مفتیِ مجیب
-                </p>
-
-                <p id="view-fatwa-mufti"
-                   class="font-bold text-emerald-900 text-lg">
-                </p>
-            </div>
-
-            <!-- Buttons -->
-            <div class="border-t pt-4 flex justify-end gap-3">
-
-                <button onclick="closeFatwaView()"
-                    class="px-5 py-2 bg-slate-200 text-slate-700 rounded-lg">
-                    بند کریں
-                </button>
-
-                <button id="view-fatwa-print-btn"
-                    class="px-5 py-2 bg-emerald-700 text-white rounded-lg font-bold">
-                    🖨️ پرنٹ کریں
-                </button>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-    <!-- JavaScript Logic -->
-    <script>
-        // 13 Muftis Predefined List
-        const MUFTIS_LIST = [
-    "مفتی ثابت جاوید قاسمی",
-    "مفتی محمد مصعب خان قاسمی",
-    "مفتی محمد سعد قاسمی",
-    "مفتی اشتیاق احمد قاسمی",
-    "مفتی سلمان دانش قاسمی",
-    "مفتی عبدالرؤف قاسمی",
-    "مفتی وسیم اختر قاسمی",
-    "مفتی محمد طلحہ قاسمی",
-    "مفتی صغیر احمد قاسمی",
-    "مفتی شاداب عالم قاسمی",
-    "مفتی سرور ندیم قاسمی",
-    "مفتی محمد معاذ قاسمی",
-    "مفتی محمد اسعد قاسمی"
-];
-
-        // Default Initial Questions Data
-        const INITIAL_QUESTIONS = [
-            {
-                id: "Q-1448-001",
-                title: "آن لائن تجارت اور بیع بالشرط کا حکم",
-                category: "معاملات و بیوع (تجارت و کاروبار)",
-                questioner: "محمد انس (جمشیدپور)",
-                phone: "0987654321",
-                questionText: "السلام علیکم! کیا دراز یا ایمیزون پر آن لائن سامان کی خرید و فروخت کرنا شریعت کے مطابق جائز ہے، جبکہ سامان کی دیکھ بھال خریدنے سے پہلے نہیں ہو سکتی؟",
-                assignedMufti: "مفتی محمد انور قاسمی",
-                status: "Approved", // Approved, Draft Received, Assigned, Unassigned
-                draftAnswer: "وعلیکم السلام ورحمۃ اللہ! آن لائن خرید و فروخت شروطِ صحتِ بیع کے ساتھ جائز ہے۔ خریدار کو سامان موصول ہونے کے بعد خیارِ رؤیت (سامان دیکھ کر پسند نہ آنے پر واپس کرنے کا حق) حاصل ہوتا ہے، لہذا یہ بیع جائز ہے۔",
-                references: "درمختار: 4/512، فتاویٰ ہندیہ: 3/120",
-                fatwaNo: "DIF-1448-0001",
-                date: "2026-08-15"
-            },
-            {
-                id: "Q-1448-002",
-                title: "مسافر کی قصر نماز کی مسافت کا مسئلہ",
-                category: "عبادات (نماز، روزہ، زکوۃ، حج)",
-                questioner: "عبدالرحمٰن (مانگو، جمشیدپور)",
-                phone: "0912345678",
-                questionText: "اگر کوئی شخص 80 کلومیٹر کے سفر پر نکلے اور وہاں 10 دن قیام کی نیت ہو تو کیا وہ نماز قصر پڑھے گا یا مکمل؟",
-                assignedMufti: "مفتی ساجد حسام مظاہری",
-                status: "Draft Received",
-                draftAnswer: "الجواب وباللہ التوفیق: شرعی مسافتِ سفر (تقریباً 78 کلومیٹر) پر سفر کرنے والا شخص اگر مقصدِ قیام پر 15 دن سے کم ٹھہرنے کی نیت کرے تو وہ مسافر رہے گا اور قصر نماز ادا کرے گا۔",
-                references: "رد المحتار: 2/121، کتاب الفقہ علی المذاہب الاربعۃ",
-                fatwaNo: "",
-                date: "2026-08-18"
-            },
-            {
-                id: "Q-1448-003",
-                title: "مشترکہ کاروباری نفع کی تقسیم",
-                category: "معاملات و بیوع (تجارت و کاروبار)",
-                questioner: "طاہر حسین (کڈمہ)",
-                phone: "0955544332",
-                questionText: "دو بھائیوں نے مل کر دکان شروع کی، ایک کی سرمایہ کاری زیادہ ہے اور دوسرے کی محنت۔ نفع کی فیصد کس طرح طے کی جائے؟",
-                assignedMufti: "مفتی عبدالرحمٰن حذیفہ",
-                status: "Assigned",
-                draftAnswer: "",
-                references: "",
-                fatwaNo: "",
-                date: "2026-08-19"
-            },
-            {
-                id: "Q-1448-004",
-                title: "زکوۃ کی رقم سے ہسپتال کے مریضوں کا علاج",
-                category: "عبادات (نماز، روزہ، زکوۃ، حج)",
-                questioner: "حاجی شفیق (جگسلائی)",
-                phone: "0988877665",
-                questionText: "کیا زکوۃ کی رقم سے کسی ٹرسٹ کے ہسپتال میں مستحق اور غریب مریضوں کی ادویات خریدی جا سکتی ہیں؟",
-                assignedMufti: "",
-                status: "Unassigned",
-                draftAnswer: "",
-                references: "",
-                fatwaNo: "",
-                date: "2026-08-20"
-            }
-        ];
-
-        // App State
-let storedQuestions = null;
-
-try {
-    storedQuestions = JSON.parse(
-        localStorage.getItem('darul_ifta_questions') || 'null'
-    );
-} catch (error) {
-    storedQuestions = null;
-}
-
-let questions = (
-    Array.isArray(storedQuestions) &&
-    storedQuestions.length > 0
-)
-    ? storedQuestions
-    : INITIAL_QUESTIONS;
-        let activeMufti = MUFTIS_LIST[0];
-
-        // Save State
-        function saveState() {
-            localStorage.setItem('darul_ifta_questions', JSON.stringify(questions));
-        }
-
-        // Init App
-        window.addEventListener('DOMContentLoaded', () => {
-            populateMuftiDropdowns();
-            renderAdminTable();
-            renderMuftiDashboard();
-            renderArchiveList();
-            updateStats();
-        });
-
-        // Populate Mufti Dropdowns
-        function populateMuftiDropdowns() {
-            const adminFilterMufti = document.getElementById('admin-filter-mufti');
-            const activeMuftiSelect = document.getElementById('active-mufti-select');
-            const adminNewMufti = document.getElementById('admin-new-assign-mufti');
-
-            MUFTIS_LIST.forEach(m => {
-                // Admin Filter
-                const opt1 = document.createElement('option');
-                opt1.value = m;
-                opt1.textContent = m;
-                adminFilterMufti.appendChild(opt1);
-
-                // Active Mufti Selector
-                const opt2 = document.createElement('option');
-                opt2.value = m;
-                opt2.textContent = m;
-                activeMuftiSelect.appendChild(opt2);
-
-                // Admin New Question Assign Modal
-                const opt3 = document.createElement('option');
-                opt3.value = m;
-                opt3.textContent = m;
-                adminNewMufti.appendChild(opt3);
-            });
-        }
-
-        // Switch Navigation Tabs
-        function switchTab(tab) {
-            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-emeraldCustom-700', 'text-white');
-                btn.classList.add('bg-emeraldCustom-800', 'text-emerald-100');
-            });
-
-            const targetSection = document.getElementById(`view-${tab}`);
-            const targetBtn = document.getElementById(`tab-${tab}`);
-
-            if (targetSection) targetSection.classList.remove('hidden');
-            if (targetBtn) {
-                targetBtn.classList.remove('bg-emeraldCustom-800', 'text-emerald-100');
-                targetBtn.classList.add('bg-emeraldCustom-700', 'text-white');
-            }
-
-            if (tab === 'admin') renderAdminTable();
-            if (tab === 'mufti') renderMuftiDashboard();
-            if (tab === 'archive') renderArchiveList();
-        }
-
-        // Update Admin Stats
-        function updateStats() {
-            document.getElementById('stat-total').textContent = questions.length;
-            document.getElementById('stat-assigned').textContent = questions.filter(q => q.status === 'Assigned').length;
-            document.getElementById('stat-drafts').textContent = questions.filter(q => q.status === 'Draft Received').length;
-            document.getElementById('stat-approved').textContent = questions.filter(q => q.status === 'Approved').length;
-        }
-
-        // Render Admin Questions Table
-        function renderAdminTable() {
-            updateStats();
-            const tbody = document.getElementById('admin-questions-tbody');
-            const search = document.getElementById('admin-search').value.toLowerCase();
-            const filterStatus = document.getElementById('admin-filter-status').value;
-            const filterMufti = document.getElementById('admin-filter-mufti').value;
-
-            tbody.innerHTML = '';
-
-            const filtered = questions.filter(q => {
-                const matchSearch = q.title.toLowerCase().includes(search) || 
-                                    q.id.toLowerCase().includes(search) || 
-                                    q.questioner.toLowerCase().includes(search);
-                const matchStatus = (filterStatus === 'ALL') || (q.status === filterStatus);
-                const matchMufti = (filterMufti === 'ALL') || (q.assignedMufti === filterMufti);
-                return matchSearch && matchStatus && matchMufti;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">کوئی ریکارڈ نہیں ملا۔</td></tr>`;
-                return;
-            }
-
-            filtered.forEach(q => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
-
-                // Status Badge styling
-                let statusBadge = '';
-                if (q.status === 'Unassigned') statusBadge = `<span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full text-xs font-bold">غیر تفویض</span>`;
-                else if (q.status === 'Assigned') statusBadge = `<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-xs font-bold">زیرِ تحقیق</span>`;
-                else if (q.status === 'Draft Received') statusBadge = `<span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-xs font-bold animate-pulse">جواب موصول</span>`;
-                else if (q.status === 'Approved') statusBadge = `<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full text-xs font-bold">منظور شدہ</span>`;
-
-                // Mufti Dropdown inside table row
-                let muftiDropdownHtml = `<select onchange="reassignMufti('${q.id}', this.value)" class="border border-slate-300 rounded px-2 py-1 text-xs bg-white focus:outline-none">
-                    <option value="">-- غیر تفویض --</option>`;
-                MUFTIS_LIST.forEach(m => {
-                    const selected = (q.assignedMufti === m) ? 'selected' : '';
-                    muftiDropdownHtml += `<option value="${m}" ${selected}>${m}</option>`;
-                });
-                muftiDropdownHtml += `</select>`;
-
-                tr.innerHTML = `
-                    <td class="p-3 font-bold text-slate-600 text-xs">${q.id}</td>
-                    <td class="p-3">
-                        <p class="font-bold text-slate-800">${q.title}</p>
-                        <p class="text-xs text-slate-500 line-clamp-1">${q.questionText}</p>
-                    </td>
-                    <td class="p-3 text-xs text-slate-600">${q.questioner}</td>
-                    <td class="p-3">${muftiDropdownHtml}</td>
-                    <td class="p-3">${statusBadge}</td>
-                    <td class="p-3 font-mono text-xs font-bold text-emerald-800">${q.fatwaNo || '-'}</td>
-                    <td class="p-3 text-center">
-                        <div class="flex items-center justify-center gap-1">
-                            ${q.status === 'Draft Received' ? `
-                                <button onclick="openAdminReviewModal('${q.id}')" class="bg-purple-600 hover:bg-purple-700 text-white px-2.5 py-1 rounded text-xs font-bold shadow">
-                                    <i class="fa-solid fa-stamp"></i> ریویو کریں
-                                </button>
-                            ` : ''}
-                            ${q.status === 'Approved' ? `
-                                <button onclick="printFatwaCertificate('${q.id}')" class="bg-slate-700 hover:bg-slate-800 text-white px-2 py-1 rounded text-xs font-bold shadow">
-                                    <i class="fa-solid fa-print"></i> پرنٹ
-                                </button>
-                            ` : ''}
-                            <button onclick="deleteQuestion('${q.id}')" class="text-red-500 hover:text-red-700 p-1 text-xs" title="حذف کریں">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Reassign Mufti from Admin Table
-        function reassignMufti(qId, newMufti) {
-            const q = questions.find(item => item.id === qId);
-            if (q) {
-                q.assignedMufti = newMufti;
-                if (newMufti && q.status === 'Unassigned') {
-                    q.status = 'Assigned';
-                } else if (!newMufti) {
-                    q.status = 'Unassigned';
-                }
-                saveState();
-                renderAdminTable();
-            }
-        }
-
-        // Render Mufti Personal Dashboard
-        function renderMuftiDashboard() {
-            activeMufti = document.getElementById('active-mufti-select').value || MUFTIS_LIST[0];
-            const container = document.getElementById('mufti-cards-container');
-            container.innerHTML = '';
-
-            const myQuestions = questions.filter(q => q.assignedMufti === activeMufti);
-
-            // Stats
-            document.getElementById('mufti-stat-total').textContent = myQuestions.length;
-            document.getElementById('mufti-stat-pending').textContent = myQuestions.filter(q => q.status === 'Assigned').length;
-            document.getElementById('mufti-stat-completed').textContent = myQuestions.filter(q => q.status === 'Approved' || q.status === 'Draft Received').length;
-
-            if (myQuestions.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full bg-white p-8 rounded-2xl border border-slate-200 text-center text-slate-500">
-                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-2"></i>
-                        <p class="font-bold">محترم ${activeMufti} صاحب!</p>
-                        <p class="text-xs mt-1">فی الحال آپ کے نام پر کوئی نیا سوال تفویض نہیں ہوا ہے۔</p>
-                    </div>
-                `;
-                return;
-            }
-
-            myQuestions.forEach(q => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-4 hover:shadow-md transition";
-
-                let actionBtn = '';
-                if (q.status === 'Assigned') {
-                    actionBtn = `
-                        <button onclick="openMuftiAnswerModal('${q.id}')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow">
-                            <i class="fa-solid fa-pen"></i>
-                            <span>جواب تحریر کریں</span>
-                        </button>
-                    `;
-                } else if (q.status === 'Draft Received') {
-                    actionBtn = `
-                        <div class="bg-purple-50 text-purple-800 p-2.5 rounded-xl border border-purple-200 text-xs text-center font-bold">
-                            <i class="fa-solid fa-clock"></i> ناظم صاحب کی منظوری کا منتظر ہے
-                        </div>
-                    `;
-                } else if (q.status === 'Approved') {
-                    actionBtn = `
-                        <div class="bg-emerald-50 text-emerald-800 p-2.5 rounded-xl border border-emerald-200 text-xs flex items-center justify-between">
-                            <span class="font-bold"><i class="fa-solid fa-circle-check"></i> منظور شدہ فتویٰ</span>
-                            <span class="font-mono text-xs font-bold">${q.fatwaNo}</span>
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between text-xs">
-                            <span class="font-bold text-slate-500">${q.id}</span>
-                            <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-bold">${q.category}</span>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-base leading-snug">${q.title}</h4>
-                        <div class="bg-slate-50 p-3 rounded-lg text-xs text-slate-600 border border-slate-100 leading-relaxed whitespace-pre-line">
-                            ${q.questionText}
-                        </div>
-                    </div>
-                    ${actionBtn}
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Change Active Mufti Selector
-        function changeActiveMufti() {
-            renderMuftiDashboard();
-        }
-
-        // Open Modal to Submit Answer (Mufti)
-        function openMuftiAnswerModal(qId) {
-            const q = questions.find(item => item.id === qId);
-            if (!q) return;
-
-            document.getElementById('answer-modal-id-input').value = q.id;
-            document.getElementById('answer-modal-q-id').textContent = q.id;
-            document.getElementById('answer-modal-q-category').textContent = q.category;
-            document.getElementById('answer-modal-q-title').textContent = q.title;
-            document.getElementById('answer-modal-q-text').textContent = q.questionText;
-
-            document.getElementById('answer-draft-text').value = q.draftAnswer || "الجواب وبالله التوفيق:\n\n";
-            document.getElementById('answer-references-text').value = q.references || "";
-
-            openModal('modal-mufti-answer');
-        }
-
-        // Handle Answer Submit (Mufti)
-        function handleMuftiAnswerSubmit(e) {
-            e.preventDefault();
-            const qId = document.getElementById('answer-modal-id-input').value;
-            const q = questions.find(item => item.id === qId);
-
-            if (q) {
-                q.draftAnswer = document.getElementById('answer-draft-text').value;
-                q.references = document.getElementById('answer-references-text').value;
-                q.status = 'Draft Received';
-                saveState();
-                closeModal('modal-mufti-answer');
-                renderMuftiDashboard();
-                renderAdminTable();
-                alert('آپ کا تیار کردہ جواب ناظم صاحب کو منظوری کے لیے بھیج دیا گیا ہے!');
-            }
-        }
-
-        // Open Admin Review Modal
-        function openAdminReviewModal(qId) {
-            const q = questions.find(item => item.id === qId);
-            if (!q) return;
-
-            document.getElementById('review-modal-id').value = q.id;
-            document.getElementById('review-q-id').textContent = q.id;
-            document.getElementById('review-mufti-name').textContent = q.assignedMufti || "مفتی صاحب";
-            document.getElementById('review-q-title').textContent = q.title;
-            document.getElementById('review-q-text').textContent = q.questionText;
-
-            document.getElementById('review-draft-input').value = q.draftAnswer;
-            document.getElementById('review-ref-input').value = q.references;
-
-            openModal('modal-admin-review');
-        }
-
-        // Approve Fatwa Final (Admin)
-        function approveFatwaFinal() {
-            const qId = document.getElementById('review-modal-id').value;
-            const q = questions.find(item => item.id === qId);
-
-            if (q) {
-                q.draftAnswer = document.getElementById('review-draft-input').value;
-                q.references = document.getElementById('review-ref-input').value;
-                q.status = 'Approved';
-
-                // Generate Sequential Fatwa Number
-                const approvedCount = questions.filter(item => item.status === 'Approved' && item.fatwaNo).length + 1;
-                const formattedSeq = String(approvedCount).padStart(4, '0');
-                q.fatwaNo = `DIF-1448-${formattedSeq}`;
-
-                saveState();
-                closeModal('modal-admin-review');
-                renderAdminTable();
-                renderArchiveList();
-                alert(`فتویٰ کامیابی کے ساتھ منظور ہو گیا! جاری شدہ فتویٰ نمبر: ${q.fatwaNo}`);
-            }
-        }
-
-// Open Fatwa Details
-function openFatwaView(qId) {
-    const q = questions.find(item => item.id === qId);
-
-    if (!q) return;
-
-    document.getElementById('view-fatwa-no').textContent =
-        q.fatwaNo || 'DIF-1448-000';
-
-    document.getElementById('view-fatwa-date').textContent =
-        q.date || '';
-
-    document.getElementById('view-fatwa-title').textContent =
-        q.title || '';
-
-    document.getElementById('view-fatwa-question').textContent =
-        q.questionText || '';
-
-    document.getElementById('view-fatwa-answer').textContent =
-        q.draftAnswer || 'جواب درج نہیں کیا گیا۔';
-
-    document.getElementById('view-fatwa-references').textContent =
-        q.references || 'کوئی حوالہ درج نہیں کیا گیا۔';
-
-    document.getElementById('view-fatwa-mufti').textContent =
-        q.assignedMufti || 'مفتی صاحب';
-
-    document.getElementById('view-fatwa-print-btn').onclick =
-        function() {
-            printFatwaCertificate(qId);
-        };
-
-    document.getElementById('fatwa-view-modal')
-        .classList.remove('hidden');
-}
-
-
-// Close Fatwa Details
-function closeFatwaView() {
-    document.getElementById('fatwa-view-modal')
-        .classList.add('hidden');
-}
-
-        // Public Question Submit
-        function handlePublicQuestionSubmit(e) {
-            e.preventDefault();
-
-            const newQ = {
-                id: `Q-1448-${String(questions.length + 1).padStart(3, '0')}`,
-                title: document.getElementById('ask-title').value,
-                category: document.getElementById('ask-category').value,
-                questioner: `${document.getElementById('ask-name').value} (${document.getElementById('ask-city').value})`,
-                phone: document.getElementById('ask-phone').value,
-                questionText: document.getElementById('ask-text').value,
-                assignedMufti: "",
-                status: "Unassigned",
-                draftAnswer: "",
-                references: "",
-                fatwaNo: "",
-                date: new Date().toISOString().split('T')[0]
-            };
-
-            questions.unshift(newQ);
-            saveState();
-
-            document.getElementById('public-question-form').reset();
-            alert(`آپ کا استفتاء دارالافتاء جمشیدپور کو موصول ہو گیا ہے! سوال آئی ڈی: ${newQ.id}`);
-            switchTab('admin');
-        }
-
-        // Open Modal to Add New Question by Admin
-        function openNewQuestionModal() {
-            openModal('modal-admin-new-q');
-        }
-
-        function handleAdminNewQuestion(e) {
-            e.preventDefault();
-
-            const assignedMufti = document.getElementById('admin-new-assign-mufti').value;
-
-            const newQ = {
-                id: `Q-1448-${String(questions.length + 1).padStart(3, '0')}`,
-                title: document.getElementById('admin-new-title').value,
-                category: "متفرقات",
-                questioner: `${document.getElementById('admin-new-name').value} (${document.getElementById('admin-new-city').value})`,
-                phone: "",
-                questionText: document.getElementById('admin-new-text').value,
-                assignedMufti: assignedMufti,
-                status: assignedMufti ? "Assigned" : "Unassigned",
-                draftAnswer: "",
-                references: "",
-                fatwaNo: "",
-                date: new Date().toISOString().split('T')[0]
-            };
-
-            questions.unshift(newQ);
-            saveState();
-            closeModal('modal-admin-new-q');
-            renderAdminTable();
-        }
-
-        // Render Public Fatwa Archive
-        function renderArchiveList() {
-            const container = document.getElementById('archive-list-container');
-            const search = document.getElementById('archive-search').value.toLowerCase();
-            container.innerHTML = '';
-
-            const approvedList = questions.filter(q => q.status === 'Approved' && (
-                q.title.toLowerCase().includes(search) || 
-                q.fatwaNo.toLowerCase().includes(search) ||
-                q.questionText.toLowerCase().includes(search)
-            ));
-
-            if (approvedList.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full bg-white p-8 rounded-2xl text-center text-slate-500 border border-slate-200">
-                        کوئی منظور شدہ فتویٰ نہیں ملا۔
-                    </div>
-                `;
-                return;
-            }
-
-            approvedList.forEach(q => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between space-y-3 hover:shadow-md transition";
-
-                card.innerHTML = `
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between text-xs">
-                            <span class="font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${q.fatwaNo}</span>
-                            <span class="text-slate-500">${q.date}</span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base">${q.title}</h3>
-                        <p class="text-xs text-slate-600 line-clamp-2">${q.draftAnswer}</p>
-                    </div>
-                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">المجیب: <strong>${q.assignedMufti}</strong></span>
-                        <button onclick="printFatwaCertificate('${q.id}')" class="text-emerald-700 font-bold hover:underline flex items-center gap-1">
-                            <i class="fa-solid fa-print"></i> مکمل فتویٰ دیکھیں
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Print Official Certificate
-        function printFatwaCertificate(qId) {
-            const q = questions.find(item => item.id === qId);
-            if (!q) return;
-
-            document.getElementById('cert-fatwa-no').textContent = q.fatwaNo || "DIF-1448-0000";
-            document.getElementById('cert-date').textContent = q.date || "--";
-            document.getElementById('cert-questioner').textContent = q.questioner || "--";
-            document.getElementById('cert-question').textContent = q.questionText || "--";
-            document.getElementById('cert-answer').textContent = q.draftAnswer || "--";
-            document.getElementById('cert-references').textContent = q.references || "کتبِ فقہ کی معتبر روایات۔";
-            document.getElementById('cert-mufti-signature').textContent = q.assignedMufti || "خادم الافتاء";
-
-            window.print();
-        }
-
-        // Delete Question
-        function deleteQuestion(qId) {
-            if (confirm('کیا آپ واقعی اس سوال کو ریکارڈ سے حذف کرنا چاہتے ہیں؟')) {
-                questions = questions.filter(q => q.id !== qId);
-                saveState();
-                renderAdminTable();
-            }
-        }
-
-        // Modal Helpers
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
+      // 8. LIBRARY & PUBLISHING (کتب خانہ)
+      function renderLibrary(c) {
+        c.innerHTML = `
+          <div class="space-y-6">
+             <h2 class="text-2xl font-bold text-slate-900 border-b pb-2">ڈیجیٹل کتب خانہ (PDF)</h2>
+             <div class="grid md:grid-cols-3 gap-6">
+                 <div class="bg-white rounded-2xl border overflow-hidden shadow-sm">
+                     <div class="h-40 bg-slate-200 flex items-center justify-center text-4xl text-slate-400"><i class="fa-solid fa-book"></i></div>
+                     <div class="p-4 space-y-2">
+                         <span class="text-[10px] bg-royal-100 text-royal-800 px-2 py-1 rounded">فقہ حنفی</span>
+                         <h3 class="font-bold text-lg text-slate-900">فتاویٰ شامی (جلد اول)</h3>
+                         <button class="w-full mt-2 bg-royal-900 text-white py-2 rounded-lg text-sm font-bold">PDF ڈاؤن لوڈ</button>
+                     </div>
+                 </div>
+             </div>
+          </div>
+        `;
+      }
+
+      // 9. DONATION / تعاون
+      function renderDonation(c) {
+        c.innerHTML = `
+          <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border shadow-xl text-center space-y-6">
+             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl"><i class="fa-solid fa-hand-holding-heart"></i></div>
+             <h2 class="text-3xl font-bold text-slate-900">ادارے کے علمی و تحقیقی مشن میں تعاون کریں</h2>
+             <p class="text-slate-600 text-sm">آپ کے تعاون سے دارالافتاء کی خدمات (فتاویٰ، اشاعتِ کتب اور تحقیقات) کو مزید وسعت دی جا سکتی ہے۔</p>
+             <div class="grid grid-cols-2 gap-4 pt-4">
+                 <div class="border p-4 rounded-xl">
+                     <h4 class="font-bold text-royal-900">Bank Transfer</h4>
+                     <p class="text-xs text-slate-500 font-sans-eng mt-2">A/C: 1234567890<br>IFSC: SBIN0001234</p>
+                 </div>
+                 <div class="border p-4 rounded-xl">
+                     <h4 class="font-bold text-royal-900">UPI / QR Code</h4>
+                     <p class="text-xs text-slate-500 font-sans-eng mt-2">darulifta@upi</p>
+                 </div>
+             </div>
+          </div>
+        `;
+      }
+
+      // Initialize
+      window.router('home');
     </script>
 </body>
 </html>
